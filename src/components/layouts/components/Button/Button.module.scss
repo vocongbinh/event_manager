@@ -1,0 +1,50 @@
+.wrapper {
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+//type
+.round {
+    border-radius: 20px;
+    height: 40px;
+    padding: 0px 24px;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    &:hover {
+        color: rgb(35, 168, 100);
+        border-color: rgb(35, 168, 100);
+    }
+}
+.primary {
+    font-size: 14px;
+    height: 40px;
+    color: #111111;
+    outline: none;
+    background-color: transparent;
+    border-radius: 4px;
+    border: none;
+    &:hover {
+        background-color: rgb(243, 245, 250);
+    }
+}
+
+//size
+.min {
+    min-width: 148px;
+}
+
+.medium {
+}
+
+.max {
+}
+
+.icon {
+    margin-right: 8px;
+}

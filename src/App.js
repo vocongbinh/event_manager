@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { publicRouter } from './routes';
+import DefaultLayout from './components/layouts/DefaultLayout';
 
 function App() {
     return (
@@ -8,7 +9,20 @@ function App() {
                 <Routes>
                     {publicRouter.map((route, index) => {
                         let Page = route.component;
-                        return <Route path={route.path} element={<Page />} />;
+                        let Layout = DefaultLayout;
+                        if (route.layout) {
+                            Layout = route.layout;
+                        }
+                        return (
+                            <Route
+                                path={route.path}
+                                element={
+                                    <Layout>
+                                        <Page />
+                                    </Layout>
+                                }
+                            />
+                        );
                     })}
                 </Routes>
             </div>

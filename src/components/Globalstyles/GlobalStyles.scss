@@ -1,10 +1,12 @@
 @import 'normalize.css';
 :root {
-    --primary: #fe2c55;
-    --default-height: 60px;
-    --padding-default: 16px;
+    --primary: rgb(45, 194, 117);
+    --default-height: 76px;
+    --padding-default: 36px;
     --font-size-default: 16px;
-    --color-hover: #e4e4e6;
+    --color-hide: rgb(245, 247, 252);
+    --text-color: rgb(42, 45, 52);
+    --white: #ffffff;
 }
 * {
     box-sizing: border-box;
@@ -18,4 +20,7 @@ body {
 }
 html {
     font-size: 62.5%;
+}
+input {
+    line-height: 24px;
 }

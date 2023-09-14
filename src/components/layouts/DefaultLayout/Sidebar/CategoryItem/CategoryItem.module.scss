@@ -1,0 +1,15 @@
+.wrapper {
+    width: 100%;
+    justify-content: left;
+    padding: 4px 8px;
+    color: rgb(42, 45, 52);
+    font-weight: 400;
+    background-color: #f5f7fc;
+    &:hover {
+        background-color: var(--white);
+    }
+}
+.category-icon {
+    width: 24px;
+    height: 24px;
+}

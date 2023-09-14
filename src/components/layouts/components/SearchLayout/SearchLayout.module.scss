@@ -1,0 +1,32 @@
+.search-field {
+    height: 100%;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    font-size: var(--font-size-default);
+    padding: 12px 36px 12px 0px;
+    color: var(--text-color);
+    caret-color: var(--primary);
+}
+.search-icon {
+    width: 14px;
+    height: 14px;
+    padding: 0 8px;
+}
+.close-icon {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    transform: translateY(-50%);
+    right: 8px;
+    top: 50%;
+}
+
+.search {
+    position: relative;
+    height: 44px;
+    width: 372px;
+    background-color: var(--color-hide);
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
