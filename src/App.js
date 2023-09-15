@@ -13,16 +13,7 @@ function App() {
                         if (route.layout) {
                             Layout = route.layout;
                         }
-                        return (
-                            <Route
-                                path={route.path}
-                                element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
-                                }
-                            />
-                        );
+                        return <Route path={route.path} element={<Layout></Layout>} />;
                     })}
                 </Routes>
             </div>

@@ -5,13 +5,7 @@
     padding: 0 var(--padding-default);
     border-bottom: 2px solid rgb(230, 235, 245);
 }
-.search {
-    height: 44px;
-    width: 372px;
-    background-color: var(--color-hide);
-    border: 1px solid transparent;
-    border-radius: 4px;
-}
+
 .logo {
     height: 44px;
     width: 44px;
@@ -19,20 +13,6 @@
     margin-right: 60px;
 }
 
-.search-field {
-    height: 100%;
-    outline: none;
-    background-color: transparent;
-    border: none;
-    font-size: var(--font-size-default);
-    padding: 12px 36px 12px 0px;
-    color: var(--text-color);
-}
-.search-icon {
-    width: 14px;
-    height: 14px;
-    padding: 0 8px;
-}
 //action
 .action {
     display: flex;
@@ -49,4 +29,9 @@
 .avatar {
     width: 32px;
     height: 32px;
+}
+
+.search-layout {
+    position: relative;
+    height: 44px;
 }

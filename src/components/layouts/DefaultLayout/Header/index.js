@@ -14,13 +14,13 @@ function Header() {
                 src="https://trinhvantuyen.com/wp-content/uploads/2022/03/hinh-anh-pikachu-1.jpg"
                 className={cx('logo')}
             />
-            <SearchLayout />
+            <SearchLayout className={cx('search-layout')} />
             <div className={cx('action')}>
-                <Button type="round" size="min" icon={<FontAwesomeIcon icon={faSailboat} />}>
-                    bình nè
+                <Button type="round" size="min">
+                    Create event
                 </Button>
                 <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
-                <Button type="primary" size="min" icon={<Image src={Images.avatar} className={cx('avatar')} />}>
+                <Button type="primary" size="min" preIcon={<Image src={Images.avatar} className={cx('avatar')} />}>
                     bình nè
                 </Button>
             </div>

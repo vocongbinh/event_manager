@@ -1,12 +1,17 @@
-import Following from '../pages/Following';
-import Home from '../pages/Home';
+import CategoryLayout from '../components/layouts/CategoryLayout';
+import DefaultLayout from '../components/layouts/DefaultLayout';
+
 //private router
 const privateRouter = [];
 //public router
 const publicRouter = [
     {
         path: '/',
-        component: Home,
+        layout: DefaultLayout,
+    },
+    {
+        path: '/events/:id',
+        layout: CategoryLayout,
     },
 ];
 export { privateRouter, publicRouter };
