@@ -19,6 +19,7 @@ const Button = forwardRef(({ type, size, href, className, preIcon, sufIcon, onCl
                 [className]: className,
                 round: type === 'round',
                 primary: type === 'primary',
+                highlight: type === 'highlight',
                 min: size === 'min',
                 medium: size === 'medium',
                 max: size === 'max',

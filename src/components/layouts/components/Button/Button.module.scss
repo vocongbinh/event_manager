@@ -32,6 +32,17 @@
     }
 }
 
+.highlight {
+    color: var(--white);
+    background-color: var(--red);
+    font-size: 2rem;
+    padding: 16px;
+    border-radius: 4px;
+    &:hover {
+        opacity: 0.5;
+    }
+}
+
 //size
 .min {
     min-width: 148px;
@@ -41,6 +52,7 @@
 }
 
 .max {
+    width: 100%;
 }
 
 .preIcon {

@@ -8,7 +8,7 @@ function CategoryItem({ data }) {
         <Button
             type="primary"
             className={cx('wrapper')}
-            icon={<Image className={cx('category-icon')} src={data.icon} />}
+            preIcon={<Image className={cx('category-icon')} src={data.icon} />}
         >
             {data.title}
         </Button>
