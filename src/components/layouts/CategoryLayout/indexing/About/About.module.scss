@@ -1,8 +1,11 @@
 .wrapper {
-    max-height: 670px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    max-height: 670px;
+    overflow-y: scroll;
+}
+.content {
+    // overflow-y: auto;
 }
 
 .title {
