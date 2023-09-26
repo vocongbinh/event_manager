@@ -39,3 +39,7 @@ button {
 .dropdown-toggle::after {
     display: none !important;
 }
+a {
+    text-decoration: none !important;
+    color: inherit !important;
+}

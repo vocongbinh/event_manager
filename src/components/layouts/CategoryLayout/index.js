@@ -8,13 +8,59 @@ import Button from '../components/Button';
 import About from './indexing/About';
 import TicketInformation from './indexing/TicketInformation';
 import Organizer from './indexing/Organizer';
+import { useEffect, useRef, useState } from 'react';
+import $ from 'jquery';
+import { faBehance } from '@fortawesome/free-brands-svg-icons';
+import { info } from 'sass';
+import Recommended from './indexing/Recommended';
 function CategoryLayout({ children }) {
     const cx = classNames.bind(styles);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const aboutRef = useRef(null);
+    const informationRef = useRef(null);
+    const organizerRef = useRef(null);
+    const recommendRef = useRef(null);
+    const scrollHandler = (ref, index) => {
+        window.scrollTo({ top: ref.current.offsetTop - 70, behavior: 'smooth' });
+        setActiveIndex(index);
+    };
+    useEffect(() => {
+        window.addEventListener('scroll', () => {
+            const offsetTop = window.scrollY + 60;
+            if (offsetTop <= aboutRef.current.offsetTop + aboutRef.current.clientHeight) {
+                setActiveIndex(0);
+            } else if (offsetTop < informationRef.current.offsetTop + informationRef.current.clientHeight) {
+                setActiveIndex(1);
+            } else if (offsetTop < organizerRef.current.offsetTop + organizerRef.current.clientHeight) {
+                setActiveIndex(2);
+            } else setActiveIndex(3);
+        });
+    });
     const listOption = [
-        { title: 'About' },
-        { title: 'Ticket Information' },
-        { title: 'Organizer' },
-        { title: 'Recommend for you' },
+        {
+            title: 'About',
+            handleClick: (index) => {
+                scrollHandler(aboutRef, index);
+            },
+        },
+        {
+            title: 'Ticket Information',
+            handleClick: (index) => {
+                scrollHandler(informationRef, index);
+            },
+        },
+        {
+            title: 'Organizer',
+            handleClick: (index) => {
+                scrollHandler(organizerRef, index);
+            },
+        },
+        {
+            title: 'Recommend for you',
+            handleClick: (index) => {
+                scrollHandler(recommendRef, index);
+            },
+        },
     ];
     return (
         <div className={`container-fluid ${cx('wrapper')}`}>
@@ -54,8 +100,17 @@ function CategoryLayout({ children }) {
                 <div className={cx('nav-bar')}>
                     <div className="container">
                         <div className={`mx-auto ${cx('tab-layout')}`}>
-                            {listOption.map((option) => (
-                                <span className={cx('option', 'active')}>{option.title}</span>
+                            {listOption.map((option, index) => (
+                                <span
+                                    className={cx('option', {
+                                        active: index === activeIndex,
+                                    })}
+                                    onClick={(e) => {
+                                        option.handleClick(index);
+                                    }}
+                                >
+                                    {option.title}
+                                </span>
                             ))}
                         </div>
                     </div>
@@ -63,32 +118,55 @@ function CategoryLayout({ children }) {
 
                 <div className={`"container" ${cx('detail')}`}>
                     <div className={`mx-auto ${cx('detail-event')}`}>
-                        <div className="col-8">
-                            <div className={cx('detail-content')}>
-                                <div className={cx('detail-item')}>
-                                    <h1> about</h1>
-                                    <About data="<h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1>" />
+                        <div className="row">
+                            <div className="col-8">
+                                <div className={cx('detail-content')}>
+                                    <div className={cx('detail-item')}>
+                                        <About
+                                            ref={aboutRef}
+                                            data="<h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1>"
+                                        />
+                                    </div>
+                                    <div className={cx('detail-item')}>
+                                        <TicketInformation ref={informationRef} />
+                                    </div>
+
+                                    <div className={cx('detail-item')}>
+                                        <Organizer
+                                            ref={organizerRef}
+                                            data={{
+                                                name: 'binh',
+                                                logo: 'https://icdn.dantri.com.vn/thumb_w/1920/2022/10/13/yen-lang-khong-den23-1665672705242.jpg',
+                                                description: 'binh dep trai',
+                                            }}
+                                        />
+                                    </div>
+                                    <div className={cx('detail-item')}>
+                                        <Recommended ref={recommendRef} />
+                                    </div>
                                 </div>
-                                <div className={cx('detail-item')}>
-                                    <h1> ticket information</h1>
-                                    <TicketInformation />
-                                </div>
-                                <div className={cx('detail-item')}>
-                                    <h1> Organizer</h1>
-                                    <Organizer
-                                        data={{
-                                            name: 'binh',
-                                            logo: 'https://icdn.dantri.com.vn/thumb_w/1920/2022/10/13/yen-lang-khong-den23-1665672705242.jpg',
-                                            description: 'binh dep trai',
-                                        }}
-                                    />
-                                </div>
-                                <div className={cx('detail-item')}>
-                                    <h1> Recommended for you</h1>
+                            </div>
+                            <div className="col-4">
+                                <div className={cx('sub-detail')}>
+                                    <p className={cx('sub-header')}>
+                                        2023-2024 BamBam THE 1ST WORLD TOUR [AREA 52] In HO CHI MINH
+                                    </p>
+                                    <p className={cx('sub-time-location')}>
+                                        <FontAwesomeIcon className={cx('icon')} icon={faClockFour} />
+                                        Saturday, 28 October 2023 (07:00 PM - 11:00 PM)
+                                    </p>
+                                    <p className={cx('sub-time-location')}>
+                                        <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
+                                        Nhà thi đấu Quân khu 7
+                                    </p>
+                                    <p className={cx('sub-address')}>Nhà thi đấu Quân khu 7</p>
+                                    <p className={cx('sub-ticket')}>From 1.400.000 VND</p>
+                                    <Button type="highlight" size="max">
+                                        Book now
+                                    </Button>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-4"></div>
                     </div>
                 </div>
             </div>

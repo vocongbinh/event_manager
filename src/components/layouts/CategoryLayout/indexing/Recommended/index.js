@@ -1,8 +1,13 @@
+import { forwardRef } from 'react';
 import styles from './Recommended.module.scss';
 import classNames from 'classnames/bind';
-function Recommended({ data }) {
+const Recommended = forwardRef(({ data }, ref) => {
     const cx = classNames.bind(styles);
-    return <div className={cx('wrapper')}></div>;
-}
+    return (
+        <div ref={ref} className={cx('wrapper')}>
+            <h1> Recommended for you</h1>
+        </div>
+    );
+});
 
 export default Recommended;
