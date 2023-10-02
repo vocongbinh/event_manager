@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 import TicketItem from '../TicketInformation/TicketItem';
 import classNames from 'classnames/bind';
 import styles from './TicketInformation.module.scss';
@@ -15,4 +15,4 @@ const TicketInformation = forwardRef(({ data }, ref) => {
     );
 });
 
-export default TicketInformation;
+export default memo(TicketInformation);

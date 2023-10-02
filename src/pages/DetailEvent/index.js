@@ -1,19 +1,20 @@
-import styles from './CategoryLayout.module.scss';
+import styles from './DetailEvent.module.scss';
 import classNames from 'classnames/bind';
 import Header from './Header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faClockFour } from '@fortawesome/free-regular-svg-icons';
-import Button from '../components/Button';
+import Button from '../../components/layouts/components/Button';
 import About from './indexing/About';
 import TicketInformation from './indexing/TicketInformation';
 import Organizer from './indexing/Organizer';
 import { useEffect, useRef, useState } from 'react';
 import $ from 'jquery';
-import { faBehance } from '@fortawesome/free-brands-svg-icons';
-import { info } from 'sass';
+import * as eventService from '../../../src/apiServices/eventService';
 import Recommended from './indexing/Recommended';
-function CategoryLayout({ children }) {
+import { useParams } from 'react-router-dom';
+
+function DetailEvent({ children }) {
     const cx = classNames.bind(styles);
     const [activeIndex, setActiveIndex] = useState(0);
     const aboutRef = useRef(null);
@@ -24,6 +25,24 @@ function CategoryLayout({ children }) {
         window.scrollTo({ top: ref.current.offsetTop - 70, behavior: 'smooth' });
         setActiveIndex(index);
     };
+    const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
+
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const params = useParams();
+    const [event, setEvent] = useState({});
     useEffect(() => {
         window.addEventListener('scroll', () => {
             const offsetTop = window.scrollY + 60;
@@ -35,7 +54,20 @@ function CategoryLayout({ children }) {
                 setActiveIndex(2);
             } else setActiveIndex(3);
         });
-    });
+
+        const fetchAPi = async () => {
+            try {
+                let event = await eventService.detailEvent(params.id);
+                //console.log(event.organizer.logoImage);
+                console.log('1');
+                setEvent(event);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchAPi();
+    }, []);
+
     const listOption = [
         {
             title: 'About',
@@ -62,6 +94,18 @@ function CategoryLayout({ children }) {
             },
         },
     ];
+    console.log('2');
+    //date time
+    let startTime = Date.parse(event.startTime);
+    let time = new Date(startTime);
+    const hours = ('0' + time.getHours()).slice(-2);
+    const minutes = ('0' + time.getMinutes()).slice(-2);
+    const month = months[time.getMonth()];
+    const year = time.getFullYear();
+    const day = days[time.getDay()];
+    const date = time.getDate();
+    startTime = `${day}, ${date} ${month} ${year} (${hours}:${minutes})`;
+
     return (
         <div className={`container-fluid ${cx('wrapper')}`}>
             <Header />
@@ -74,21 +118,21 @@ function CategoryLayout({ children }) {
                 <div className="container">
                     <div className={cx('infor-event')}>
                         <div className={cx('calendar')}>
-                            <p className={cx('month')}>OCTOBER</p>
-                            <p className={cx('date')}>28</p>
-                            <p className={cx('day')}>Saturday</p>
+                            <p className={cx('month')}>{month}</p>
+                            <p className={cx('date')}>{date}</p>
+                            <p className={cx('day')}>{day}</p>
                         </div>
                         <div className={`col-sm-7 ${cx('content-event')}`}>
-                            <p className={cx('title')}> 1589 - TRUNG QUÂN- 15 YEARS LIVE CONCERT</p>
+                            <p className={cx('title')}>{event.eventName}</p>
                             <p className={cx('time-location')}>
                                 <FontAwesomeIcon className={cx('icon')} icon={faClockFour} />
-                                Saturday, 28 October 2023 (07:00 PM - 11:00 PM)
+                                {startTime}
                             </p>
                             <p className={cx('time-location')}>
                                 <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
-                                Nhà thi đấu Quân khu 7
+                                {event.stage}
                             </p>
-                            <p className={cx('address')}>Nhà thi đấu Quân khu 7</p>
+                            <p className={cx('address')}>{event.address}</p>
                         </div>
                         <div className={cx('interact')}>
                             <Button type="highlight" size="max">
@@ -122,24 +166,14 @@ function CategoryLayout({ children }) {
                             <div className="col-8">
                                 <div className={cx('detail-content')}>
                                     <div className={cx('detail-item')}>
-                                        <About
-                                            ref={aboutRef}
-                                            data="<h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1><h1>binhfhdsfhhdsfdfsdf</h1>"
-                                        />
+                                        <About ref={aboutRef} data={event.description} />
                                     </div>
                                     <div className={cx('detail-item')}>
                                         <TicketInformation ref={informationRef} />
                                     </div>
 
                                     <div className={cx('detail-item')}>
-                                        <Organizer
-                                            ref={organizerRef}
-                                            data={{
-                                                name: 'binh',
-                                                logo: 'https://icdn.dantri.com.vn/thumb_w/1920/2022/10/13/yen-lang-khong-den23-1665672705242.jpg',
-                                                description: 'binh dep trai',
-                                            }}
-                                        />
+                                        <Organizer ref={organizerRef} data={event.organizer} />
                                     </div>
                                     <div className={cx('detail-item')}>
                                         <Recommended ref={recommendRef} />
@@ -174,4 +208,4 @@ function CategoryLayout({ children }) {
     );
 }
 
-export default CategoryLayout;
+export default DetailEvent;

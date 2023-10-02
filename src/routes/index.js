@@ -1,5 +1,5 @@
-import CategoryLayout from '../components/layouts/CategoryLayout';
 import DefaultLayout from '../components/layouts/DefaultLayout';
+import DetailEvent from '../pages/DetailEvent';
 import Home from '../pages/Home';
 
 //private router
@@ -13,7 +13,7 @@ const publicRouter = [
     },
     {
         path: '/events/:id',
-        layout: CategoryLayout,
+        component: DetailEvent,
     },
 ];
 export { privateRouter, publicRouter };

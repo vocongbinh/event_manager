@@ -1,4 +1,6 @@
 @import 'normalize.css';
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
 :root {
     --primary: rgb(45, 194, 117);
     --default-height: 76px;
@@ -42,4 +44,50 @@ button {
 a {
     text-decoration: none !important;
     color: inherit !important;
+}
+
+//custom slick
+.button-bar {
+    display: flex !important;
+    vertical-align: middle;
+    margin: auto;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 40px;
+    width: 70px;
+    text-align: center;
+}
+
+.button-bar li {
+    list-style: none;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 3px;
+    padding: 0;
+}
+
+.button-bar li button {
+    border: none;
+    background: rgb(45, 194, 117);
+    cursor: pointer;
+    color: transparent;
+    border-radius: 2px;
+    background-color: rgba(45, 194, 117, 0.4);
+    height: 4px !important;
+    width: 24px !important;
+}
+
+.button-bar li.slick-active button {
+    background-color: rgb(45, 194, 117);
+}
+
+.button-bar li button:hover,
+.button-bar li button:focus {
+    background: rgb(45, 194, 117);
+}
+
+.slick-slide img {
+    border: 5px solid #fff;
+    display: block;
+    margin: auto;
 }

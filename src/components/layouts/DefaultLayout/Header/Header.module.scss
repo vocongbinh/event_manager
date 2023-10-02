@@ -35,3 +35,19 @@
     position: relative;
     height: 44px;
 }
+
+//tipy
+.options-tippy {
+    position: relative;
+}
+.tippy-wrapper {
+    box-shadow: rgba(42, 45, 52, 0.16) 0px 4px 20px;
+    border-radius: 8px;
+    z-index: 1;
+    background: var(--white);
+    width: 324px;
+    cursor: auto;
+}
+.infor-item + .infor-item {
+    margin-top: 10px;
+}

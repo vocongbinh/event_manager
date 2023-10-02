@@ -3,11 +3,11 @@ import classNames from 'classnames/bind';
 function EventItem({ data }) {
     const cx = classNames.bind(styles);
     return (
-        <a className={cx('wrapper')}>
-            <img className={cx('content-img')} src={data.image} />
-            <p className={cx('name')}>{data.name}</p>
-            <p className={cx('time')}>{data.time}</p>
-            <p className={cx('type')}>{data.type}</p>
+        <a target="_blank" href={`/events/${data._id}`} className={cx('wrapper')}>
+            <img className={cx('content-img')} src={data.coverImage} />
+            <p className={cx('name')}>{data.eventName}</p>
+            <p className={cx('time')}>{data.startTime}</p>
+            <p className={cx('type')}>{data.eventType}</p>
         </a>
     );
 }

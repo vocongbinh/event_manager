@@ -7,5 +7,7 @@ const Images = {
     night: require('./night_icon.png'),
     sport: require('./sport_icon.png'),
     attraction: require('./attraction_icon.png'),
+    headingLeft: require('./heading-img-1-left.svg'),
+    headingRight: require('./heading-img-1-right.svg'),
 };
 export default Images;

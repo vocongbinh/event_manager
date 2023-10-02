@@ -3,10 +3,10 @@ import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCircleInfo, faLocation, faSailboat } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
-import Button from '../../components/Button';
-import Images from '../../../../assets/images';
-import Image from '../../components/Image';
-import SearchLayout from '../../components/SearchLayout';
+import Button from '../../../components/layouts/components/Button';
+import Images from '../../../assets/images';
+import Image from '../../../components/layouts/components/Image';
+import SearchLayout from '../../../components/layouts/components/SearchLayout';
 
 function Header() {
     const cx = classNames.bind(styles);

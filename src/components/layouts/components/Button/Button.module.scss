@@ -19,6 +19,11 @@
         border-color: rgb(35, 168, 100);
     }
 }
+.circle {
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid #c0edd6;
+}
 .primary {
     font-size: 14px;
     height: 40px;

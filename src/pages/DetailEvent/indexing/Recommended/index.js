@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 import styles from './Recommended.module.scss';
 import classNames from 'classnames/bind';
 const Recommended = forwardRef(({ data }, ref) => {
@@ -10,4 +10,4 @@ const Recommended = forwardRef(({ data }, ref) => {
     );
 });
 
-export default Recommended;
+export default memo(Recommended);
