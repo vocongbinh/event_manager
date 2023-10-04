@@ -25,22 +25,7 @@ function DetailEvent({ children }) {
         window.scrollTo({ top: ref.current.offsetTop - 70, behavior: 'smooth' });
         setActiveIndex(index);
     };
-    const months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-    ];
 
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const params = useParams();
     const [event, setEvent] = useState({});
     useEffect(() => {
@@ -94,17 +79,17 @@ function DetailEvent({ children }) {
             },
         },
     ];
-    console.log('2');
+
     //date time
-    let startTime = Date.parse(event.startTime);
-    let time = new Date(startTime);
-    const hours = ('0' + time.getHours()).slice(-2);
-    const minutes = ('0' + time.getMinutes()).slice(-2);
-    const month = months[time.getMonth()];
-    const year = time.getFullYear();
-    const day = days[time.getDay()];
-    const date = time.getDate();
-    startTime = `${day}, ${date} ${month} ${year} (${hours}:${minutes})`;
+    // let startTime = Date.parse(event.startTime);
+    // let time = new Date(startTime);
+    // const hours = ('0' + time.getHours()).slice(-2);
+    // const minutes = ('0' + time.getMinutes()).slice(-2);
+    // const month = months[time.getMonth()];
+    // const year = time.getFullYear();
+    // const day = days[time.getDay()];
+    // const date = time.getDate();
+    // startTime = `${day}, ${date} ${month} ${year} (${hours}:${minutes})`;
 
     return (
         <div className={`container-fluid ${cx('wrapper')}`}>
@@ -118,15 +103,15 @@ function DetailEvent({ children }) {
                 <div className="container">
                     <div className={cx('infor-event')}>
                         <div className={cx('calendar')}>
-                            <p className={cx('month')}>{month}</p>
-                            <p className={cx('date')}>{date}</p>
-                            <p className={cx('day')}>{day}</p>
+                            <p className={cx('month')}>{event.month}</p>
+                            <p className={cx('date')}>{event.date}</p>
+                            <p className={cx('day')}>{event.day}</p>
                         </div>
                         <div className={`col-sm-7 ${cx('content-event')}`}>
                             <p className={cx('title')}>{event.eventName}</p>
                             <p className={cx('time-location')}>
                                 <FontAwesomeIcon className={cx('icon')} icon={faClockFour} />
-                                {startTime}
+                                {event.startTime}
                             </p>
                             <p className={cx('time-location')}>
                                 <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />

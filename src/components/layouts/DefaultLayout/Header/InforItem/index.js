@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './InforItem.module.scss';
 import classNames from 'classnames/bind';
-function InforItem({ data, onClick }) {
+function InforItem({ data, onClick, className }) {
     const cx = classNames.bind(styles);
     let props = {
         onClick,
@@ -13,7 +13,12 @@ function InforItem({ data, onClick }) {
     } else Comp = 'div';
 
     return (
-        <Comp className={cx('wrapper')} {...props}>
+        <Comp
+            className={cx('wrapper', {
+                [className]: className,
+            })}
+            {...props}
+        >
             {data.icon}
             <span className={cx('title')}>{data.title}</span>
         </Comp>

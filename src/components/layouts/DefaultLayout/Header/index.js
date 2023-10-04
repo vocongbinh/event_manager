@@ -20,7 +20,7 @@ function Header() {
         {
             title: 'Hồ sơ ban tổ chức',
             icon: <FontAwesomeIcon icon={faUser} />,
-            path: '/organizer_profile',
+            path: '/my_event/my_organizer_profile',
         },
         {
             title: 'Chỉnh sửa hồ sơ',

@@ -4,6 +4,7 @@ import { eventRequest, request } from '../utils/request';
 export const allEvents = async () => {
     try {
         const res = await eventRequest.get('api/event');
+
         return res.data;
     } catch (error) {
         console.log(error);

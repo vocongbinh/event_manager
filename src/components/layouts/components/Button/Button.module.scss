@@ -4,9 +4,16 @@
     line-height: 24px;
     cursor: pointer;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    .preIcon {
+        margin-right: 8px;
+    }
+    .sufIcon {
+        margin-left: 8px;
+    }
 }
+
 //type
 .round {
     border-radius: 20px;
@@ -58,11 +65,4 @@
 
 .max {
     width: 100%;
-}
-
-.preIcon {
-    margin-right: 8px;
-}
-.sufIcon {
-    margin-left: 8px;
 }
