@@ -7,9 +7,33 @@ import InforItem from '../DefaultLayout/Header/InforItem';
 import Image from '../components/Image';
 import Button from '../components/Button';
 import { useState } from 'react';
+import Events from '../../../pages/myEvent/Events';
+import OrganizerProfile from '../../../pages/myEvent/OrganizerProfile';
 
-function MyEventLayout({ children, ...props }) {
+function MyEventLayout({ children }) {
     const cx = classNames.bind(styles);
+    const listOptions = [
+        {
+            title: 'Organizer Profile',
+            icon: <FontAwesomeIcon icon={faAddressCard} />,
+            path: '/my_event/organizer_profile',
+        },
+        {
+            title: 'Created Events',
+            icon: <FontAwesomeIcon icon={faCalendar} />,
+            path: '/my_event/events',
+        },
+        {
+            title: 'My account balance',
+            icon: <FontAwesomeIcon icon={faMoneyBill} />,
+            path: '/my_event/account_balance',
+        },
+        {
+            title: 'Bank account information',
+            icon: <FontAwesomeIcon icon={faPiggyBank} />,
+            path: '/my_event/bank_account',
+        },
+    ];
     return (
         <div className={cx('wrapper')}>
             <div className={cx('sidebar')}>
@@ -31,7 +55,7 @@ function MyEventLayout({ children, ...props }) {
                         </span>
                     </button>
                 </div>
-                {props.sidebarItems.map((item, index) => (
+                {listOptions.map((item, index) => (
                     <InforItem className={cx('infor-item')} data={item} />
                 ))}
             </div>

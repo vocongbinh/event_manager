@@ -1,0 +1,124 @@
+// .wrapper {
+//     background-color: var(--white);
+//     width: 100%;
+//     padding: 70px;
+//     height: 100%;
+//     position: relative;
+//     h2 {
+//         color: #414a57;
+//         font-size: 24px;
+//         width: 100%;
+//         width: fit-content;
+//     }
+//     h4 {
+//         width: fit-content;
+//         font-size: 15px;
+//         padding: 15px 0px;
+//         color: #27313d;
+//     }
+//     &::after {
+//         content: '';
+//         position: absolute;
+//         bottom: 0;
+//         height: 1px;
+//         width: 100%;
+//         background-color: #ccc;
+//     }
+// }
+// .content {
+// }
+.a-number {
+    color: #77c47f;
+    margin-left: 7.2rem;
+    font-size: 3.6rem;
+}
+.t-number {
+    margin-left: 18px;
+    color: #77c47f;
+}
+.wrapper {
+    width: 100%;
+    height: 100%;
+    // background-color: #e1e1e1;
+    padding: 60px 120px;
+
+    //position: relative;
+    h2 {
+        color: #414a57;
+        font-size: 24px;
+        width: 100%;
+        width: fit-content;
+    }
+    h4 {
+        width: fit-content;
+        font-size: 15px;
+        padding: 15px 0px;
+        color: #27313d;
+    }
+}
+.line {
+    height: 1px;
+    width: 90%;
+    background-color: #ccc;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+// .header {
+//     font-weight: bold;
+//     margin-bottom: 20px;
+//     font-size: 32px;
+// }
+// .block-infor {
+//     width: 100%;
+//     border: 1px solid #000000;
+//     border-radius: 5px;
+//     padding: 15px;
+//     margin-bottom: 30px;
+//     background-color: #ffffff;
+//     align-items: center;
+// }
+// .label {
+//     white-space: nowrap;
+//     padding-bottom: 5px;
+//     display: flex;
+//     font-size: 15px;
+//     padding-right: 16px;
+//     font-weight: 500 !important;
+//     &::after {
+//         content: ' *';
+//         color: red;
+//         font-weight: bold;
+//     }
+// }
+// .bound-input {
+//     border: 1px solid #000000;
+//     border-radius: 10px;
+//     padding: 5px 15px;
+//     background-color: #f5f7fd;
+//     width: 100%;
+//     height: 32px;
+//     font-size: 15px;
+// }
+
+// .table .row {
+//     padding: 15px 0;
+// }
+
+// .title {
+//     font-size: 24px;
+//     color: #414a57;
+//     margin-bottom: 10px;
+// }
+// .save-btn {
+//     display: block;
+//     width: 200px;
+//     text-align: center;
+//     font-size: 18px;
+//     font-weight: bold;
+//     margin-left: auto;
+//     padding: 7px;
+//     background-color: #58ca58;
+//     border: 0;
+//     border-radius: 10px;
+//     cursor: pointer;
+// }

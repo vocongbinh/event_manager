@@ -1,7 +1,8 @@
 .wrapper {
     display: flex;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
+    flex-direction: row;
 }
 //sidebar
 .avatar {
@@ -10,7 +11,14 @@
     border-radius: 50%;
 }
 .sidebar {
-    flex: 1;
+    width: 30%;
+    height: 100%;
+    position: fixed;
+    float: left;
+    // position: fixed;
+    // top: 0;
+    // left: 0;
+
     background-color: #303b46;
 }
 .header {
@@ -50,5 +58,6 @@
 //container
 .container {
     width: 70%;
-    padding: 40px 80px;
+    margin-left: 30%;
+    overflow: auto;
 }

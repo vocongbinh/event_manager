@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleInfo, faGear, faSailboat, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faGear, faRightFromBracket, faSailboat, faUser } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../components/Button';
 import Images from '../../../../assets/images';
 import Image from '../../components/Image';
@@ -13,18 +13,18 @@ function Header() {
     const cx = classNames.bind(styles);
     const userOptions = [
         {
-            title: 'Chỉnh sửa hồ sơ',
+            title: 'Edit Profile',
             icon: <FontAwesomeIcon icon={faGear} />,
             path: '/edit_profile',
         },
         {
-            title: 'Hồ sơ ban tổ chức',
+            title: 'My organization Profile',
             icon: <FontAwesomeIcon icon={faUser} />,
-            path: '/my_event/my_organizer_profile',
+            path: '/my_event/events',
         },
         {
-            title: 'Chỉnh sửa hồ sơ',
-            icon: <FontAwesomeIcon icon={faGear} />,
+            title: 'Exit',
+            icon: <FontAwesomeIcon icon={faRightFromBracket} />,
         },
     ];
     return (
@@ -41,7 +41,6 @@ function Header() {
                 <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
 
                 <Tippy
-                    visible
                     placement="bottom-end"
                     interactive
                     render={(attrs) => (

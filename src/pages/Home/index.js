@@ -27,7 +27,7 @@ function Home() {
                 console.log(binh);
                 setEvents(binh);
             } catch (err) {
-                console.log('loi');
+                console.log('error');
             }
         };
         getListEvents();

@@ -1,14 +1,14 @@
 import classNames from 'classnames/bind';
-import styles from './MyOrganizer.module.scss';
+import styles from './Events.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faCheck, faMagnifyingGlass, faPlus, faSortDown } from '@fortawesome/free-solid-svg-icons';
 
-import Button from '../../components/layouts/components/Button';
+import Button from '../../../components/layouts/components/Button';
 import { useEffect, useState } from 'react';
-import * as myService from '../../apiServices/myService';
+import * as myService from '../../../apiServices/myService';
 import MyEventItem from './MyEventItem';
-function MyOrganizer() {
+function Events() {
     const cx = classNames.bind(styles);
     const [countPage, setCountPage] = useState(1);
     const maxCountPage = 2;
@@ -116,4 +116,4 @@ function MyOrganizer() {
     );
 }
 
-export default MyOrganizer;
+export default Events;

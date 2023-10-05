@@ -28,7 +28,7 @@ const Button = forwardRef(({ type, size, href, className, preIcon, sufIcon, onCl
             {...props}
         >
             {preIcon && <div className={cx('preIcon')}>{preIcon}</div>}
-            <h4 className={cx('content')}>{children}</h4>
+            {children}
             {sufIcon && <div className={cx('sufIcon')}>{sufIcon}</div>}
         </Comp>
     );
