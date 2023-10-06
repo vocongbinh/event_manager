@@ -2,18 +2,69 @@ import classNames from 'classnames/bind';
 import styles from './SearchLayout.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import * as eventService from '../../../../apiServices/eventService';
+import Tippy from '@tippyjs/react/headless';
+import SearchItem from './SearchItem';
+import { useDebounce } from '../../../../hooks';
 function SearchLayout({ className }) {
     const cx = classNames.bind(styles);
+    const [results, setResults] = useState([]);
+    const [valueSearch, setValueSearch] = useState('');
+    const debounceValue = useDebounce(valueSearch, 500);
+    useEffect(() => {
+        console.log(debounceValue);
+        if (!debounceValue.trim()) {
+            setResults([]);
+            return;
+        }
+        const fetchApi = async () => {
+            const data = await eventService.searchEvent(debounceValue);
+            setResults(data);
+        };
+        fetchApi();
+    }, [debounceValue]);
     return (
-        <div
-            className={cx('search', {
-                [className]: className,
-            })}
+        <Tippy
+            visible
+            interactive
+            render={(attrs) => (
+                <div className={cx('tippy-wrapper')} tab {...attrs}>
+                    {results.length > 0 && (
+                        <div>
+                            {results.map((result) => (
+                                <SearchItem data={result} />
+                            ))}
+                            <a className={cx('see-all-btn')} href="/">
+                                See all results...
+                            </a>
+                        </div>
+                    )}
+                </div>
+            )}
         >
-            <FontAwesomeIcon icon={faSearch} className={cx('search-icon')} />
-            <input placeholder="Search" className={cx('search-field')} />
-            <FontAwesomeIcon icon={faClose} className={cx('close-icon')} />
-        </div>
+            <div
+                className={cx('search', {
+                    [className]: className,
+                })}
+            >
+                <FontAwesomeIcon icon={faSearch} className={cx('search-icon')} />
+                <input
+                    placeholder="Search"
+                    value={valueSearch}
+                    onChange={(e) => {
+                        if (!e.target.value.startsWith(' ')) {
+                            setValueSearch(e.target.value);
+                        }
+                    }}
+                    className={cx('search-field')}
+                />
+                {valueSearch.length > 0 && (
+                    <FontAwesomeIcon onClick={() => setValueSearch('')} icon={faClose} className={cx('close-icon')} />
+                )}
+            </div>
+        </Tippy>
     );
 }
 

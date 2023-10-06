@@ -30,3 +30,15 @@ export const detailEvent = async (id) => {
         console.log(error);
     }
 };
+export const searchEvent = async (value) => {
+    try {
+        const res = await request.get(`api/event/search`, {
+            params: {
+                q: value,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
