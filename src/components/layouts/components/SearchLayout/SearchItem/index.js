@@ -5,7 +5,7 @@ function SearchItem({ data }) {
     console.log(data);
     return (
         <div className={cx('wrapper')}>
-            <a>
+            <a target="_blank" href={`/events/${data._id}`}>
                 <p className={cx('name')}>{data.eventName}</p>
                 <p className={cx('time-location')}>
                     {data.stage}

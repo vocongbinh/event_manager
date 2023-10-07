@@ -23,7 +23,7 @@ function Home() {
     useEffect(() => {
         const getListEvents = async () => {
             try {
-                const binh = await eventServices.headerEvents();
+                const binh = await eventServices.allEvents();
                 console.log(binh);
                 setEvents(binh);
             } catch (err) {

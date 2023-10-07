@@ -10,7 +10,7 @@ function TicketItem({ data }) {
                 </div>
                 <div className="col-sm-5">
                     <div className={cx('cost')}>
-                        <div className={cx('value')}>{data.price}</div>
+                        <div className={cx('value')}>{data.price} VND</div>
                         {data.status && <p className={cx('status')}>{data.status}</p>}
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import { eventRequest, request } from '../utils/request';
 
 export const allEvents = async () => {
     try {
-        const res = await eventRequest.get('api/event');
+        const res = await request.get('api/event');
 
         return res.data;
     } catch (error) {
@@ -25,6 +25,7 @@ export const headerEvents = async () => {
 export const detailEvent = async (id) => {
     try {
         const res = await request.get(`api/event/${id}`);
+        console.log('binh' + res.data);
         return res.data;
     } catch (error) {
         console.log(error);
