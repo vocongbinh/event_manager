@@ -1,0 +1,59 @@
+.wrapper {
+    background-color: rgb(45, 194, 117);
+    height: 124px;
+    display: flex;
+    justify-content: center;
+}
+.container {
+    margin-top: 24px;
+    min-width: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+.language-container {
+    display: flex;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+.language {
+    font-size: 14px;
+    color: white;
+}
+.divider {
+    display: block;
+    font-size: 12px;
+    color: white;
+    padding: 0px 5px;
+}
+.active {
+    font-weight: bold;
+}
+
+.close-icon {
+    font-size: 22px;
+    color: white;
+}
+.header-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.title-container {
+    width: auto;
+    // width: auto;
+}
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+}
+.logo {
+}

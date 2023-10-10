@@ -9,5 +9,6 @@ const Images = {
     attraction: require('./attraction_icon.png'),
     headingLeft: require('./heading-img-1-left.svg'),
     headingRight: require('./heading-img-1-right.svg'),
+    neLogo: require('./ne_logo.svg').default,
 };
 export default Images;
