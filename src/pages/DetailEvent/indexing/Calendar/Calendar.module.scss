@@ -1,0 +1,27 @@
+.wrapper {
+    h1 {
+        color: #333;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-size: 16px;
+        padding: 20px;
+        border-bottom: solid 1px #ccc;
+    }
+}
+.item {
+    padding: 15px;
+    font-size: 16px;
+    color: #333;
+    .date {
+        font-weight: 700;
+    }
+    .time {
+    }
+}
+.book-btn {
+    font-size: 12px;
+    padding: 8px !important;
+    color: var(--white) !important;
+}

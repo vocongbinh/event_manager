@@ -1,0 +1,98 @@
+//ticket info
+.ticket-info {
+    width: 100%;
+    background-color: #f1f1f1;
+}
+.type-header {
+    border-bottom: 2px solid #ccc;
+    padding: 15px;
+    h5 {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 16px;
+        line-height: 30px;
+        color: #666;
+    }
+}
+.ticket-wrapper {
+    padding-top: 40px;
+}
+.type-item {
+    border-bottom: 1px dashed #bbb;
+    padding: 20px 0px;
+    h5 {
+        color: #666;
+        font-size: 15px;
+        font-weight: 400;
+        vertical-align: middle;
+        padding: 10px 0px;
+    }
+    &:last-child {
+        border: none;
+    }
+}
+
+.quantity-layout {
+    height: 100%;
+    float: right;
+}
+//booking-info
+.booking-info {
+    width: 100%;
+    background-color: var(--white);
+    .book-item {
+        border-bottom: 1px dashed #bbb;
+        padding: 6px 0px;
+        &:last-child {
+            border: none !important;
+        }
+        h5 {
+            color: #666;
+            font-size: 14px;
+            font-weight: 400;
+            vertical-align: middle;
+        }
+        p {
+            color: #666;
+            font-size: 12px;
+            font-weight: 400;
+            vertical-align: middle;
+        }
+    }
+}
+.booking-header {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    line-height: 30px;
+    padding-bottom: 15px;
+    color: #333;
+    border-bottom: 2px solid #ccc;
+}
+.booking-content {
+    padding: 15px;
+}
+.header-row {
+    padding: 12px 0px;
+    border-bottom: 1px dashed #bbb;
+    h5 {
+        font-size: 15px !important;
+        font-weight: 700;
+        color: #666;
+        padding: 0px;
+    }
+}
+
+.total {
+    width: 100%;
+    background-color: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 15px;
+    h5 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--white);
+    }
+}

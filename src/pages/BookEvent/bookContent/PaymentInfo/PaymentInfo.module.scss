@@ -1,0 +1,36 @@
+.wrapper {
+    width: 100%;
+}
+.ticket-receiver {
+}
+.header {
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 8px 0px;
+}
+.table {
+    border: 1px solid red;
+    background-color: var(--white);
+    .input {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid red;
+
+        label {
+            font-size: 14px;
+            color: #999;
+            &::after {
+                content: '*';
+                color: var(--red);
+            }
+        }
+        input {
+            border: none;
+            outline: none;
+            font-size: 14px;
+            color: #555;
+        }
+    }
+}

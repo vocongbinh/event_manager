@@ -8,18 +8,21 @@ import Button from '../../components/layouts/components/Button';
 import About from './indexing/About';
 import TicketInformation from './indexing/TicketInformation';
 import Organizer from './indexing/Organizer';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import $ from 'jquery';
 import * as eventService from '../../../src/apiServices/eventService';
 import * as ticketService from '../../../src/apiServices/ticketService';
+import * as showtimeService from '../../../src/apiServices/showtimeService';
 import Recommended from './indexing/Recommended';
 import { useParams } from 'react-router-dom';
+import Calendar from './indexing/Calendar';
 
 function DetailEvent({ children }) {
     const cx = classNames.bind(styles);
     const [activeIndex, setActiveIndex] = useState(0);
     const aboutRef = useRef(null);
     const informationRef = useRef(null);
+    const calendarRef = useRef(null);
     const organizerRef = useRef(null);
     const recommendRef = useRef(null);
     const scrollHandler = (ref, index) => {
@@ -28,21 +31,64 @@ function DetailEvent({ children }) {
     const params = useParams();
     const [event, setEvent] = useState({});
     const [ticketTypes, setTicketTypes] = useState([]);
+    const [showtimes, setShowtimes] = useState([]);
+    let listOption = [
+        {
+            title: 'About',
+            ref: aboutRef,
+            handleClick: (index) => {
+                scrollHandler(aboutRef, index);
+            },
+        },
+        {
+            title: 'Ticket Information',
+            ref: informationRef,
+            handleClick: (index) => {
+                scrollHandler(informationRef, index);
+            },
+        },
+        {
+            title: 'Event calendar',
+            ref: calendarRef,
+            handleClick: (index) => {
+                scrollHandler(calendarRef, index);
+            },
+        },
+        {
+            title: 'Organizer',
+            ref: organizerRef,
+            handleClick: (index) => {
+                scrollHandler(organizerRef, index);
+            },
+        },
+        {
+            title: 'Recommend for you',
+            ref: recommendRef,
+            handleClick: (index) => {
+                scrollHandler(recommendRef, index);
+            },
+        },
+    ];
     useEffect(() => {
-        window.addEventListener('scroll', () => {
+        const scrollEvent = window.addEventListener('scroll', () => {
             const offsetTop = window.scrollY + 60;
-            if (offsetTop <= aboutRef.current.offsetTop + aboutRef.current.clientHeight) {
-                setActiveIndex(0);
-            } else if (offsetTop < informationRef.current.offsetTop + informationRef.current.clientHeight) {
-                setActiveIndex(1);
-            } else if (offsetTop < organizerRef.current.offsetTop + organizerRef.current.clientHeight) {
-                setActiveIndex(2);
-            } else setActiveIndex(3);
+
+            for (let i = 0; i < listOption.length; i++) {
+                if (offsetTop <= listOption[i].ref.current.offsetTop + listOption[i].ref.current.clientHeight) {
+                    setActiveIndex(i);
+
+                    break;
+                }
+            }
         });
+
         const fetchAPi = async () => {
             try {
-                let event = await eventService.detailEvent(params.id);
+                const event = await eventService.detailEvent(params.id);
                 setEvent(event);
+                const showtimes = await showtimeService.getShowtimeOfEvent(params.id);
+                setShowtimes(showtimes);
+                console.log(showtimes);
                 const ticketTypes = await ticketService.getTicketOfEvent(params.id);
                 setTicketTypes(ticketTypes);
             } catch (error) {
@@ -50,34 +96,15 @@ function DetailEvent({ children }) {
             }
         };
         fetchAPi();
+        return () => {
+            window.removeEventListener('scroll', scrollEvent);
+        };
     }, []);
-
-    const listOption = [
-        {
-            title: 'About',
-            handleClick: (index) => {
-                scrollHandler(aboutRef, index);
-            },
-        },
-        {
-            title: 'Ticket Information',
-            handleClick: (index) => {
-                scrollHandler(informationRef, index);
-            },
-        },
-        {
-            title: 'Organizer',
-            handleClick: (index) => {
-                scrollHandler(organizerRef, index);
-            },
-        },
-        {
-            title: 'Recommend for you',
-            handleClick: (index) => {
-                scrollHandler(recommendRef, index);
-            },
-        },
-    ];
+    if (showtimes.length === 1) {
+        listOption.splice(2, 1);
+    }
+    const listPrices = ticketTypes.map((item) => item.price);
+    const minPrice = Math.min(...listPrices);
 
     //date time
     // let startTime = Date.parse(event.startTime);
@@ -94,10 +121,7 @@ function DetailEvent({ children }) {
         <div className={`container-fluid ${cx('wrapper')}`}>
             <Header />
             <div className={cx('container')}>
-                <img
-                    className={cx('background-event')}
-                    src="https://lh3.googleusercontent.com/yt5FGbyvBSoAYuOAh7zW-R91NtRXs4HTR1uggdhNuWb3WdkfAEUGKbCGERsCGdgww_l2JdVbYcOtVnfZawyW2vV3IjxDx8s29M7hHvxJthCRFA=s2400-rj"
-                />
+                <img className={cx('background-event')} src={event.coverImage} />
 
                 <div className="container">
                     <div className={cx('infor-event')}>
@@ -119,8 +143,8 @@ function DetailEvent({ children }) {
                             <p className={cx('address')}>{event.address}</p>
                         </div>
                         <div className={cx('interact')}>
-                            <Button type="highlight" size="max">
-                                Book now
+                            <Button onClick={() => scrollHandler(calendarRef, 2)} type="highlight" size="max">
+                                {showtimes.length > 1 ? 'Select showtime' : 'Book'}
                             </Button>
                         </div>
                     </div>
@@ -128,18 +152,35 @@ function DetailEvent({ children }) {
                 <div className={cx('nav-bar')}>
                     <div className="container">
                         <div className={`mx-auto ${cx('tab-layout')}`}>
-                            {listOption.map((option, index) => (
-                                <span
-                                    className={cx('option', {
-                                        active: index === activeIndex,
-                                    })}
-                                    onClick={(e) => {
-                                        option.handleClick(index);
-                                    }}
-                                >
-                                    {option.title}
-                                </span>
-                            ))}
+                            {listOption.map((option, index) => {
+                                if (option.ref === calendarRef) {
+                                    if (showtimes.length > 1)
+                                        return (
+                                            <span
+                                                className={cx('option', {
+                                                    active: index === activeIndex,
+                                                })}
+                                                onClick={(e) => {
+                                                    option.handleClick(index);
+                                                }}
+                                            >
+                                                {option.title}
+                                            </span>
+                                        );
+                                } else
+                                    return (
+                                        <span
+                                            className={cx('option', {
+                                                active: index === activeIndex,
+                                            })}
+                                            onClick={(e) => {
+                                                option.handleClick(index);
+                                            }}
+                                        >
+                                            {option.title}
+                                        </span>
+                                    );
+                            })}
                         </div>
                     </div>
                 </div>
@@ -155,6 +196,11 @@ function DetailEvent({ children }) {
                                     <div className={cx('detail-item')}>
                                         <TicketInformation ref={informationRef} data={ticketTypes} />
                                     </div>
+                                    {showtimes.length > 1 && (
+                                        <div className={cx('detail-item')}>
+                                            <Calendar ref={calendarRef} data={showtimes} />
+                                        </div>
+                                    )}
 
                                     <div className={cx('detail-item')}>
                                         <Organizer ref={organizerRef} data={event.organizer} />
@@ -185,15 +231,20 @@ function DetailEvent({ children }) {
                                         className={cx('sub-ticket', 'sub-time-location')}
                                     >
                                         <FontAwesomeIcon className={cx('icon')} icon={faTicket} />
-                                        From <span style={{ fontWeight: 700 }}>1.400.000 VND</span>
+                                        From <span style={{ fontWeight: 700 }}>{minPrice} VND</span>
                                         <FontAwesomeIcon
                                             className={cx('icon')}
                                             style={{ float: 'right', marginTop: '2px' }}
                                             icon={faChevronRight}
                                         />
                                     </p>
-                                    <Button className={cx('sub-book-btn')} type="highlight" size="max">
-                                        Book now
+                                    <Button
+                                        onClick={() => scrollHandler(calendarRef, 2)}
+                                        className={cx('sub-book-btn')}
+                                        type="highlight"
+                                        size="max"
+                                    >
+                                        {showtimes.length > 1 ? 'Select showtime' : 'Book'}
                                     </Button>
                                 </div>
                             </div>

@@ -1,13 +1,13 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faCircleInfo, faLocation, faSailboat } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faCircleInfo, faLocation } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 import Button from '../../../components/layouts/components/Button';
 import Images from '../../../assets/images';
 import Image from '../../../components/layouts/components/Image';
 import SearchLayout from '../../../components/layouts/components/SearchLayout';
-
+import DropdownButton from '../../../components/layouts/components/DropdownButton';
 function Header() {
     const cx = classNames.bind(styles);
     const categories = [
@@ -24,6 +24,7 @@ function Header() {
         'Community',
         'Attractions',
     ];
+    const listLocation = ['Ho Chi Minh', 'Ha Noi', 'Other locations'];
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
@@ -32,6 +33,7 @@ function Header() {
                     className={cx('logo')}
                 />
                 <SearchLayout className={cx('search-layout')} />
+
                 <div className={`dropdown ${cx('location-wrapper')}`}>
                     <Button
                         id="dropdownMenuButton1"

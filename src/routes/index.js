@@ -8,6 +8,7 @@ import Events from '../pages/myEvent/Events';
 import OrganizerProfile from '../pages/myEvent/OrganizerProfile';
 import AccountBalance from '../pages/myEvent/Events/AccountBalance';
 import BankAccount from '../pages/myEvent/Events/BankAccount';
+import BookEvent from '../pages/BookEvent';
 
 //private router
 const privateRouter = [{}];
@@ -17,6 +18,14 @@ const publicRouter = [
         path: '/',
         layout: DefaultLayout,
         component: Home,
+    },
+    {
+        path: '/events/:id/book',
+        component: BookEvent,
+    },
+    {
+        path: '/events/:id/book/:showtime_id',
+        component: BookEvent,
     },
     {
         path: '/events/:id',
