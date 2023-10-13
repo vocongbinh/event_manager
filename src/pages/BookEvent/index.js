@@ -9,13 +9,16 @@ import {
     faCalendar,
     faCaretDown,
     faCircleCheck,
+    faEnvelope,
     faMinus,
+    faPhone,
     faPlus,
     faRightFromBracket,
     faTicket,
+    faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import Images from '../../assets/images';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { createContext, useEffect, useState } from 'react';
 import { request } from '../../utils/request';
 import * as ticketService from '../../apiServices/ticketService';
@@ -23,27 +26,53 @@ import TicketTypeItem from './TicketTypeItem';
 import SelectTicket from './bookContent/SelectTicket';
 import PaymentInfo from './bookContent/PaymentInfo';
 export const BookContext = createContext();
-function BookEvent() {
+function BookEvent({ children, ...props }) {
     const cx = classNames.bind(styles);
     const params = useParams();
+    const location = useLocation();
     const [tickets, setTickets] = useState([]);
     const [bookings, setBookings] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
 
+    // state of payment infor
+    const [firstName, setFirstName] = useState('');
+    const [latstName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [reEmail, setReEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const navigate = useNavigate();
+
     const nf = new Intl.NumberFormat();
     let total = 0;
+    let propsProvider = {};
+    switch (props.index) {
+        case 0:
+            propsProvider = {
+                bookings,
+                setBookings,
+            };
+            break;
 
+        case 1:
+            propsProvider = {
+                firstName,
+                latstName,
+                email,
+                reEmail,
+                phoneNumber,
+                setFirstName,
+                setLastName,
+                setEmail,
+                setReEmail,
+                setPhoneNumber,
+            };
+            break;
+        default:
+            break;
+    }
     useEffect(() => {
-        const fetchAPI = async () => {
-            try {
-                const data = await ticketService.getTicketOfShowtime(params.showtime_id);
-                setTickets(data);
-            } catch (error) {
-                throw new Error(error.message);
-            }
-        };
-        fetchAPI();
-    }, []);
+        setActiveStep(props.index);
+    }, [props.index]);
     const listItems = [
         {
             title: 'My Tickets',
@@ -66,9 +95,27 @@ function BookEvent() {
             href: '/',
         },
     ];
-    const listSteps = ['Select Ticket', 'Payment info', 'finish'];
+    const listSteps = [
+        {
+            title: 'Select Ticket',
+            component: <SelectTicket />,
+        },
+        {
+            title: 'Payment info',
+            component: <PaymentInfo />,
+            to: './step2',
+        },
+        {
+            title: 'finish',
+            component: <SelectTicket />,
+            to: './step3',
+        },
+    ];
+    const listLayout = [<SelectTicket />, <PaymentInfo />];
     const nextHandler = () => {
         if (activeStep < listSteps.length - 1) {
+            const value = activeStep + 1;
+            navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
             setActiveStep((prev) => prev + 1);
         }
     };
@@ -119,7 +166,7 @@ function BookEvent() {
                                                             active: activeStep >= index,
                                                         })}
                                                     >
-                                                        {step}
+                                                        {step.title}
                                                     </h5>
                                                 </div>
                                             </td>
@@ -147,7 +194,7 @@ function BookEvent() {
                                                         active: activeStep >= index,
                                                     })}
                                                 >
-                                                    {step}
+                                                    {step.title}
                                                 </h5>
                                             </div>
                                         </td>
@@ -161,12 +208,70 @@ function BookEvent() {
                         <div className="container">
                             <div className="row">
                                 <div className="col-8">
-                                    <BookContext.Provider value={{ bookings, setBookings }}>
-                                        <PaymentInfo />
-                                    </BookContext.Provider>
+                                    <BookContext.Provider value={propsProvider}>{children}</BookContext.Provider>
                                 </div>
                                 <div className="col-4">
                                     <div className={cx('booking-info')}>
+                                        {props.index === 1 && (
+                                            <>
+                                                <div className={cx('ticket-receiver')}>
+                                                    <p className={cx('booking-header')}>Ticket Receiver</p>
+                                                    <div className="container">
+                                                        <div className={`row  ${cx('row-infor')}`}>
+                                                            <div className="col-4">
+                                                                <div className="row">
+                                                                    <div className={cx('infor-layout')}>
+                                                                        <FontAwesomeIcon icon={faUser} />
+                                                                        <h5>Full Name</h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-8 text-end">
+                                                                <p>
+                                                                    {firstName} {latstName}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className={`row  ${cx('row-infor')}`}>
+                                                            <div className="col-4">
+                                                                <div className="row">
+                                                                    <div className={cx('infor-layout')}>
+                                                                        <FontAwesomeIcon icon={faEnvelope} />
+                                                                        <h5>Email</h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-8 text-end">
+                                                                <p>{email}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className={`row  ${cx('row-infor')}`}>
+                                                            <div className="col-5">
+                                                                <div className="row">
+                                                                    <div className={cx('infor-layout')}>
+                                                                        <FontAwesomeIcon icon={faPhone} />
+                                                                        <h5>Phone number</h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-7 text-end">
+                                                                <p>{phoneNumber}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className={cx('payment-method')}>
+                                                    <p className={cx('booking-header')}> Payment Method</p>
+                                                    <div className="container">
+                                                        <div className={`row ${cx('header-row')}`}>
+                                                            <div className="col-12 p-0 ">
+                                                                <h5>Zalopay</h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        )}
                                         <div className={cx('booking-content')}>
                                             <p className={cx('booking-header')}>Booking information</p>
                                             <div className="container">
@@ -208,7 +313,7 @@ function BookEvent() {
                                     </div>
                                     <div className="col-12">
                                         <Button onClick={nextHandler} className={cx('next-btn')} size="max">
-                                            Next
+                                            {props.index === 0 ? 'Next' : 'Submit'}
                                         </Button>
                                     </div>
                                 </div>

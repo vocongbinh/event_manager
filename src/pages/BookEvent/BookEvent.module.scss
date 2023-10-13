@@ -11,7 +11,7 @@
     background-image: linear-gradient(to right, #382626, #806351);
 }
 .nav {
-    padding: 10px 0;
+    padding: 10px;
     border: 0;
     border-color: transparent;
     background: rgba(0, 0, 0, 0.6);
@@ -119,6 +119,7 @@
 //booking-info
 .booking-info {
     width: 100%;
+    padding: 15px;
     background-color: var(--white);
     .book-item {
         border-bottom: 1px dashed #bbb;
@@ -145,13 +146,11 @@
     text-transform: uppercase;
     font-size: 16px;
     line-height: 30px;
-    padding-bottom: 15px;
+    padding: 8px 0px;
     color: #333;
     border-bottom: 2px solid #ccc;
 }
-.booking-content {
-    padding: 15px;
-}
+
 .header-row {
     padding: 12px 0px;
     border-bottom: 1px dashed #bbb;
@@ -206,4 +205,25 @@
 }
 .checked {
     display: block !important;
+}
+.infor-layout {
+    display: flex;
+    align-items: center;
+
+    h5 {
+        font-size: 15px !important;
+        font-weight: 700;
+        padding-left: 10px;
+    }
+}
+.row-infor {
+    color: #666;
+    padding: 12px 0px;
+    border-bottom: 1px dashed #bbb;
+    &:last-child {
+        border: none;
+    }
+    p {
+        font-size: 14px;
+    }
 }

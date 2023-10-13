@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faCircleInfo, faLocation } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faCircleInfo, faLocation, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 import Button from '../../../components/layouts/components/Button';
 import Images from '../../../assets/images';
@@ -64,12 +64,14 @@ function Header() {
                     </ul>
                 </div>
                 <div className={cx('action')}>
-                    <Button type="round" size="min">
-                        binh ne
-                    </Button>
+                    <DropdownButton />
                     <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
-                    <Button type="primary" size="min" preIcon={<Image src={Images.avatar} className={cx('avatar')} />}>
-                        bình nè
+                    <Button
+                        className={cx('create-btn')}
+                        size="min"
+                        preIcon={<FontAwesomeIcon icon={faPlus} className={cx('add-icon')} />}
+                    >
+                        Create event
                     </Button>
                 </div>
             </div>

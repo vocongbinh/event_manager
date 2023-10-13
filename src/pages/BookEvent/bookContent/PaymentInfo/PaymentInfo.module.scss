@@ -12,25 +12,95 @@
 }
 .table {
     border: 1px solid red;
+}
+.table-info {
+    border: 1px solid #ccc;
     background-color: var(--white);
-    .input {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid red;
-
-        label {
-            font-size: 14px;
-            color: #999;
-            &::after {
-                content: '*';
-                color: var(--red);
-            }
-        }
-        input {
-            border: none;
-            outline: none;
-            font-size: 14px;
-            color: #555;
+    tr,
+    td {
+        border: 1px solid #ccc;
+    }
+}
+.input {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    label {
+        font-size: 16px;
+        color: #999;
+        &::after {
+            content: '*';
+            color: var(--red);
+            font-weight: 700;
+            margin-left: 5px;
         }
     }
+    input {
+        border: none;
+        outline: none;
+        font-size: 14px;
+        color: #555;
+    }
+}
+.header-method {
+    padding: 0;
+    border-bottom: 3px solid #ccc;
+}
+.method {
+    width: 100%;
+    display: flex;
+    padding: 12px 0px;
+    align-items: center;
+
+    table {
+        flex: 1;
+        tr {
+            border: 1px solid #ccc;
+
+            td {
+                border: 1px solid #ccc;
+
+                &:first-child {
+                    text-align: center;
+                }
+                &:last-child {
+                    padding: 8px;
+                }
+            }
+        }
+        p {
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+        }
+    }
+}
+.zalo-logo {
+    width: 64px;
+}
+input[type='radio'] {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    outline: none;
+    border: 3px solid gray;
+    margin-right: 10px;
+}
+
+input[type='radio']:before {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 60%;
+    margin: 20% auto;
+    border-radius: 50%;
+}
+
+input[type='radio']:checked:before {
+    background: var(--sub-color);
+}
+
+input[type='radio']:checked {
+    border-color: var(--sub-color);
 }

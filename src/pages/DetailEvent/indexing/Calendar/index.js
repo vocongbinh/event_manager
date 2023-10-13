@@ -52,7 +52,12 @@ const Calendar = forwardRef(({ data }, ref) => {
                             <p className={cx('time')}>{`${timeStart}-${timeEnd}`}</p>
                         </div>
                         <div className="col-sm-3 col-12">
-                            <Button href={`book/${item._id}`} type="highlight" size="max" className={cx('book-btn')}>
+                            <Button
+                                href={`book/${item._id}/step1`}
+                                type="highlight"
+                                size="max"
+                                className={cx('book-btn')}
+                            >
                                 Book now
                             </Button>
                         </div>

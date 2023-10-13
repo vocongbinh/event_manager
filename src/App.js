@@ -19,6 +19,11 @@ function App() {
                         if (route.sidebarItems) {
                             props.sidebarItems = route.sidebarItems;
                         }
+
+                        if (route.hasOwnProperty('index')) {
+                            props.index = route.index;
+                        }
+
                         return (
                             <Route
                                 path={route.path}

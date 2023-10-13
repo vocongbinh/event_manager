@@ -4,11 +4,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useState } from 'react';
 import { BookContext } from '..';
-function TicketTypeItem({ item, listBooks, handleBook }) {
+function TicketTypeItem({ item }) {
     const cx = classNames.bind(styles);
-    const [count, setCount] = useState(0);
+    let initValue = 0;
     const bookContext = useContext(BookContext);
+    if (bookContext.bookings) {
+        bookContext.bookings.forEach((element) => {
+            if (element.name === item.ticketName) {
+                initValue = element.count;
+            }
+        });
+    }
 
+    const [count, setCount] = useState(initValue);
     const hanldeIncrease = () => {
         let books;
         if (count < item.quantity) {
