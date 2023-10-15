@@ -6,12 +6,12 @@ import Home from '../pages/Home';
 import { faAddressCard, faCalendar, faMoneyBill, faPiggyBank } from '@fortawesome/free-solid-svg-icons';
 import Events from '../pages/myEvent/Events';
 import OrganizerProfile from '../pages/myEvent/OrganizerProfile';
-import AccountBalance from '../pages/myEvent/Events/AccountBalance';
-import BankAccount from '../pages/myEvent/Events/BankAccount';
+import BankAccount from '../pages/myEvent/BankAccount';
 import BookEvent from '../pages/BookEvent';
-import BookLayout from '../components/layouts/components/BookLayout';
 import SelectTicket from '../pages/BookEvent/bookContent/SelectTicket';
 import PaymentInfo from '../pages/BookEvent/bookContent/PaymentInfo';
+import ManageEventLayout from '../components/layouts/ManageEventLayout';
+import Summary from '../pages/myEvent/Events/OptionManager/Summary';
 
 //private router
 const privateRouter = [{}];
@@ -63,9 +63,10 @@ const publicRouter = [
         layout: MyEventLayout,
     },
     {
-        path: '/my_event/account_balance',
-        component: AccountBalance,
-        layout: MyEventLayout,
+        path: '/my_event/events/:id/summary',
+        component: Summary,
+        layout: ManageEventLayout,
     },
+    // manager even
 ];
 export { privateRouter, publicRouter };

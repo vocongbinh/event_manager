@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '../../../../components/layouts/components/Button';
+import Button from '../../../components/layouts/components/Button';
 import styles from './BankAccount.module.scss';
 import classNames from 'classnames/bind';
 import { faPiggyBank } from '@fortawesome/free-solid-svg-icons';

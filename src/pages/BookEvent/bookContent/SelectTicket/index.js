@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '../../../../components/layouts/components/Button';
+
 import DropdownButton from '../../../../components/layouts/components/DropdownButton';
 import Image from '../../../../components/layouts/components/Image';
 import styles from './SelectTicket.module.scss';

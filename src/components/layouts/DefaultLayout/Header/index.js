@@ -20,7 +20,7 @@ function Header() {
         {
             title: 'My organization Profile',
             icon: <FontAwesomeIcon icon={faUser} />,
-            path: '/my_event/events',
+            path: '/my_event/events/',
         },
         {
             title: 'Exit',

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Images from '../../../../assets/images';
 import styles from './PaymentInfo.module.scss';
 import classNames from 'classnames/bind';
