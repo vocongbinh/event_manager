@@ -28,11 +28,6 @@ const NewEventLayout = () => {
             component: <NewEventForm />,
         },
         {
-            title: 'Loại vé',
-            header: 'Thêm loại vé cho sự kiện',
-            icon: <FontAwesomeIcon icon={faMoneyBill} />,
-        },
-        {
             title: 'Thời gian',
             header: 'Chọn thời gian cho sự kiện',
             icon: <FontAwesomeIcon icon={faMoneyBill} />,
@@ -80,7 +75,7 @@ const NewEventLayout = () => {
                     <NewEventForm />
                 </div>
 
-                <div hidden={step != 2 && step != 3} className={cx('container1')}>
+                <div hidden={step != 2} className={cx('container1')}>
                     <ShowTimes step={step} />
                 </div>
             </div>

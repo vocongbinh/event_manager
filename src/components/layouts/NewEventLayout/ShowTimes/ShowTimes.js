@@ -31,25 +31,17 @@ const ShowTimes = ({ step }) => {
                     }),
 
                 showTimeEndDate: yup.date().min(new Date()).required('Vui lòng nhập chọn ngày kết thúc'),
-                ticketSales: yup.array().of(
-                    yup.object().shape({
-                        ticketTypeId: yup.string().required(),
-                        ticketStartDate: yup
-                            .date()
-                            .min(new Date())
-                            .required('Vui lòng nhập chọn ngày bắt đầu')
-                            .test('min-max-validation', 'Ngày kết thúc phải trễ hơn ngày bắt đầu', function (value) {
-                                const showTimeEndTime = this.parent.ticketEndDate;
-                                return value < showTimeEndTime;
-                            }),
-                        ticketEndDate: yup.date().min(new Date()).required('Vui lòng nhập chọn ngày kết thúc'),
-                    }),
-                ),
+                // ticketSales: yup.array().of(
+                //     yup.object().shape({
+                //         ticketTypeId: yup.string().required(),
+                //     }),
+                // ),
             }),
         ),
         ticketTypes: yup.array().of(
             yup.object().shape({
                 id: yup.string().required(),
+                showTimeId: yup.string().required(),
                 ticketTypeName: yup.string().required('Vui lòng nhập tên loại vé'),
                 ticketTypePrice: yup.number().min(0, 'Giá vé không hợp lệ').required('Vui lòng nhập giá vé'),
                 ticketImage: yup.string().required('Vui lòng chọn ảnh vé'),
@@ -76,6 +68,15 @@ const ShowTimes = ({ step }) => {
                     }),
 
                 ticketInfomation: yup.string().nullable(),
+                ticketStartDate: yup
+                    .date()
+                    .min(new Date())
+                    .required('Vui lòng nhập chọn ngày bắt đầu')
+                    .test('min-max-validation', 'Ngày kết thúc phải trễ hơn ngày bắt đầu', function (value) {
+                        const showTimeEndTime = this.parent.ticketEndDate;
+                        return value < showTimeEndTime;
+                    }),
+                ticketEndDate: yup.date().min(new Date()).required('Vui lòng nhập chọn ngày kết thúc'),
             }),
         ),
     });
@@ -119,7 +120,7 @@ const ShowTimes = ({ step }) => {
                 }}
             >
                 <Form>
-                    {step == 2 && (
+                    {/* {step == 2 && (
                         <FieldArray name="ticketTypes">
                             {({ move, swap, push, insert, unshift, pop, form }) => {
                                 return (
@@ -153,14 +154,12 @@ const ShowTimes = ({ step }) => {
                                         >
                                             Thêm loại vé
                                         </button>
-                                        {/* <button onClick={() => console.log(form.values)}>log</button> */}
-                                        {/* <button type="submit">Submit</button> */}
                                     </div>
                                 );
                             }}
                         </FieldArray>
-                    )}{' '}
-                    {step == 3 && (
+                    )}{' '} */}
+                    {step == 2 && (
                         <FieldArray name="showtimes">
                             {({ move, swap, push, insert, unshift, pop, form }) => {
                                 return (
@@ -177,7 +176,6 @@ const ShowTimes = ({ step }) => {
                                                     id: uuidv4(),
                                                     showTimeStartDate: null,
                                                     showTimeEndDate: null,
-                                                    ticketSales: [],
                                                 })
                                             }
                                         >

@@ -151,11 +151,11 @@
 //     gap: 5px;
 // }
 .input-container {
-    // height: 100%;
-    // display: flex;
-    // flex-direction: column;
-    // align-items: flex-start;
-    // justify-content: space-between;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 .input-header {
     flex: 1;
@@ -270,12 +270,11 @@
 .ticket-errors {
     background: rgb(255, 216, 216);
     border-radius: 10px;
-    width: 80%;
-    margin: 20px;
-    margin-bottom: 10px;
-    margin-left: 10px;
+    width: auto;
+    margin: auto;
     height: auto;
-    padding: 20px;
+    padding: 15px;
+    margin-bottom: 10px;
 }
 .ticket-label {
     font-size: 13px;

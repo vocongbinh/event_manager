@@ -120,6 +120,66 @@ const Ticket = ({ form, index, pop, creator }) => {
                             ) : null}
                         </div>
                         <div className={cx('row col-12')}>
+                            <div className="col-md-3">
+                                <div className={cx('input-container')}>
+                                    <div className={cx('input-header')}>
+                                        <div className={cx('input-label')}>Giá vé</div>
+                                        <div className={cx('free-container')}>
+                                            <input
+                                                value={isFree}
+                                                onChange={() => setIsFree(!isFree)}
+                                                type="checkbox"
+                                            ></input>
+                                            <div className={cx('free-label')}>Miễn phí</div>
+                                        </div>
+                                    </div>
+                                    <InputItem
+                                        name={`ticketTypes.${index}.ticketTypePrice`}
+                                        type="number"
+                                        placeholder="Giá vé"
+                                        readOnly={isFree}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className={cx('input-container')}>
+                                    <div className={cx('input-header')}>
+                                        <div className={cx('input-label')}>Tổng lượng vé</div>
+                                    </div>
+                                    <InputItem
+                                        name={`ticketTypes.${index}.totalTicket`}
+                                        type="number"
+                                        placeholder="Tổng lượng vé"
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className={cx('input-container')}>
+                                    <div className={cx('input-header')}>
+                                        <div className={cx('input-label')}>Số vé tối thiểu trên đơn hàng</div>
+                                    </div>
+                                    <InputItem
+                                        name={`ticketTypes.${index}.minPerOrder`}
+                                        type="number"
+                                        placeholder="Vé tối thiểu"
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className={cx('input-container')}>
+                                    <div className={cx('input-header')}>
+                                        <div className={cx('input-label')}>Số vé tối đa trên đơn hàng</div>
+                                    </div>
+                                    <InputItem
+                                        name={`ticketTypes.${index}.maxPerOrder`}
+                                        type="number"
+                                        placeholder="Vé tối đa"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* <div className={cx('row col-12')}>
                             <div className="col-md-2">
                                 <div className={cx('input-header')}>
                                     <div className={cx('input-label')}>Giá vé</div>
@@ -189,18 +249,83 @@ const Ticket = ({ form, index, pop, creator }) => {
                             </div>
 
                             <div className="col-md-4">
-                                {/* <div className={cx('input-container')}> */}
                                 <InputItem
                                     name={`ticketTypes.${index}.maxPerOrder`}
                                     type="number"
                                     placeholder="Vé tối đa"
                                 />
-                                {/* </div> */}
+                            </div>
+                        </div> */}
+                        <div className={cx('row col-12')}>
+                            <div className="col-md-9">
+                                <div className="row">
+                                    <div className="col-md-4">
+                                        <div className={cx('input-label')}>Ngày bắt đầu bán</div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <DatePicker
+                                            name={`ticketTypes.${index}.ticketStartDate`}
+                                            type="text"
+                                            placeholder="Ngày bắt đầu"
+                                        />
+                                    </div>
+                                    <div className="col-md-4">
+                                        <TimePicker
+                                            date={form.values.ticketTypes[index].ticketStartDate}
+                                            isDisabled={form.values.ticketTypes[index].ticketStartDate === null}
+                                            name={`ticketTypes.${index}.ticketStartDate`}
+                                            type="text"
+                                            placeholder="Giờ bắt đầu"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-4">
+                                        <div className={cx('input-label')}>Ngày kết thúc bán</div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <DatePicker
+                                            name={`ticketTypes.${index}.ticketEndDate`}
+                                            type="text"
+                                            placeholder="Ngày kết thúc"
+                                        />
+                                    </div>
+                                    <div className="col-md-4">
+                                        <TimePicker
+                                            date={form.values.ticketTypes[index].ticketEndDate}
+                                            isDisabled={form.values.ticketTypes[index].ticketEndDate === null}
+                                            name={`ticketTypes.${index}.ticketEndDate`}
+                                            type="text"
+                                            placeholder="Giờ kết thúc"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3">
+                                <div className={cx('ticket-color-wrapper')}>
+                                    <div className={cx('color-container')}>
+                                        <div className={cx('input-container')}>
+                                            <div className={cx('input-label')}>Màu vé</div>
+                                            <div>(để phân biệt các loại vé)</div>
+                                        </div>
+                                        <input
+                                            color={color}
+                                            onChange={(e) => {
+                                                setColor(e.target.value);
+                                                helperColor.setValue('color');
+                                            }}
+                                            name={`ticketTypes.${index}.ticketColor`}
+                                            type="color"
+                                        ></input>
+                                    </div>
+                                    <div className={cx('button-view-ticket')}>Xem vé mẫu</div>
+                                </div>
                             </div>
                         </div>
+
                         <div className={cx('divider')}></div>
                         <div className={cx('row col-12')}>
-                            <div className="col-md-6">
+                            <div className="col-md-9">
                                 <TextAreaItem
                                     name={`ticketTypes.${index}.ticketInfomation`}
                                     type="text"
@@ -239,26 +364,6 @@ const Ticket = ({ form, index, pop, creator }) => {
                                         <div style={{ fontWeight: '700' }}>(Tỉ lệ 2:1)</div>
                                     </div>
                                 )}
-                            </div>
-                            <div className="col-md-3">
-                                <div className={cx('ticket-color-wrapper')}>
-                                    <div className={cx('color-container')}>
-                                        <div className={cx('input-container')}>
-                                            <div className={cx('input-label')}>Màu vé</div>
-                                            <div>(để phân biệt các loại vé)</div>
-                                        </div>
-                                        <input
-                                            color={color}
-                                            onChange={(e) => {
-                                                setColor(e.target.value);
-                                                helperColor.setValue('color');
-                                            }}
-                                            name={`ticketTypes.${index}.ticketColor`}
-                                            type="color"
-                                        ></input>
-                                    </div>
-                                    <div className={cx('button-view-ticket')}>Xem vé mẫu</div>
-                                </div>
                             </div>
                         </div>
                         <div className="row col-12">

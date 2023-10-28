@@ -26,9 +26,6 @@ import TicketTime from '../TicketTime/TicketTime';
 const ShowTime = ({ form, index, pop }) => {
     const cx = classNames.bind(style);
     const [fieldTicketSales, meta, helperTicketSales] = useField(`showtimes.${index}.ticketSales`);
-    // console.log(form);
-    // console.log(form.errors);
-
     return (
         <div className={cx('wrapper')}>
             <Form>
@@ -124,7 +121,48 @@ const ShowTime = ({ form, index, pop }) => {
                     <div className={cx('item-container')}>
                         <div className={cx('title-text')}>Danh sách vé</div>
                         <div className="row col-12">
-                            <FieldArray name={`showtimes.${index}.ticketSales`}>
+                            <FieldArray name={`ticketTypes`}>
+                                {({ move, swap, push, insert, unshift, pop, form }) => {
+                                    return (
+                                        <div>
+                                            {form.values.ticketTypes.length > 0 &&
+                                                form.values.ticketTypes.map((ticket, ind) => {
+                                                    if (ticket.showTimeId == form.values.showtimes[index].id)
+                                                        return <Ticket form={form} pop={pop} index={ind} />;
+                                                })}
+                                            <button
+                                                type="button"
+                                                className={cx('addbutton')}
+                                                onClick={() => {
+                                                    console.log(form.values);
+
+                                                    push({
+                                                        id: uuidv4(),
+                                                        showTimeId: form.values.showtimes[index].id,
+                                                        ticketTypeName: '',
+                                                        ticketTypePrice: '',
+                                                        ticketTypeDescription: '',
+                                                        ticketImage: null,
+                                                        ticketColor: '',
+                                                        totalTicket: '',
+                                                        minPerOrder: '',
+                                                        maxPerOrder: '',
+                                                        ticketEndDate: null,
+                                                        ticketStartDate: null,
+                                                        ticketInfomation: '',
+                                                    });
+                                                    console.log(form.values);
+                                                }}
+                                            >
+                                                Thêm loại vé
+                                            </button>
+                                            {/* <button onClick={() => console.log(form.values)}>log</button> */}
+                                            {/* <button type="submit">Submit</button> */}
+                                        </div>
+                                    );
+                                }}
+                            </FieldArray>
+                            {/* <FieldArray name={`showtimes.${index}.ticketSales`}>
                                 {({ move, swap, push, insert, unshift, pop, form }) => {
                                     let tickets = form.values.ticketTypes;
                                     let ticketSales = form.values.showtimes[index].ticketSales;
@@ -157,7 +195,7 @@ const ShowTime = ({ form, index, pop }) => {
                                             {ticketSales.length > 0 &&
                                                 ticketSales.map((ticket, ind) => {
                                                     return (
-                                                        <TicketTime
+                                                        <Ticket
                                                             form={form}
                                                             pop={pop}
                                                             index={ind}
@@ -169,7 +207,7 @@ const ShowTime = ({ form, index, pop }) => {
                                         </div>
                                     );
                                 }}
-                            </FieldArray>
+                            </FieldArray> */}
                         </div>
                     </div>
                 </div>

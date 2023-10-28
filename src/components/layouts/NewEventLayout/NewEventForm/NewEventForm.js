@@ -23,6 +23,7 @@ const NewEventForm = () => {
     const items = ['Bến Tre', 'Hồ Chí Minh', 'Hà Nội'];
     const cx = classNames.bind(style);
     const formSchema = yup.object().shape({
+        eventType: yup.string().required(),
         eventName: yup.string().required(),
         displacePlace: yup.string().required(),
         address: yup.string().required(),
