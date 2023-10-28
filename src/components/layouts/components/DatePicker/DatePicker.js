@@ -109,7 +109,6 @@ const DatePicker = forwardRef(({ label, kind = 'primary', ...props }) => {
                                     ))}
                                     {Array.from({ length: firstDayOfMonth }, (_, index) => {
                                         const day = lastDateOfLastMonth - firstDayOfMonth + index + 1;
-                                        console.log(firstDayOfMonth);
                                         return (
                                             <div
                                                 key={`${month - 1 >= 0 ? month - 1 : 11}-${day}`}
@@ -145,7 +144,6 @@ const DatePicker = forwardRef(({ label, kind = 'primary', ...props }) => {
                                     })}
                                     {Array.from({ length: (6 - lastDayOfMonth) % 7 }).map((_, index) => {
                                         const day = index + 1;
-                                        console.log('last day' + lastDayOfMonth);
                                         return (
                                             <div
                                                 key={`${month + 1 <= 11 ? month + 1 : 0}-${day}`}

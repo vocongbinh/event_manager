@@ -59,12 +59,12 @@
     padding-bottom: 15px;
     padding-top: 15px;
 }
-// .input-container {
-//     display: flex;
-//     align-items: flex-start;
-//     // margin-bottom: 30px;
-//     width: 100%;
-// }
+.input-container {
+    display: flex;
+    align-items: flex-start;
+    // margin-bottom: 30px;
+    width: 100%;
+}
 .title-icon {
     padding-top: 5px;
     flex-shrink: 0px;
@@ -151,11 +151,11 @@
 //     gap: 5px;
 // }
 .input-container {
-    // height: 100%;
-    // display: flex;
-    // flex-direction: column;
-    // align-items: flex-start;
-    // justify-content: space-between;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 .input-header {
     flex: 1;
@@ -163,9 +163,8 @@
 .input-label {
     font-size: 13px;
     font-weight: 600;
-    margin-top: 5px;
-    // margin-left: 20px;
-    // line-height: 40px;
+    margin-left: 20px;
+    line-height: 40px;
 }
 .input-label-1 {
     font-size: 13px;
@@ -180,7 +179,7 @@
     margin: 5px 10px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     font-size: 13px;
 }
 .free-label {
@@ -220,7 +219,6 @@
     font-weight: 700;
     text-align: center;
     color: #fff;
-    cursor: pointer;
 }
 .button-view-ticket {
     height: 30px;
@@ -271,7 +269,6 @@
     background: rgb(255, 216, 216);
     border-radius: 10px;
     width: 80%;
-    margin: 20px;
     margin-bottom: 10px;
     margin-left: 10px;
     height: auto;

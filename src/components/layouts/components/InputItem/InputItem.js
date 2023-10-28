@@ -30,7 +30,7 @@ const InputItem = ({ label, ...props }) => {
                         // placeholder={placeholder}
                         // onChange={(e) => onValueChange(value, e.target.value)}
                     ></input>
-                    {field.value != '' && inputFocus === true && (
+                    {field.value != '' && (
                         <button type="button" className={cx('post-icon')} onClick={handleClear}>
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>

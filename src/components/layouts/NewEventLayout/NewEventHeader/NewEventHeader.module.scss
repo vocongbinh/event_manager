@@ -6,7 +6,8 @@
 }
 .container {
     margin-top: 24px;
-    min-width: 450px;
+    width: 80%;
+    // max-width: 800px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -51,7 +52,7 @@
     // width: auto;
 }
 .title {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     color: #fff;
 }

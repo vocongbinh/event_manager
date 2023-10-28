@@ -5,7 +5,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import Images from '../../../../assets/images';
 import Image from '../../components/Image';
 
-const NewEventHeader = () => {
+const NewEventHeader = ({ header }) => {
     console.log(Images.neLogo);
 
     const cx = classNames.bind(style);
@@ -24,7 +24,7 @@ const NewEventHeader = () => {
                     <div className={cx('header-container')}>
                         <div className={cx('title-container')}>
                             <div className={cx('box')}></div>
-                            <div className={cx('title')}>Tạo sự kiện mới</div>
+                            <div className={cx('title')}>{header ?? 'Tạo sự kiện mới'}</div>
                         </div>
                         <div>
                             <img src={Images.neLogo} className={cx('logo')} />

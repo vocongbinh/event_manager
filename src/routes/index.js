@@ -8,7 +8,8 @@ import Events from '../pages/myEvent/Events';
 import OrganizerProfile from '../pages/myEvent/OrganizerProfile';
 import AccountBalance from '../pages/myEvent/Events/AccountBalance';
 import BankAccount from '../pages/myEvent/Events/BankAccount';
-import NewEvent from '../pages/NewEvent';
+import EventTypeList from '../components/layouts/NewEventLayout/EventTypeList';
+import NewEventLayout from '../components/layouts/NewEventLayout/NewEventLayout';
 //private router
 const privateRouter = [{}];
 //public router
@@ -20,8 +21,7 @@ const publicRouter = [
     },
     {
         path: '/newEvent',
-        layout: NewEvent,
-        component: Home,
+        layout: NewEventLayout,
     },
     {
         path: '/events/:id',

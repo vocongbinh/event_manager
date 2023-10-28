@@ -5,12 +5,13 @@ import { faCheckCircle, faClose, faEdit, faInfoCircle, faUserEdit } from '@forta
 import Images from '../../../../assets/images';
 import Image from '../../components/Image';
 import DatePicker from '../../components/DatePicker';
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, memo } from 'react';
 import TimePicker from '../../components/TimePicker/TimePicker';
 import MenuItem from '../../components/MenuItem/MenuItem';
 import InputItem from '../../components/InputItem/InputItem';
 import { Formik, Form, useField } from 'formik';
 import * as yup from 'yup';
+import TextAreaItem from '../../components/TextAreaItem/TextAreaItem';
 const NewEventForm = () => {
     // const [eventName, setEventName] = useState('');
     // const [displacePlace, setDisplacePlace] = useState('');
@@ -28,6 +29,8 @@ const NewEventForm = () => {
         provinceCode: yup.number().min(0).required(),
         districtCode: yup.number().min(0).required(),
         startDate: yup.date().required(),
+        eventInfomation: yup.string().required(),
+        coverImage: yup.string().required(),
         // startTime: yup.string().url().required(),
     });
 
@@ -42,6 +45,8 @@ const NewEventForm = () => {
                     startTime: '',
                     provinceCode: -1,
                     districtCode: -1,
+                    eventInfomation: '',
+                    coverImage: '',
                 }}
                 validationSchema={formSchema}
                 onSubmit={(values, { setSubmitting }) => {
@@ -63,7 +68,7 @@ const NewEventForm = () => {
                                     <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
                                 </div>
                                 <div className={cx('item-container')}>
-                                    <div className={cx('title-text')}>Nhập vào tên sự kiện</div>
+                                    <div className={cx('title-text')}>Tên sự kiện</div>
                                     <div className="row col-12">
                                         <InputItem name="eventName" type="text" placeholder="Tên sự kiện" />
                                     </div>
@@ -112,42 +117,51 @@ const NewEventForm = () => {
                             </div>
                             <div className={cx('input-container')}>
                                 <div className={cx('title-icon')}>
-                                    {((formik.errors.startDate || formik.errors.startTime) && (
+                                    {((formik.errors.eventInfomation || !formik.values.eventInfomation) && (
                                         <FontAwesomeIcon icon={faInfoCircle} className={cx('info-icon')} />
                                     )) || <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')} />}
                                     <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
                                 </div>
                                 <div className={cx('item-container')}>
-                                    <div className={cx('title-text')}>Nhập vào tên sự kiện</div>
+                                    <div className={cx('title-text')}>Thông tin sự kiện</div>
                                     <div className="row col-12">
-                                        <div className="col-md-6">
-                                            <DatePicker
-                                                // value={startDate}
-                                                // onValueChange={useCallback((value) => {
-                                                //     setStartDate(value);
-                                                // }, [])}
-                                                name="startDate"
-                                                placeholder="Ngày bắt đầu"
-                                                label="Ngày bắt đầu"
-                                            />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <TimePicker
-                                                // value={startTime}
-                                                // onValueChange={useCallback((value) => {
-                                                //     setStartTime(value);
-                                                // }, [])}
-                                                date={formik.values.startDate}
-                                                isDisabled={formik.values.startDate === null}
-                                                name="startTime"
-                                                placeholder="Giờ bắt đầu"
-                                                label="Giờ bắt đầu"
-                                            />
-                                        </div>
+                                        <TextAreaItem
+                                            name="eventInfomation"
+                                            type="text"
+                                            placeholder="Nhập vào nội dung chi tiết sự kiện"
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit">Submit</button>
+                            {/* <div className={cx('input-container')}>
+                                <div className={cx('title-icon')}>
+                                    <div className={cx('title-icon')}>
+                                        {((formik.errors.startDate || formik.errors.startTime) && (
+                                            <FontAwesomeIcon icon={faInfoCircle} className={cx('info-icon')} />
+                                        )) || <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')} />}
+                                        <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
+                                    </div>
+                                </div>
+                                <div className={cx('item-container')}>
+                                    <div className="row col-12">
+                                        <button type="submit" className={` ${cx('addbutton')}`}>
+                                            Tiếp tục
+                                        </button>
+                                    </div>
+                                </div>
+                            </div> */}
+                            <div className={cx('item-container')}>
+                                {/* <div className="row col-6">
+                                    <button type="button" className={` ${cx('addbutton')}`}>
+                                        Lưu lại
+                                    </button>
+                                </div> */}
+                                <div className="row col-12">
+                                    <button type="submit" className={` ${cx('addbutton')}`}>
+                                        Tiếp tục
+                                    </button>
+                                </div>
+                            </div>
                         </form>
                     );
                 }}
@@ -156,4 +170,4 @@ const NewEventForm = () => {
     );
 };
 
-export default NewEventForm;
+export default memo(NewEventForm);
