@@ -6,8 +6,6 @@ import Home from '../pages/Home';
 import { faAddressCard, faCalendar, faMoneyBill, faPiggyBank } from '@fortawesome/free-solid-svg-icons';
 import Events from '../pages/myEvent/Events';
 import OrganizerProfile from '../pages/myEvent/OrganizerProfile';
-import AccountBalance from '../pages/myEvent/Events/AccountBalance';
-import BankAccount from '../pages/myEvent/Events/BankAccount';
 import EventTypeList from '../components/layouts/NewEventLayout/EventTypeList';
 import NewEventLayout from '../components/layouts/NewEventLayout/NewEventLayout';
 import BankAccount from '../pages/myEvent/BankAccount';
@@ -29,6 +27,8 @@ const publicRouter = [
     {
         path: '/newEvent',
         layout: NewEventLayout,
+    },
+    {
         path: '/events/:id/book',
         component: BookEvent,
     },
