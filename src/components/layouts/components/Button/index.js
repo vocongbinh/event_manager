@@ -1,7 +1,8 @@
 import styles from './Button.module.scss';
 import classNames from 'classnames/bind';
 import { forwardRef } from 'react';
-const Button = forwardRef(({ type, size, href, className, preIcon, sufIcon, onClick, children, ...prop }, ref) => {
+import { Link } from 'react-router-dom';
+const Button = forwardRef(({ type, size, href, to, className, preIcon, sufIcon, onClick, children, ...prop }, ref) => {
     const cx = classNames.bind(styles);
     let Comp = 'button';
     let props = {
@@ -11,6 +12,10 @@ const Button = forwardRef(({ type, size, href, className, preIcon, sufIcon, onCl
     if (href) {
         Comp = 'a';
         props.href = href;
+    }
+    if (to) {
+        Comp = Link;
+        props.to = to;
     }
     return (
         <Comp

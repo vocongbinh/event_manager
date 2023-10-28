@@ -67,12 +67,19 @@
         font-size: 12px;
     }
 }
-.number-layout.past {
+.number-layout {
     background-color: #bcbcbc;
+    &:hover {
+        background-color: #87887e;
+    }
 }
-.number-layout.draft {
+.selected {
     background-color: #87887e;
+    p {
+        color: var(--primary);
+    }
 }
+
 .number-block {
     padding: 0px 12px;
     background-color: var(--white);
@@ -96,6 +103,7 @@
     color: #666;
     display: inline-block;
     border-radius: 2px;
+    font-weight: 600;
 }
 .page-wrapper {
     display: flex;
@@ -149,4 +157,13 @@
     clear: left;
     width: 100%;
     text-align: center;
+}
+//event-item
+.event-item-wrapper {
+    width: 100%;
+    text-align: center;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    padding: 5%;
+    margin-top: 4em;
 }

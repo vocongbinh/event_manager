@@ -10,6 +10,13 @@ import AccountBalance from '../pages/myEvent/Events/AccountBalance';
 import BankAccount from '../pages/myEvent/Events/BankAccount';
 import EventTypeList from '../components/layouts/NewEventLayout/EventTypeList';
 import NewEventLayout from '../components/layouts/NewEventLayout/NewEventLayout';
+import BankAccount from '../pages/myEvent/BankAccount';
+import BookEvent from '../pages/BookEvent';
+import SelectTicket from '../pages/BookEvent/bookContent/SelectTicket';
+import PaymentInfo from '../pages/BookEvent/bookContent/PaymentInfo';
+import ManageEventLayout from '../components/layouts/ManageEventLayout';
+import Summary from '../pages/myEvent/Events/OptionManager/Summary';
+
 //private router
 const privateRouter = [{}];
 //public router
@@ -22,6 +29,24 @@ const publicRouter = [
     {
         path: '/newEvent',
         layout: NewEventLayout,
+        path: '/events/:id/book',
+        component: BookEvent,
+    },
+    {
+        path: '/events/:id/book/:showtime_id/',
+        component: BookEvent,
+    },
+    {
+        path: '/events/:id/book/:showtime_id/step2',
+        layout: BookEvent,
+        component: PaymentInfo,
+        index: 1,
+    },
+    {
+        path: '/events/:id/book/:showtime_id/:step1',
+        layout: BookEvent,
+        component: SelectTicket,
+        index: 0,
     },
     {
         path: '/events/:id',
@@ -44,9 +69,10 @@ const publicRouter = [
         layout: MyEventLayout,
     },
     {
-        path: '/my_event/account_balance',
-        component: AccountBalance,
-        layout: MyEventLayout,
+        path: '/my_event/events/:id/summary',
+        component: Summary,
+        layout: ManageEventLayout,
     },
+    // manager even
 ];
 export { privateRouter, publicRouter };

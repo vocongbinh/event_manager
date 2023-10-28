@@ -12,3 +12,15 @@ export const getTicketOfEvent = async (eventId) => {
         console.log(error);
     }
 };
+export const getTicketOfShowtime = async (showtimeId) => {
+    try {
+        const res = await request.get(`api/ticket/showtime`, {
+            params: {
+                showtime_id: showtimeId,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

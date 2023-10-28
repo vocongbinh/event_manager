@@ -9,6 +9,9 @@ export const addressRequest = axios.create({
 export const stageRequest = axios.create({
     baseURL: 'https://b8b446c3-c71c-43f5-963e-44aa2718e173.mock.pstmn.io/',
 });
+export const myRequest = axios.create({
+    baseURL: 'https://26ba083f-3e7e-4f12-ae0e-9e2662c66bc8.mock.pstmn.io/',
+});
 
 export const request = axios.create({
     baseURL: 'http://localhost:5001/',

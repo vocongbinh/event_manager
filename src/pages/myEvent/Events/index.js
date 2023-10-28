@@ -3,28 +3,53 @@ import styles from './Events.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faCheck, faMagnifyingGlass, faPlus, faSortDown } from '@fortawesome/free-solid-svg-icons';
-
+import * as eventService from '../../../apiServices/eventService';
 import Button from '../../../components/layouts/components/Button';
 import { useEffect, useState } from 'react';
 import * as myService from '../../../apiServices/myService';
 import MyEventItem from './MyEventItem';
 function Events() {
     const cx = classNames.bind(styles);
-    const [countPage, setCountPage] = useState(1);
-    const maxCountPage = 2;
-    const [maxPageDisplay, setMaxPageDisplay] = useState(null);
+
+    const maxCountPage = 10;
+    const [maxPageDisplay, setMaxPageDisplay] = useState(10);
     const [events, setEvents] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const [typeSearch, setTypeSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    let displayPage;
+    //page navigation
+
+    const indexOfLastRecord = currentPage * maxPageDisplay;
+    const indexOfFirstRecord = indexOfLastRecord - maxPageDisplay;
+    const nPages = Math.ceil(events.length / maxPageDisplay);
+    displayPage = events.slice(indexOfFirstRecord, indexOfLastRecord);
+
     const handleSetActive = (count) => {
+        setCurrentPage(1);
         setMaxPageDisplay(count);
+    };
+    const handlePrevPage = () => {
+        if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+    };
+    const handleNextPage = () => {
+        if (currentPage < nPages) setCurrentPage((prev) => prev + 1);
     };
     useEffect(() => {
         const fetchApi = async () => {
-            const events = await myService.allEvents();
+            const events = await myService.allEvents('65105f66641996e970f1309c');
             console.log(events);
             setEvents(events);
         };
         fetchApi();
     }, []);
+
+    const handleKeyDown = async (e) => {
+        if (e.key === 'Enter') {
+            const result = await myService.searchEvents(searchValue, '65105f66641996e970f1309c');
+            setEvents(result);
+        }
+    };
     const displayPages = [
         {
             value: 10,
@@ -60,13 +85,29 @@ function Events() {
                 <div className={cx('search')}>
                     <div className={cx('search-layout')}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} className={cx('search-icon')} />
-                        <input type="text" placeholder="Search event name" />
+                        <input
+                            onKeyDown={handleKeyDown}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            type="text"
+                            placeholder="Search event name"
+                        />
                     </div>
-                    <div className={cx('number-layout', 'past')}>
-                        <div className={cx('number-block')}>3</div>
+                    <div
+                        onClick={() => setTypeSearch('past')}
+                        className={cx('number-layout', 'past', {
+                            selected: typeSearch === 'past',
+                        })}
+                    >
+                        <div className={cx('number-block')}>{events.length}</div>
                         <p>past</p>
                     </div>
-                    <div className={cx('number-layout', 'draft')}>
+                    <div
+                        onClick={() => setTypeSearch('draft')}
+                        className={cx('number-layout', 'draft', {
+                            selected: typeSearch === 'draft',
+                        })}
+                    >
                         <div className={cx('number-block')}>11</div>
                         <p>draft</p>
                     </div>
@@ -74,11 +115,15 @@ function Events() {
             </div>
             <div className={cx('page-wrapper')}>
                 <div className={cx('page-container')}>
-                    <Button className={cx('change-page-btn')}>Privious</Button>
+                    <Button onClick={handlePrevPage} className={cx('change-page-btn')}>
+                        Privious
+                    </Button>
                     <p>
-                        {countPage}/{maxCountPage}
+                        {currentPage}/{nPages}
                     </p>
-                    <Button className={cx('change-page-btn')}>Next</Button>
+                    <Button onClick={handleNextPage} className={cx('change-page-btn')}>
+                        Next
+                    </Button>
                 </div>
                 <div className={cx('per-page')}>
                     <h3>Display per page</h3>
@@ -90,7 +135,7 @@ function Events() {
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                         >
-                            <h3>20</h3>
+                            <h3>{maxPageDisplay}</h3>
                             <span mar>
                                 <FontAwesomeIcon icon={faSortDown} />
                             </span>
@@ -108,7 +153,7 @@ function Events() {
             </div>
 
             <div className={cx('list-event')}>
-                {events.map((event) => (
+                {displayPage.map((event) => (
                     <MyEventItem data={event} />
                 ))}
             </div>

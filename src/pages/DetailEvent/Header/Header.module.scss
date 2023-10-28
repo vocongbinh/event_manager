@@ -20,6 +20,8 @@
 
 //action
 .action {
+    height: 100%;
+    padding: 6px 0px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -109,4 +111,15 @@
         cursor: pointer;
         font-weight: 600;
     }
+}
+.create-btn {
+    height: 100%;
+    color: var(--white);
+    font-size: 14px;
+
+    border-radius: 4px;
+    background-color: var(--sub-color);
+}
+.add-icon {
+    color: #5c7b17;
 }

@@ -24,8 +24,7 @@ export const headerEvents = async () => {
 };
 export const detailEvent = async (id) => {
     try {
-        const res = await request.get(`api/event/${id}`);
-        console.log('binh' + res.data);
+        const res = await request.get(`api/event/detail/${id}`);
         return res.data;
     } catch (error) {
         console.log(error);
@@ -38,6 +37,16 @@ export const searchEvent = async (value) => {
                 q: value,
             },
         });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+export const getEventById = async (id) => {
+    try {
+        console.log('gggg');
+        const res = await request.get(`api/event/${id}`);
+        console.log(res.data);
         return res.data;
     } catch (error) {
         console.log(error);
