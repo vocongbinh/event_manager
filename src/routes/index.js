@@ -12,6 +12,7 @@ import SelectTicket from '../pages/BookEvent/bookContent/SelectTicket';
 import PaymentInfo from '../pages/BookEvent/bookContent/PaymentInfo';
 import ManageEventLayout from '../components/layouts/ManageEventLayout';
 import Summary from '../pages/myEvent/Events/OptionManager/Summary';
+import Discount from '../pages/myEvent/Events/OptionManager/Discount';
 
 //private router
 const privateRouter = [{}];
@@ -66,6 +67,13 @@ const publicRouter = [
         path: '/my_event/events/:id/summary',
         component: Summary,
         layout: ManageEventLayout,
+        index: 1,
+    },
+    {
+        path: '/my_event/events/:id/discount',
+        component: Discount,
+        layout: ManageEventLayout,
+        index: 4,
     },
     // manager even
 ];

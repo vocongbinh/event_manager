@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { eventRequest, request } from '../utils/request';
-
+export const eventSErvice = {};
 export const allEvents = async () => {
     try {
         const res = await request.get('api/event');

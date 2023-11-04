@@ -6,12 +6,20 @@ import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { useNavigate } from 'react-router-dom';
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 import Button from '../../../../../components/layouts/components/Button';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as eventService from '../../../../../apiServices/eventService';
 import * as ticketService from '../../../../../apiServices/ticketService';
+import Chart, { Colors } from 'chart.js/auto';
+import { format } from 'date-fns';
 
 function Summary() {
+    const moment = extendMoment(Moment);
+    const graph = document.getElementById('ticket-chart');
+    let labels = [];
+    const [chart, setChart] = useState();
     const cx = classNames.bind(styles);
     const [event, setEvents] = useState(null);
     const params = useParams();
@@ -20,49 +28,87 @@ function Summary() {
     const navigate = useNavigate();
     const [showId, setShowId] = useSearchParams();
     const [ticketTypes, setTicketTypes] = useState([]);
+    let totalCount = 0;
+    let totalPrice = 0;
     let startTime;
     let listShowtime = [];
     const showtimeId = showId.get('showId');
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
     if (event != null) {
         const datetime = Date.parse(event.showtimes[0].startAt);
         let time = new Date(datetime);
-        const hours = ('0' + time.getHours()).slice(-2);
-        const minutes = ('0' + time.getMinutes()).slice(-2);
-        startTime = hours + ':' + minutes + ' ' + time.getDate() + '/' + time.getMonth() + '/' + time.getFullYear();
+        startTime = format(time, 'HH:mm dd/MM/yyyy');
         listShowtime = event.showtimes.map((element) => {
             let timeShow = new Date(Date.parse(element.startAt));
-            const hours = ('0' + timeShow.getHours()).slice(-2);
-            const minutes = ('0' + timeShow.getMinutes()).slice(-2);
-            let startShowTime =
-                days[timeShow.getDay()] +
-                ' ' +
-                timeShow.getDate() +
-                '/' +
-                timeShow.getMonth() +
-                '/' +
-                timeShow.getFullYear() +
-                ' (' +
-                hours +
-                ':' +
-                minutes +
-                ')';
+            let startShowTime = format(timeShow, 'ccc dd/MM/yyyy HH:mm');
             return {
                 ...element,
                 startShowTime,
             };
         });
     }
+    const handleApply = () => {
+        const range = moment.range(startDate, endDate);
+        const labelsConfig = Array.from(range.by('day')).map((x) => x.format('DD/MM'));
+        labels = Array.from(range.by('day')).map((x) => x.format('DD-MM-yyyy'));
+        let datasets = [];
+
+        ticketTypes.forEach((type) => {
+            let data = {};
+            data.label = type.ticketName;
+            let dataOfset = [];
+            labels.forEach((label) => {
+                let count = 0;
+                type.ticketsales.forEach((ticket) => {
+                    console.log(format(new Date(Date.parse(ticket.createdAt)), 'dd-MM-yyyy'), label);
+                    if (format(new Date(Date.parse(ticket.createdAt)), 'dd-MM-yyyy') === label) {
+                        count++;
+                    }
+                });
+                dataOfset.push(count * type.price);
+            });
+            data.data = dataOfset;
+            datasets.push(data);
+        });
+        const config = {
+            type: 'line',
+            data: {
+                labels: labelsConfig,
+                datasets,
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Ticket sale by date',
+                    },
+                },
+            
+            },
+        };
+        if (chart) {
+            chart.destroy();
+            setChart(new Chart(graph, config));
+        } else {
+            setChart(new Chart(graph, config));
+        }
+
+    };
+
     useEffect(() => {
         const fetchApi = async () => {
             const events = await eventService.getEventById(params.id);
             setEvents(events[0]);
-            const typesData = await ticketService.getTicketOfShowtime(showtimeId);
-            console.log(typesData);
+            const typesData = await ticketService.getTypeSummary(showtimeId);
             setTicketTypes(typesData);
         };
+
         fetchApi();
-    }, [showtimeId]);
+    }, [params.id, showtimeId]);
 
     return (
         <div className={cx('wrapper')}>
@@ -132,7 +178,9 @@ function Summary() {
                 <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
                 <p>To</p>
                 <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
-                <Button className={cx('apply-btn')}>Apply</Button>
+                <Button onClick={handleApply} className={cx('apply-btn')}>
+                    Apply
+                </Button>
             </div>
             <div className={cx('status-layout')}>
                 <div className={cx('status-item', 'paid')}>
@@ -158,6 +206,7 @@ function Summary() {
                 </div>
             </div>
             <div className={cx('ticket-summary')}>
+                <p className={cx('summary-header')}>Ticket summary</p>
                 <table>
                     <thead>
                         <tr>
@@ -174,34 +223,38 @@ function Summary() {
                             <th>
                                 <p>Paid Tickets</p>
                             </th>
-                            <th>
-                                <p>Processing Tickets</p>
-                            </th>
+
                             <th>
                                 <p>Total Tickets</p>
                             </th>
                         </tr>
                     </thead>
 
-                    {ticketTypes.map((type) => (
-                        <tr>
-                            <td></td>
-                            <td style={{ color: '#39B54A' }}>{type.ticketName}</td>
-                            <td style={{ textAlign: 'right' }}>0</td>
-                            <td style={{ textAlign: 'right' }}>0</td>
-                            <td style={{ textAlign: 'right' }}>0</td>
-                            <td style={{ textAlign: 'right' }}>0</td>
-                        </tr>
-                    ))}
+                    {ticketTypes.map((type) => {
+                        totalCount += type.countTicket;
+                        totalPrice += type.totalPrice;
+                        return (
+                            <tr>
+                                <td></td>
+                                <td style={{ color: '#39B54A' }}>{type.ticketName}</td>
+                                <td style={{ textAlign: 'right' }}>{type.price}</td>
+                                <td style={{ textAlign: 'right' }}>{type.countTicket}</td>
+
+                                <td style={{ textAlign: 'right' }}>{type.totalPrice}</td>
+                            </tr>
+                        );
+                    })}
                     <tr>
                         <td colSpan={3}>
                             <p style={{ color: '#474747', fontWeight: 700 }}>Total</p>
                         </td>
-                        <td style={{ textAlign: 'right' }}>0</td>
-                        <td style={{ textAlign: 'right' }}>0</td>
-                        <td style={{ textAlign: 'right' }}>0</td>
+                        <td style={{ textAlign: 'right' }}>{totalCount}</td>
+                        <td style={{ textAlign: 'right' }}>{totalPrice}</td>
                     </tr>
                 </table>
+            </div>
+            <div className={cx('chart')}>
+                <canvas id="ticket-chart"></canvas>
             </div>
         </div>
     );

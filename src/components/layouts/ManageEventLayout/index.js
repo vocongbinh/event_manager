@@ -16,39 +16,46 @@ import Button from '../components/Button';
 import { useState } from 'react';
 import Events from '../../../pages/myEvent/Events';
 import OrganizerProfile from '../../../pages/myEvent/OrganizerProfile';
+import Summary from '../../../pages/myEvent/Events/OptionManager/Summary';
 
-function ManageEventLayout({ children }) {
+function ManageEventLayout({ children, ...props }) {
     const cx = classNames.bind(styles);
     const listOptions = [
         {
             title: 'Back to my event',
             icon: <FontAwesomeIcon icon={faCircleArrowLeft} />,
             path: '/my_event/organizer_profile',
+            index: 0,
         },
         {
             title: 'Summary',
             icon: <FontAwesomeIcon icon={faChartLine} />,
             path: '/my_event/organizer_profile',
+            index: 1,
         },
         {
             title: 'RSVPS   ',
             icon: <FontAwesomeIcon icon={faUserGroup} />,
             path: '/my_event/events',
+            index: 2,
         },
         {
             title: 'Promote',
             icon: <FontAwesomeIcon icon={faBullhorn} />,
             path: '/my_event/account_balance',
+            index: 3,
         },
         {
             title: 'Discount code',
             icon: <FontAwesomeIcon icon={faGift} />,
             path: '/my_event/bank_account',
+            index: 4,
         },
         {
             title: 'Moderator',
             icon: <FontAwesomeIcon icon={faUsersRays} />,
             path: '/my_event/bank_account',
+            index: 5,
         },
     ];
     return (
@@ -61,7 +68,7 @@ function ManageEventLayout({ children }) {
                         height="48px"
                         src="https://cdn.pixabay.com/photo/2020/07/21/16/10/pokemon-5426712_960_720.png"
                     />
-                    <button>
+                    <Button className={cx('avt-btn')} href="/">
                         bình nè
                         <span className={cx('name')}>
                             <img
@@ -70,11 +77,20 @@ function ManageEventLayout({ children }) {
                                 className={cx('avatar')}
                             />
                         </span>
-                    </button>
+                    </Button>
                 </div>
-                {listOptions.map((item, index) => (
-                    <InforItem className={cx('infor-item')} data={item} />
-                ))}
+                {listOptions.map((item, index) => {
+                    if (item.component === children) console.log('ff');
+                    else console.log('fdsfd');
+                    return (
+                        <InforItem
+                            className={cx('infor-item', {
+                                active: item.index === props.index,
+                            })}
+                            data={item}
+                        />
+                    );
+                })}
             </div>
             <div className={cx('container')}>{children}</div>
         </div>
