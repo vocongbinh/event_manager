@@ -3,7 +3,7 @@ import styles from './Events.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faCheck, faMagnifyingGlass, faPlus, faSortDown } from '@fortawesome/free-solid-svg-icons';
-import * as eventService from '../../../apiServices/eventService';
+import eventService from '../../../apiServices/eventService';
 import Button from '../../../components/layouts/components/Button';
 import { useEffect, useState } from 'react';
 import * as myService from '../../../apiServices/myService';

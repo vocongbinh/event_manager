@@ -1,0 +1,29 @@
+.wrapper {
+    width: 80%;
+    margin: 0px auto;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+}
+.border-layout {
+    padding: 20px 0px;
+    border-bottom: 1px solid #ccc;
+}
+.header {
+    font-weight: 400;
+    font-size: 3rem;
+}
+.share-btn {
+    background-color: #5074af;
+    border-radius: 4px;
+    padding: 16px 30px;
+    font-size: 1.8rem;
+    color: white;
+    margin: 10px 0px;
+}
+.link {
+    color: #65d0f2 !important;
+    &:hover {
+        color: #39b54a !important   ;
+    }
+}

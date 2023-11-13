@@ -5,7 +5,7 @@ import { faCirclePlus, faLockOpen, faPenToSquare, faTrash } from '@fortawesome/f
 import { useEffect, useRef, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import * as eventService from '../../../../../apiServices/eventService';
+import eventService from '../../../../../apiServices/eventService';
 import * as ticketService from '../../../../../apiServices/ticketService';
 import { useLocation, useParams } from 'react-router-dom';
 import format from 'date-fns/format';
@@ -111,7 +111,7 @@ function Discount() {
     useEffect(() => {
         const fetchApi = async () => {
             const events = await eventService.getEventById(params.id);
-            setEvents(events[0]);
+            setEvents(events);
             const typesData = await ticketService.getTicketOfShowtime(showtimeId);
             setTicketTypes(typesData);
             setListTypeOfDiscount(
@@ -401,65 +401,6 @@ function Discount() {
                             </div>
                             {errors.quantity && <div className={cx('error')}>{errors.quantity}</div>}
                         </div>
-                        {/* <div className={cx('body-layout')}>
-                            <div className="row">
-                                <div className="col-4">
-                                    <span>Ticket types</span>
-                                </div>
-                                <div className="col-8">
-                                    <div className="container p-0">
-                                        <div className="d-flex align-items-center">
-                                            <input checked={checkedAll} onChange={handleCheckAll} type="checkbox" />
-                                            <label style={{ marginLeft: 4 }}>All ticket types</label>
-                                        </div>
-                                        {checkedAll && (
-                                            <div>
-                                                <span style={{ marginRight: 8 }}>Quantity</span>
-                                                <input
-                                                    value={quantityAll}
-                                                    onChange={(e) => setQuantityAll(e.target.value)}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                    {ticketTypes.map((type, index) => {
-                                        // const [quantity, setQuantity] = useState(data.quantity);
-
-                                        return (
-                                            <div className="container p-0">
-                                                <div className="d-flex align-items-center">
-                                                    <input
-                                                        id={type._id}
-                                                        checked={listCheck.includes(type._id)}
-                                                        onChange={handleCheck}
-                                                        className="box-type"
-                                                        type="checkbox"
-                                                    />
-                                                    <label style={{ marginLeft: 4 }}>{type.ticketName}</label>
-                                                </div>
-                                                {listCheck.includes(type._id) && !checkedAll && (
-                                                    <div>
-                                                        <span style={{ marginRight: 8 }}>Quantity</span>
-                                                        <input
-                                                            value={listTypeOfDiscount[index].quantity}
-                                                            onChange={(e) =>
-                                                                setListTypeOfDiscount(
-                                                                    listTypeOfDiscount.map((item, id) => {
-                                                                        if (id === index)
-                                                                            item.quantity = e.target.value;
-                                                                        return item;
-                                                                    }),
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        </div> */}
                     </Modal.Body>
                     <Modal.Footer className={cx('footer')}>
                         <Button className={cx('save-btn')} size="max" onClick={handleSave}>

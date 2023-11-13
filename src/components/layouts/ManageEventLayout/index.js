@@ -17,8 +17,12 @@ import { useState } from 'react';
 import Events from '../../../pages/myEvent/Events';
 import OrganizerProfile from '../../../pages/myEvent/OrganizerProfile';
 import Summary from '../../../pages/myEvent/Events/OptionManager/Summary';
-
+import { createBrowserHistory } from 'history';
+import { useLocation } from 'react-router-dom';
 function ManageEventLayout({ children, ...props }) {
+    const location = useLocation();
+    const current = location.pathname;
+
     const cx = classNames.bind(styles);
     const listOptions = [
         {
@@ -30,31 +34,31 @@ function ManageEventLayout({ children, ...props }) {
         {
             title: 'Summary',
             icon: <FontAwesomeIcon icon={faChartLine} />,
-            path: '/my_event/organizer_profile',
+            path: current.split('/').slice(0, -1).join('/') + '/summary',
             index: 1,
         },
         {
-            title: 'RSVPS   ',
+            title: 'RSVPS',
             icon: <FontAwesomeIcon icon={faUserGroup} />,
-            path: '/my_event/events',
+            path: current.split('/').slice(0, -1).join('/') + '/RSVPS',
             index: 2,
         },
         {
             title: 'Promote',
             icon: <FontAwesomeIcon icon={faBullhorn} />,
-            path: '/my_event/account_balance',
+            path: current.split('/').slice(0, -1).join('/') + '/promote',
             index: 3,
         },
         {
             title: 'Discount code',
             icon: <FontAwesomeIcon icon={faGift} />,
-            path: '/my_event/bank_account',
+            path: current.split('/').slice(0, -1).join('/') + '/discount',
             index: 4,
         },
         {
             title: 'Moderator',
             icon: <FontAwesomeIcon icon={faUsersRays} />,
-            path: '/my_event/bank_account',
+            path: current.split('/').slice(0, -1).join('/') + '/moderator',
             index: 5,
         },
     ];

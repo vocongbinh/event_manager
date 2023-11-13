@@ -8,30 +8,22 @@ import Images from '../../../assets/images';
 import Image from '../../../components/layouts/components/Image';
 import SearchLayout from '../../../components/layouts/components/SearchLayout';
 import DropdownButton from '../../../components/layouts/components/DropdownButton';
+import { useNavigate } from 'react-router-dom';
 function Header() {
     const cx = classNames.bind(styles);
-    const categories = [
-        'Live music',
-        'Art & Culture',
-        'Theater & Plays',
-        'Nightlife',
-        'outdoor',
-        'Conference',
-        'Seminar/Courses',
-        'Exhibitions',
-        'Meetups',
-        'Sports',
-        'Community',
-        'Attractions',
-    ];
+    const categories = ['Live music', 'Theater & Plays', 'Nightlife', 'Community', 'Course', 'Attractions', 'Sport'];
     const listLocation = ['Ho Chi Minh', 'Ha Noi', 'Other locations'];
+    const navigate = useNavigate();
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
                 <img
+                    onClick={() => navigate('/')}
+                    alt=""
                     src="https://trinhvantuyen.com/wp-content/uploads/2022/03/hinh-anh-pikachu-1.jpg"
                     className={cx('logo')}
                 />
+
                 <SearchLayout className={cx('search-layout')} />
 
                 <div className={`dropdown ${cx('location-wrapper')}`}>

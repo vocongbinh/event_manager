@@ -10,7 +10,7 @@ import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import Button from '../../../../../components/layouts/components/Button';
 import 'react-datepicker/dist/react-datepicker.css';
-import * as eventService from '../../../../../apiServices/eventService';
+import eventService from '../../../../../apiServices/eventService';
 import * as ticketService from '../../../../../apiServices/ticketService';
 import Chart, { Colors } from 'chart.js/auto';
 import { format } from 'date-fns';
@@ -87,7 +87,6 @@ function Summary() {
                         text: 'Ticket sale by date',
                     },
                 },
-            
             },
         };
         if (chart) {
@@ -96,13 +95,12 @@ function Summary() {
         } else {
             setChart(new Chart(graph, config));
         }
-
     };
 
     useEffect(() => {
         const fetchApi = async () => {
-            const events = await eventService.getEventById(params.id);
-            setEvents(events[0]);
+            const event = await eventService.getEventById(params.id);
+            setEvents(event);
             const typesData = await ticketService.getTypeSummary(showtimeId);
             setTicketTypes(typesData);
         };

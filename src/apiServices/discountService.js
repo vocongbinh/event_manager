@@ -1,5 +1,4 @@
 import { request } from '../utils/request';
-
 export const create = async (data) => {
     try {
         const res = await request.post('api/discount', data);

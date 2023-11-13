@@ -1,0 +1,126 @@
+.wrapper {
+    width: 80%;
+    margin: 0px auto;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+}
+.border-layout {
+    padding: 20px 0px;
+    border-bottom: 1px solid #ccc;
+}
+.header {
+    font-weight: 400;
+    font-size: 3rem;
+}
+.share-btn {
+    background-color: #5074af;
+    border-radius: 4px;
+    padding: 16px 30px;
+    font-size: 1.8rem;
+    color: white;
+    margin: 10px 0px;
+}
+.link {
+    color: #65d0f2 !important;
+    &:hover {
+        color: #39b54a !important   ;
+    }
+}
+.content {
+    background-color: #f6f6f6;
+    color: #7dc242;
+    padding: 20px 40px;
+    font-weight: 300;
+    font-size: 2.4rem;
+}
+.table {
+    thead {
+        td {
+            text-transform: uppercase;
+            font-size: 1.4rem;
+        }
+    }
+    td {
+        font-size: 1.6rem;
+    }
+}
+.avatar-item {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 16px;
+}
+.name-item {
+    font-weight: 600;
+}
+.create-btn {
+    background-color: #b6e685;
+    background-image: none;
+    color: #27313d;
+    font-weight: 400;
+    font-size: 24px;
+    transition: 0.3s all ease-in-out;
+    border-radius: 4%;
+    padding: 10px;
+    &:hover {
+        background-color: #b6e685;
+        color: #27313d;
+        opacity: 0.8;
+    }
+}
+.body {
+    font-size: 13px;
+    padding: 8px 50px !important;
+    background-color: #f6f6f6;
+    color: #414b57;
+}
+.body-layout {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    background-color: var(--white);
+    font-size: 1.6rem;
+    margin-top: 16px;
+}
+.email-layout {
+    input {
+        background-color: transparent;
+        margin-left: 16px;
+        border: none;
+        outline: none;
+        flex: 1;
+    }
+}
+.role-select {
+    select {
+        flex: 1;
+        border: none;
+        outline: none;
+        margin-left: 16px;
+        option {
+            padding: 0px 10px;
+        }
+    }
+}
+.table-can {
+    background-color: transparent;
+    width: 100%;
+    thead {
+        text-align: center;
+    }
+    tbody {
+        tr {
+            td {
+                &:first-child {
+                    text-align: left;
+                    width: 30%;
+                }
+                text-align: center;
+                svg {
+                    color: var(--primary);
+                }
+            }
+        }
+    }
+}

@@ -89,6 +89,19 @@ function OrganizerProfile() {
                         </div>
                     </div>
                 </div>
+                <div className={cx('block-infor')}>
+                    <div className={cx('title')}>Bank account information</div>
+                    <div className={cx('table')}>
+                        <div className={`row ${cx('row')}`}>
+                            <div className="col-6">
+                                <div className={`d-flex flex-column align-items-left`}>
+                                    <label className={cx('label')}>Account number</label>
+                                    <input className={cx('bound-input')} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <Button className={cx('save-btn')} size="min">
                     Save
                 </Button>
