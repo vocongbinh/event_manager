@@ -1,1 +1,1 @@
-export { default } from './NewEventHeader';
+export { default } from './FormHeader';

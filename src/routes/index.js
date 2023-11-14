@@ -14,6 +14,11 @@ import SelectTicket from '../pages/BookEvent/bookContent/SelectTicket';
 import PaymentInfo from '../pages/BookEvent/bookContent/PaymentInfo';
 import ManageEventLayout from '../components/layouts/ManageEventLayout';
 import Summary from '../pages/myEvent/Events/OptionManager/Summary';
+import AuthenticationLayout from '../components/layouts/AuthenticationLayout/AuthenticationLayout';
+import LoginForm from '../components/layouts/AuthenticationLayout/Login/LoginForm';
+import Profile from '../components/layouts/AuthenticationLayout/Profile';
+import ResetPassword from '../components/layouts/AuthenticationLayout/ResetPassword';
+import Register from '../components/layouts/AuthenticationLayout/Register';
 
 //private router
 const privateRouter = [{}];
@@ -73,6 +78,27 @@ const publicRouter = [
         component: Summary,
         layout: ManageEventLayout,
     },
+    {
+        path: '/auth/login',
+        layout: AuthenticationLayout,
+        component: LoginForm,
+    },
+    {
+        path: '/auth/resetpassword',
+        layout: AuthenticationLayout,
+        component: ResetPassword,
+    },
+    {
+        path: '/auth/profile',
+        layout: AuthenticationLayout,
+        component: Profile,
+    },
+    {
+        path: '/auth/register',
+        layout: AuthenticationLayout,
+        component: Register,
+    },
+
     // manager even
 ];
 export { privateRouter, publicRouter };

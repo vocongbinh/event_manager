@@ -28,13 +28,14 @@ import * as yup from 'yup';
 const Ticket = ({ form, index, pop, creator }) => {
     const [field, meta, helpers] = useField(`ticketTypes.${index}.ticketTypeName`);
     const [fieldIsFree, metaIsFree, helpersIsFree] = useField(`ticketTypes.${index}.ticketTypePrice`);
+    const [fieldFreeBool, metaFreeBool, helpersFreeBool] = useField(`ticketTypes.${index}.isFree`);
     const [fieldColor, metaColor, helperColor] = useField(`ticketTypes.${index}.ticketColor`);
     const [fieldImage, metaImage, helperImage] = useField(`ticketTypes.${index}.ticketImage`);
     const items = ['Bến Tre', 'Hồ Chí Minh', 'Hà Nội'];
     const cx = classNames.bind(style);
     const fileRef = useRef();
+    const [isFree, setIsFree] = useState(helpersFreeBool.value);
     const [ticketTypeName, setTicketTypeName] = useState('');
-    const [isFree, setIsFree] = useState(false);
     const [color, setColor] = useState('');
     const [image, setImage] = useState('');
     const [isEditingTicketName, setEditingTicketName] = useState(false);
@@ -42,13 +43,19 @@ const Ticket = ({ form, index, pop, creator }) => {
     const handleOpenFileChosen = () => {
         fileRef.current.click();
     };
+    // useEffect(() => {
+    //     const touched = { ...form.touched };
+    //     form.setTouched(touched);
+    // });
     useEffect(() => {
-        if (isFree) {
+        if (isFree == true) {
             helpersIsFree.setValue(0);
         } else {
-            helpersIsFree.setValue('');
+            if (helpersIsFree.value == 0) {
+                helpersIsFree.setValue('');
+            }
         }
-    }, [isFree, helpersIsFree.value]);
+    }, [helpersFreeBool.value, isFree]);
     return (
         <div className={cx('wrapper')}>
             <div key={index} className={cx('container')}>
@@ -109,13 +116,29 @@ const Ticket = ({ form, index, pop, creator }) => {
                 {isEditingForm && (
                     <div className={cx('ticket-container')}>
                         <div className={cx('row col-12')}>
-                            {form.errors && form.errors.ticketTypes && form.errors.ticketTypes[index] ? (
+                            {form.touched?.ticketTypes && form.touched?.ticketTypes[index] && (
+                                <div>{JSON.stringify(form.touched.ticketTypes[index])}</div>
+                            )}
+                            {form.errors &&
+                            form.errors?.ticketTypes &&
+                            form.errors?.ticketTypes[index] &&
+                            form.touched &&
+                            form.touched?.ticketTypes &&
+                            form.touched?.ticketTypes[index] ? (
                                 <div className={cx('ticket-errors')}>
-                                    {Object.values(form.errors.ticketTypes[index]).map((item, index) => (
-                                        <div className={cx('ticket-label')} key={index}>
-                                            {item}
-                                        </div>
-                                    ))}{' '}
+                                    {Object.entries(form.errors.ticketTypes[index]).map(([key, value]) => {
+                                        if (
+                                            1 &&
+                                            form.touched.ticketTypes[index][key] &&
+                                            form.touched.ticketTypes[index][key] === true
+                                        ) {
+                                            return (
+                                                <div className={cx('ticket-label')} key={key}>
+                                                    {value}
+                                                </div>
+                                            );
+                                        } else return null;
+                                    })}
                                 </div>
                             ) : null}
                         </div>
@@ -137,7 +160,7 @@ const Ticket = ({ form, index, pop, creator }) => {
                                         name={`ticketTypes.${index}.ticketTypePrice`}
                                         type="number"
                                         placeholder="Giá vé"
-                                        readOnly={isFree}
+                                        // readOnly={isFree}
                                     />
                                 </div>
                             </div>
@@ -367,7 +390,33 @@ const Ticket = ({ form, index, pop, creator }) => {
                             </div>
                         </div>
                         <div className="row col-12">
-                            <div className={cx('button')}>Hoàn thành</div>
+                            <div
+                                className={cx('button')}
+                                onClick={() => {
+                                    const newTouched = { ...form.touched };
+
+                                    // Mark the specific field as touched in the copy
+                                    // newTouched[`ticketTypes[${index}].totalTicket`] = true;
+
+                                    // Set the updated touched state back to the form
+                                    // const ticketType = form.values.ticketTypes[index]; // Get the specific ticket type object
+                                    // const fieldsToMarkAsTouched = Object.keys(ticketType);
+
+                                    // fieldsToMarkAsTouched.forEach((field) => {
+                                    //     newTouched[`ticketTypes[${index}].${field}`] = true;
+                                    // });
+                                    // form.setFieldTouched(newTouched, true);
+                                    // console.log(form.touched);
+                                    // form.setFieldTouched(`ticketTypes[${index}].totalTicket`, true);
+                                    const fieldsToMarkAsTouched = form.values.ticketTypes[index];
+
+                                    Object.keys(fieldsToMarkAsTouched).forEach((field) => {
+                                        form.setFieldTouched(`ticketTypes[${index}].${field}`, true);
+                                    });
+                                }}
+                            >
+                                Hoàn thành
+                            </div>
                         </div>
                     </div>
                 )}

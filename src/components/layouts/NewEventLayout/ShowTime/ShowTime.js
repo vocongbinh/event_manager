@@ -139,6 +139,7 @@ const ShowTime = ({ form, index, pop }) => {
                                                     push({
                                                         id: uuidv4(),
                                                         showTimeId: form.values.showtimes[index].id,
+                                                        isFree: false,
                                                         ticketTypeName: '',
                                                         ticketTypePrice: '',
                                                         ticketTypeDescription: '',

@@ -1,4 +1,4 @@
-import NewEventHeader from './NewEventHeader/NewEventHeader';
+import FormHeader from '../components/FormHeader';
 import style from './NewEventLayout.module.scss';
 import classNames from 'classnames/bind';
 import ShowTime from './ShowTime/ShowTime';
@@ -66,7 +66,7 @@ const NewEventLayout = () => {
                 ))}
             </div>
             <div className={cx('container')}>
-                <NewEventHeader header={listOptions[step].header} />
+                <FormHeader header={listOptions[step].header} />
 
                 <div hidden={step != 0} className={cx('container1')}>
                     <EventTypeList />

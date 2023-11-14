@@ -42,6 +42,7 @@ const ShowTimes = ({ step }) => {
             yup.object().shape({
                 id: yup.string().required(),
                 showTimeId: yup.string().required(),
+                isFree: yup.boolean().required(),
                 ticketTypeName: yup.string().required('Vui lòng nhập tên loại vé'),
                 ticketTypePrice: yup.number().min(0, 'Giá vé không hợp lệ').required('Vui lòng nhập giá vé'),
                 ticketImage: yup.string().required('Vui lòng chọn ảnh vé'),
@@ -93,6 +94,7 @@ const ShowTimes = ({ step }) => {
                             ticketSales: [],
                         },
                     ],
+
                     ticketTypes: [
                         // {
                         //     id: uuidv4(),
@@ -111,6 +113,10 @@ const ShowTimes = ({ step }) => {
                     ],
                 }}
                 validationSchema={formSchema}
+                // validateOnBlur={true}
+                // validateOnChange={false}
+                // validateOnMount={false}
+                // isInitialValid={true}
                 onSubmit={(values, { setSubmitting }) => {
                     console.log(JSON.stringify(values, null, 2));
                     setTimeout(() => {
@@ -162,6 +168,8 @@ const ShowTimes = ({ step }) => {
                     {step == 2 && (
                         <FieldArray name="showtimes">
                             {({ move, swap, push, insert, unshift, pop, form }) => {
+                                // form.setTouched();
+
                                 return (
                                     <div className={cx('wrapper')}>
                                         {form.values.showtimes.length > 0 &&

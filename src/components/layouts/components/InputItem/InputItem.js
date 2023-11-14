@@ -6,7 +6,7 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { useField } from 'formik';
 const InputItem = ({ label, ...props }) => {
     const cx = classNames.bind(styles);
-    const [inputFocus, setInputFocus] = useState(false);
+    // const [inputFocus, setInputFocus] = useState(false);
     const [field, meta, helpers] = useField(props.name);
     const handleClear = () => {
         console.log('reset input');
@@ -25,8 +25,8 @@ const InputItem = ({ label, ...props }) => {
                         // type="text"
                         // name={name}
                         className={cx('input-item')}
-                        onFocus={() => setInputFocus(true)}
-                        onBlur={() => setInputFocus(false)}
+                        // onFocus={() => setInputFocus(true)}
+                        // onBlur={() => setInputFocus(false)}
                         // placeholder={placeholder}
                         // onChange={(e) => onValueChange(value, e.target.value)}
                     ></input>

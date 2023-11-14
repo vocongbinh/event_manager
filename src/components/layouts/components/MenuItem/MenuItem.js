@@ -18,7 +18,11 @@ const MenuItem = ({ label, items = [], ...props }) => {
         // onValueChange(index);
         setShowMenuItem(false);
     };
-
+    useEffect(() => {
+        if (props.value != undefined) {
+            helpers.setValue(props.value);
+        }
+    }, []);
     return (
         <div className={cx('menu-container')}>
             <div className={cx('title-container')}>
