@@ -24,3 +24,16 @@ export const getTicketOfShowtime = async (showtimeId) => {
         console.log(error);
     }
 };
+//summary
+export const getTypeSummary = async (showtimeId) => {
+    try {
+        const res = await request.get(`api/ticket/summary`, {
+            params: {
+                showtime_id: showtimeId,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import EventItem from './EventItem';
 import styles from './Home.module.scss';
 import classNames from 'classnames/bind';
-import * as eventServices from '../../apiServices/eventService';
+import eventServices from '../../apiServices/eventService';
 
 import Button from '../../components/layouts/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -11,7 +11,7 @@ import {
     faPenToSquare,
     faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as showtimeService from '../../../../apiServices/showtimeService';
 function MyEventItem({ data }) {
@@ -24,9 +24,13 @@ function MyEventItem({ data }) {
             icon: <FontAwesomeIcon icon={faChartLine} />,
             path: `./${data._id}/summary?showId=${showtime._id} `,
         },
-        { title: 'Manage RSVPs', icon: <FontAwesomeIcon icon={faUserGroup} /> },
+        { title: 'Manage moderator', icon: <FontAwesomeIcon icon={faUserGroup} />, path: `./${data._id}/moderator` },
         { title: 'Promote', icon: <FontAwesomeIcon icon={faBullhorn} /> },
-        { title: 'Discount', icon: <FontAwesomeIcon icon={faGift} /> },
+        {
+            title: 'Discount',
+            icon: <FontAwesomeIcon icon={faGift} />,
+            path: `./${data._id}/discount`,
+        },
         { title: 'Edit', icon: <FontAwesomeIcon icon={faPenToSquare} /> },
         { title: 'Replicate', icon: <FontAwesomeIcon icon={faCopy} /> },
     ];
@@ -63,9 +67,9 @@ function MyEventItem({ data }) {
                 <tr>
                     {listOptions.map((option) => (
                         <td className={cx('option-item')}>
-                            <div onClick={() => navigate(option.path)} className={cx('option')}>
+                            <Link to={option.path} target="_blank" className={cx('option')}>
                                 {option.icon} {option.title}
-                            </div>
+                            </Link>
                         </td>
                     ))}
                 </tr>

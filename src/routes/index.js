@@ -19,6 +19,9 @@ import LoginForm from '../components/layouts/AuthenticationLayout/Login/LoginFor
 import Profile from '../components/layouts/AuthenticationLayout/Profile';
 import ResetPassword from '../components/layouts/AuthenticationLayout/ResetPassword';
 import Register from '../components/layouts/AuthenticationLayout/Register';
+import Discount from '../pages/myEvent/Events/OptionManager/Discount';
+import Promote from '../pages/myEvent/Events/OptionManager/Promote';
+import Moderator from '../pages/myEvent/Events/OptionManager/Moderator';
 
 //private router
 const privateRouter = [{}];
@@ -77,6 +80,31 @@ const publicRouter = [
         path: '/my_event/events/:id/summary',
         component: Summary,
         layout: ManageEventLayout,
+        index: 1,
+    },
+    {
+        path: '/my_event/events/:id/moderator',
+        component: Moderator,
+        layout: ManageEventLayout,
+        index: 2,
+    },
+    {
+        path: '/my_event/events/:id/promote',
+        component: Promote,
+        layout: ManageEventLayout,
+        index: 3,
+    },
+    {
+        path: '/my_event/events/:id/discount',
+        component: Discount,
+        layout: ManageEventLayout,
+        index: 4,
+    },
+    {
+        path: '/my_event/events/:id/moderator',
+        component: Discount,
+        layout: ManageEventLayout,
+        index: 5,
     },
     {
         path: '/auth/login',

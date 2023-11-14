@@ -10,7 +10,7 @@ import TicketInformation from './indexing/TicketInformation';
 import Organizer from './indexing/Organizer';
 import React, { useEffect, useRef, useState } from 'react';
 import $ from 'jquery';
-import * as eventService from '../../../src/apiServices/eventService';
+import eventService from '../../../src/apiServices/eventService';
 import * as ticketService from '../../../src/apiServices/ticketService';
 import * as showtimeService from '../../../src/apiServices/showtimeService';
 import Recommended from './indexing/Recommended';

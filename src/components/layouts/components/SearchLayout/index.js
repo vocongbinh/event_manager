@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import * as eventService from '../../../../apiServices/eventService';
+import eventService from '../../../../apiServices/eventService';
 import Tippy from '@tippyjs/react/headless';
 import SearchItem from './SearchItem';
 import { useDebounce } from '../../../../hooks';

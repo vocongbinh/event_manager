@@ -99,3 +99,14 @@ h5,
 p {
     margin-bottom: 0 !important;
 }
+.react-datepicker {
+    font-size: 1rem !important;
+}
+select {
+    outline: none;
+}
+.react-datepicker__input-container {
+    input {
+        width: 100%;
+    }
+}
