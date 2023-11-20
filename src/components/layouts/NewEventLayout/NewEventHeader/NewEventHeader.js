@@ -36,4 +36,4 @@ const NewEventHeader = ({ header }) => {
     );
 };
 
-export default NewEventHeader;
+export default memo(NewEventHeader);

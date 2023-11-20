@@ -5,18 +5,22 @@ import { faCheckCircle, faClose, faEdit, faInfoCircle, faUserEdit } from '@forta
 import Images from '../../../../assets/images';
 import Image from '../../components/Image';
 import DatePicker from '../../components/DatePicker';
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, memo } from 'react';
 import TimePicker from '../../components/TimePicker/TimePicker';
 import MenuItem from '../../components/MenuItem/MenuItem';
 import InputItem from '../../components/InputItem/InputItem';
-import { Formik, Form, useField, FieldArray, Field } from 'formik';
+import { Formik, Form, useField, FieldArray, Field, FormikContext, useFormikContext } from 'formik';
 import * as yup from 'yup';
 import Ticket from '../Ticket/Ticket';
 import ShowTime from '../ShowTime/ShowTime';
+import Button from '../../components/Button';
 import { v4 as uuidv4 } from 'uuid';
+import { useNewEventFormContext } from '../../../../utils/newEventContext';
 
-const ShowTimes = ({ step }) => {
+const ShowTimes = () => {
     const cx = classNames.bind(style);
+    const newEventContext = useNewEventFormContext();
+
     const formSchema = yup.object().shape({
         showtimes: yup.array().of(
             yup.object().shape({
@@ -77,11 +81,19 @@ const ShowTimes = ({ step }) => {
                         const showTimeEndTime = this.parent.ticketEndDate;
                         return value < showTimeEndTime;
                     }),
-                ticketEndDate: yup.date().min(new Date()).required('Vui lòng nhập chọn ngày kết thúc'),
+                ticketEndDate: yup
+                    .date()
+                    .min(new Date())
+                    .required('Vui lòng nhập chọn ngày kết thúc')
+                    .test('min-max-validation', 'Ngày kết thúc phải trễ hơn ngày bắt đầu', function (value) {
+                        // const time = form.showtimes.find((x) => x.id === this.parent.id).showTimeStartDate;
+                        // return value < time;
+                        return true;
+                    }),
             }),
         ),
     });
-
+    console.log('render showtimes');
     return (
         <div>
             <Formik
@@ -89,116 +101,67 @@ const ShowTimes = ({ step }) => {
                     showtimes: [
                         {
                             id: uuidv4(),
-                            showTimeStartDate: null,
-                            showTimeEndDate: null,
+                            showTimeStartDate: '',
+                            showTimeEndDate: '',
                             ticketSales: [],
                         },
                     ],
 
-                    ticketTypes: [
-                        // {
-                        //     id: uuidv4(),
-                        //     ticketTypeName: '',
-                        //     ticketTypePrice: '',
-                        //     ticketTypeDescription: '',
-                        //     ticketImage: null,
-                        //     ticketColor: '',
-                        //     totalTicket: '',
-                        //     minPerOrder: '',
-                        //     maxPerOrder: '',
-                        //     ticketEndDate: null,
-                        //     ticketStartDate: null,
-                        //     ticketInfomation: '',
-                        // },
-                    ],
+                    ticketTypes: [],
                 }}
                 validationSchema={formSchema}
-                // validateOnBlur={true}
-                // validateOnChange={false}
-                // validateOnMount={false}
-                // isInitialValid={true}
                 onSubmit={(values, { setSubmitting }) => {
-                    console.log(JSON.stringify(values, null, 2));
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
+                    console.log(newEventContext.newEvent);
+                    const fullEventData = {
+                        ...newEventContext.newEvent,
+
+                        ...values,
+                    };
+                    alert(JSON.stringify(fullEventData));
                 }}
             >
                 <Form>
-                    {/* {step == 2 && (
-                        <FieldArray name="ticketTypes">
-                            {({ move, swap, push, insert, unshift, pop, form }) => {
-                                return (
-                                    <div className={cx('wrapper')}>
-                                        {form.values.ticketTypes.length > 0 &&
-                                            form.values.ticketTypes.map((ticket, ind) => {
-                                                return <Ticket form={form} pop={pop} index={ind} />;
-                                            })}
-                                        <button
-                                            type="button"
-                                            className={cx('addbutton')}
-                                            onClick={() => {
-                                                console.log(form.values);
-
-                                                push({
-                                                    id: uuidv4(),
-                                                    ticketTypeName: '',
-                                                    ticketTypePrice: '',
-                                                    ticketTypeDescription: '',
-                                                    ticketImage: null,
-                                                    ticketColor: '',
-                                                    totalTicket: '',
-                                                    minPerOrder: '',
-                                                    maxPerOrder: '',
-                                                    ticketEndDate: null,
-                                                    ticketStartDate: null,
-                                                    ticketInfomation: '',
-                                                });
-                                                console.log(form.values);
-                                            }}
-                                        >
-                                            Thêm loại vé
-                                        </button>
+                    <FieldArray name="showtimes">
+                        {({ push, remove, form }) => {
+                            return (
+                                <div className={cx('wrapper')}>
+                                    {form.values.showtimes.length > 0 &&
+                                        form.values.showtimes.map((_, index) => {
+                                            return <ShowTime form={form} index={index} remove={remove} />;
+                                        })}
+                                    <button
+                                        type="button"
+                                        className={cx('add-showtime-button')}
+                                        onClick={() =>
+                                            push({
+                                                id: uuidv4(),
+                                                showTimeStartDate: null,
+                                                showTimeEndDate: null,
+                                            })
+                                        }
+                                    >
+                                        Thêm ngày sự kiện
+                                    </button>
+                                    <div className={cx('item-container')}>
+                                        <div className={cx('action')}>
+                                            <Button
+                                                type="primary"
+                                                className={cx('next-button')}
+                                                size="max"
+                                                background="blue"
+                                            >
+                                                Tạo sự kiện
+                                            </Button>
+                                        </div>
                                     </div>
-                                );
-                            }}
-                        </FieldArray>
-                    )}{' '} */}
-                    {step == 2 && (
-                        <FieldArray name="showtimes">
-                            {({ move, swap, push, insert, unshift, pop, form }) => {
-                                // form.setTouched();
-
-                                return (
-                                    <div className={cx('wrapper')}>
-                                        {form.values.showtimes.length > 0 &&
-                                            form.values.showtimes.map((showtime, index) => {
-                                                return <ShowTime pop={pop} form={form} index={index} />;
-                                            })}
-                                        <button
-                                            type="button"
-                                            className={cx('add-showtime-button')}
-                                            onClick={() =>
-                                                push({
-                                                    id: uuidv4(),
-                                                    showTimeStartDate: null,
-                                                    showTimeEndDate: null,
-                                                })
-                                            }
-                                        >
-                                            Thêm ngày sự kiện
-                                        </button>
-                                        <button type="submit">Submit</button>
-                                    </div>
-                                );
-                            }}
-                        </FieldArray>
-                    )}{' '}
+                                </div>
+                            );
+                        }}
+                    </FieldArray>
                 </Form>
             </Formik>
         </div>
     );
 };
 
-export default ShowTimes;
+export default memo(ShowTimes);

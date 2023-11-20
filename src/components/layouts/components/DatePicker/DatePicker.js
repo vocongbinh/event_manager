@@ -5,8 +5,25 @@ import HeadlessTippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faCircleXmark, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { useField } from 'formik';
+const months = [
+    'Tháng một',
+    'Tháng hai',
+    'Tháng ba',
+    'Tháng tư',
+    'Tháng năm',
+    'Tháng sáu',
+    'Tháng bảy',
+    'Tháng tám',
+    'Tháng chín',
+    'Tháng mười',
+    'Tháng mười một',
+    'Tháng mười hai',
+];
+const days = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
-const DatePicker = forwardRef(({ label, kind = 'primary', ...props }) => {
+const DatePicker = ({ label, kind = 'primary', ...props }) => {
+    const cx = classNames.bind(styles);
+
     const [date, setDate] = useState(new Date());
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date().getMonth());
@@ -20,33 +37,15 @@ const DatePicker = forwardRef(({ label, kind = 'primary', ...props }) => {
     const [field, meta, helpers] = useField(props.name);
     const inputRef = useRef();
 
-    const months = [
-        'Tháng một',
-        'Tháng hai',
-        'Tháng ba',
-        'Tháng tư',
-        'Tháng năm',
-        'Tháng sáu',
-        'Tháng bảy',
-        'Tháng tám',
-        'Tháng chín',
-        'Tháng mười',
-        'Tháng mười một',
-        'Tháng mười hai',
-    ];
-    const days = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
-    let renderCalendar = () => {
+    useEffect(() => {
         setFirstDayOfMonth((prev) => new Date(year, month, 1).getDay());
         setLastDateOfMonth((prev) => new Date(year, month + 1, 0).getDate());
         setLastDayOfMonth((prev) => new Date(year, month, new Date(year, month + 1, 0).getDate()).getDay());
         setLastDateOfLastMonth((prev) => new Date(year, month, 0).getDate());
         setIsToday(month == new Date().getMonth() && new Date().getFullYear() == year);
-    };
-    useEffect(() => {
-        renderCalendar();
         setDateHeader(`${months[month]}, ${year}`);
     }, [date]);
-    const cx = classNames.bind(styles);
+
     const handleClear = () => {
         helpers.setValue(null);
     };
@@ -67,12 +66,13 @@ const DatePicker = forwardRef(({ label, kind = 'primary', ...props }) => {
         }
     };
     const handleSelectDay = (day) => {
+        console.log('select day');
+
         let newDate = new Date(year, month, day);
         setShowDatePicker(false);
         helpers.setValue(newDate);
-        inputRef.current.focus();
+        helpers.setTouched(true);
     };
-
     return (
         <div
             className={cx('date-container', {
@@ -161,12 +161,13 @@ const DatePicker = forwardRef(({ label, kind = 'primary', ...props }) => {
                     )}
                     onClickOutside={() => {
                         setShowDatePicker(false);
+                        helpers.setTouched(true);
                     }}
                 >
                     <div className={cx('date-input')}>
                         <input
                             ref={inputRef}
-                            {...field}
+                            onChange={field.onChange}
                             {...props}
                             value={field.value ? field.value.toLocaleDateString() : ''}
                             type="text"
@@ -191,6 +192,6 @@ const DatePicker = forwardRef(({ label, kind = 'primary', ...props }) => {
             </div>
         </div>
     );
-});
+};
 
 export default memo(DatePicker);

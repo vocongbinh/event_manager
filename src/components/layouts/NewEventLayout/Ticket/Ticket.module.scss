@@ -267,18 +267,37 @@
         object-fit: cover;
     }
 }
-.ticket-errors {
-    background: rgb(255, 216, 216);
-    border-radius: 10px;
-    width: auto;
-    margin: auto;
-    height: auto;
-    padding: 15px;
-    margin-bottom: 10px;
-}
+// .ticket-errors {
+//     border-radius: 10px;
+//     width: auto;
+//     margin: auto;
+//     height: auto;
+// }
 .ticket-label {
+    // padding: 15px;
+    padding: 5px;
+    padding-left: 15px;
     font-size: 13px;
     color: rgb(241, 105, 105);
     font-weight: 500;
     width: 100%;
+    background: rgb(255, 216, 216);
+    &:first-child {
+        padding-top: 15px;
+        border-top-left-radius: 10px; /* Adjust this value based on your design */
+        border-top-right-radius: 10px; /* Adjust this value based on your design */
+    }
+
+    &:last-child {
+        padding-bottom: 15px;
+        border-bottom-left-radius: 10px; /* Adjust this value based on your design */
+        border-bottom-right-radius: 10px; /* Adjust this value based on your design */
+        margin-bottom: 10px;
+    }
+}
+.errorHide {
+    background: rgb(77, 9, 9);
+
+    height: 0px !important;
+    width: 0;
 }

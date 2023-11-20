@@ -6,14 +6,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faAddressCard, faCalendar, faMoneyBill, faPiggyBank } from '@fortawesome/free-solid-svg-icons';
 import InforItem from '../DefaultLayout/Header/InforItem';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import EventTypeList from '../NewEventLayout/EventTypeList';
 import NewEventForm from './NewEventForm/NewEventForm';
 import ShowTimes from './ShowTimes/ShowTimes';
+import { NewEventFormProvider } from '../../../utils/newEventContext';
 const NewEventLayout = () => {
     const cx = classNames.bind(style);
     const [step, setStep] = useState(0);
+    const [maxStep, setMaxStep] = useState(0);
     const listOptions = [
         {
             title: 'Loại sự kiện',
@@ -33,7 +35,11 @@ const NewEventLayout = () => {
             icon: <FontAwesomeIcon icon={faMoneyBill} />,
         },
     ];
-
+    const setNext = useCallback((val) => {
+        console.log('next step');
+        setStep(val);
+        if (maxStep < val) setMaxStep(val);
+    }, []);
     return (
         <div className={cx('content-wrapper')}>
             <div className={cx('sidebar')}>
@@ -61,24 +67,30 @@ const NewEventLayout = () => {
                             selected: index === step,
                         })}
                         data={item}
-                        onClick={() => setStep(index)}
+                        onClick={() => {
+                            if (index <= maxStep) {
+                                setStep(index);
+                            }
+                        }}
                     />
                 ))}
             </div>
-            <div className={cx('container')}>
-                <FormHeader header={listOptions[step].header} />
+            <NewEventFormProvider>
+                <div className={cx('container')}>
+                    <FormHeader header={listOptions[step].header} />
 
-                <div hidden={step != 0} className={cx('container1')}>
-                    <EventTypeList />
-                </div>
-                <div hidden={step != 1} className={cx('container1')}>
-                    <NewEventForm />
-                </div>
+                    <div hidden={step != 0} className={cx('container1')}>
+                        <EventTypeList next={setNext} />
+                    </div>
+                    <div hidden={step != 1} className={cx('container1')}>
+                        <NewEventForm next={setNext} />
+                    </div>
 
-                <div hidden={step != 2} className={cx('container1')}>
-                    <ShowTimes step={step} />
+                    <div hidden={step != 2} className={cx('container1')}>
+                        <ShowTimes />
+                    </div>
                 </div>
-            </div>
+            </NewEventFormProvider>
         </div>
     );
 };

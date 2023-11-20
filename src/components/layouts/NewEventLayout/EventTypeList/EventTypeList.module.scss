@@ -58,6 +58,9 @@
     padding: 20px 25px;
     cursor: pointer;
 }
+.isSelected {
+    background-color: rgb(230, 255, 233);
+}
 
 .icon {
     height: 40px;
@@ -70,4 +73,26 @@
     font-size: 2rem;
     font-weight: semibold;
     flex: 1;
+}
+
+.action {
+    margin-left: auto;
+    margin-right: 10px;
+    width: 200px;
+}
+.showtime-errors {
+    background: rgb(255, 216, 216);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+}
+.showtime-label {
+    margin: auto;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 13px;
+    color: rgb(241, 105, 105);
+    font-weight: 500;
 }

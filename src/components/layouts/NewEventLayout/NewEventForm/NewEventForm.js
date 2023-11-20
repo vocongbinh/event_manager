@@ -12,7 +12,13 @@ import InputItem from '../../components/InputItem/InputItem';
 import { Formik, Form, useField } from 'formik';
 import * as yup from 'yup';
 import TextAreaItem from '../../components/TextAreaItem/TextAreaItem';
-const NewEventForm = () => {
+import Button from '../../components/Button';
+import ImagePicker from '../../components/ImagePicker/ImagePicker';
+import TextEditor from '../../components/TextEditor/TextEditor';
+import { event } from 'jquery';
+import { useNewEventFormContext } from '../../../../utils/newEventContext';
+
+const NewEventForm = ({ next }) => {
     // const [eventName, setEventName] = useState('');
     // const [displacePlace, setDisplacePlace] = useState('');
     // const [address, setAddress] = useState('');
@@ -22,16 +28,13 @@ const NewEventForm = () => {
     // const [districtCode, setDistrictCode] = useState('');
     const items = ['Bến Tre', 'Hồ Chí Minh', 'Hà Nội'];
     const cx = classNames.bind(style);
+    const eventFormContext = useNewEventFormContext();
+
     const formSchema = yup.object().shape({
-        eventType: yup.string().required(),
         eventName: yup.string().required(),
-        displacePlace: yup.string().required(),
-        address: yup.string().required(),
-        provinceCode: yup.number().min(0).required(),
-        districtCode: yup.number().min(0).required(),
-        startDate: yup.date().required(),
-        eventInfomation: yup.string().required(),
+        description: yup.string().required(),
         coverImage: yup.string().required(),
+        // embeddedLinks: yup.array(),
         // startTime: yup.string().url().required(),
     });
 
@@ -39,43 +42,81 @@ const NewEventForm = () => {
         <div className={cx('wrapper')}>
             <Formik
                 initialValues={{
-                    eventName: '',
-                    displacePlace: '',
-                    address: '',
-                    startDate: null,
-                    startTime: '',
-                    provinceCode: -1,
-                    districtCode: -1,
-                    eventInfomation: '',
+                    eventName: 'dd',
+                    description: 'ss',
                     coverImage: '',
+                    // embeddedLinks: [],
                 }}
                 validationSchema={formSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                    console.log('submit');
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
+                    eventFormContext.updateNewEvent(values);
+                    // alert(JSON.stringify(values));
+                    next(2);
                 }}
             >
-                {(formik) => {
-                    return (
-                        <form noValidate onSubmit={formik.handleSubmit}>
-                            <div className={cx('input-container')}>
-                                <div className={cx('title-icon')}>
-                                    {((!formik.values.eventName || formik.errors.eventName) && (
-                                        <FontAwesomeIcon icon={faInfoCircle} className={cx('info-icon')} />
-                                    )) || <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')} />}
-                                    <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
-                                </div>
-                                <div className={cx('item-container')}>
-                                    <div className={cx('title-text')}>Tên sự kiện</div>
-                                    <div className="row col-12">
-                                        <InputItem name="eventName" type="text" placeholder="Tên sự kiện" />
-                                    </div>
+                {(formik) => (
+                    <form onSubmit={formik.handleSubmit}>
+                        <div>{JSON.stringify(formik.errors)}</div>
+                        <div className={cx('input-container')}>
+                            <div className={cx('title-icon')}>
+                                {(formik.touched?.eventName && formik.errors?.eventName && (
+                                    <FontAwesomeIcon icon={faInfoCircle} className={cx('info-icon')} />
+                                )) || <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')} />}
+                                <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
+                            </div>
+                            <div className={cx('item-container')}>
+                                <div className={cx('title-text')}>Tên sự kiện</div>
+                                <div className="row col-12">
+                                    <InputItem name="eventName" type="text" placeholder="Tên sự kiện" />
                                 </div>
                             </div>
-                            <div className={cx('input-container')}>
+                        </div>
+                        <div className={cx('input-container')}>
+                            <div className={cx('title-icon')}>
+                                {(formik.errors.description && formik.touched.description && (
+                                    <FontAwesomeIcon icon={faInfoCircle} className={cx('info-icon')} />
+                                )) || <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')} />}
+                                <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
+                            </div>
+                            <div className={cx('item-container')}>
+                                <div className={cx('title-text')}>Ảnh bìa sự kiện</div>
+                                <div className="row col-12">
+                                    <ImagePicker name="coverImage" type="file" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className={cx('input-container')}>
+                            <div className={cx('title-icon')}>
+                                {(formik.errors.description && formik.touched.description && (
+                                    <FontAwesomeIcon icon={faInfoCircle} className={cx('info-icon')} />
+                                )) || <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')} />}
+                                <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
+                            </div>
+                            <div className={cx('item-container')}>
+                                <div className={cx('title-text')}>Thông tin sự kiện</div>
+                                <div className="row col-12">
+                                    <TextEditor name="description" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className={cx('item-container')}>
+                            <div className={cx('action')}>
+                                <Button type="primary" className={cx('next-button')} size="max" background="blue">
+                                    Tiếp theo
+                                </Button>
+                            </div>
+                        </div>
+                    </form>
+                )}
+            </Formik>
+            <div></div>
+        </div>
+    );
+};
+
+export default memo(NewEventForm);
+{
+    /* <div className={cx('input-container')}>
                                 <div className={cx('title-icon')}>
                                     {((formik.errors.address ||
                                         formik.errors.displacePlace ||
@@ -115,60 +156,5 @@ const NewEventForm = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className={cx('input-container')}>
-                                <div className={cx('title-icon')}>
-                                    {((formik.errors.eventInfomation || !formik.values.eventInfomation) && (
-                                        <FontAwesomeIcon icon={faInfoCircle} className={cx('info-icon')} />
-                                    )) || <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')} />}
-                                    <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
-                                </div>
-                                <div className={cx('item-container')}>
-                                    <div className={cx('title-text')}>Thông tin sự kiện</div>
-                                    <div className="row col-12">
-                                        <TextAreaItem
-                                            name="eventInfomation"
-                                            type="text"
-                                            placeholder="Nhập vào nội dung chi tiết sự kiện"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <div className={cx('input-container')}>
-                                <div className={cx('title-icon')}>
-                                    <div className={cx('title-icon')}>
-                                        {((formik.errors.startDate || formik.errors.startTime) && (
-                                            <FontAwesomeIcon icon={faInfoCircle} className={cx('info-icon')} />
-                                        )) || <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')} />}
-                                        <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
-                                    </div>
-                                </div>
-                                <div className={cx('item-container')}>
-                                    <div className="row col-12">
-                                        <button type="submit" className={` ${cx('addbutton')}`}>
-                                            Tiếp tục
-                                        </button>
-                                    </div>
-                                </div>
-                            </div> */}
-                            <div className={cx('item-container')}>
-                                {/* <div className="row col-6">
-                                    <button type="button" className={` ${cx('addbutton')}`}>
-                                        Lưu lại
-                                    </button>
-                                </div> */}
-                                <div className="row col-12">
-                                    <button type="submit" className={` ${cx('addbutton')}`}>
-                                        Tiếp tục
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    );
-                }}
-            </Formik>
-        </div>
-    );
-};
-
-export default memo(NewEventForm);
+                            </div> */
+}

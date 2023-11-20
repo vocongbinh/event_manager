@@ -22,6 +22,8 @@ import Register from '../components/layouts/AuthenticationLayout/Register';
 import Discount from '../pages/myEvent/Events/OptionManager/Discount';
 import Promote from '../pages/myEvent/Events/OptionManager/Promote';
 import Moderator from '../pages/myEvent/Events/OptionManager/Moderator';
+import Otp from '../components/layouts/AuthenticationLayout/Otp/OtpForm';
+import RegisterSuccess from '../components/layouts/AuthenticationLayout/RegisterSuccess';
 
 //private router
 const privateRouter = [{}];
@@ -117,6 +119,11 @@ const publicRouter = [
         component: ResetPassword,
     },
     {
+        path: '/auth/otp',
+        layout: AuthenticationLayout,
+        component: Otp,
+    },
+    {
         path: '/auth/profile',
         layout: AuthenticationLayout,
         component: Profile,
@@ -125,6 +132,11 @@ const publicRouter = [
         path: '/auth/register',
         layout: AuthenticationLayout,
         component: Register,
+    },
+    {
+        path: '/auth/registersuccess',
+        layout: AuthenticationLayout,
+        component: RegisterSuccess,
     },
 
     // manager even

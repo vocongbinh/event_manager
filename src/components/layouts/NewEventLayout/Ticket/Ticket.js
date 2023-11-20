@@ -16,21 +16,28 @@ import {
 import Images from '../../../../assets/images';
 import Image from '../../components/Image';
 import DatePicker from '../../components/DatePicker';
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect, memo } from 'react';
 import TimePicker from '../../components/TimePicker/TimePicker';
 import MenuItem from '../../components/MenuItem/MenuItem';
 import InputItem from '../../components/InputItem/InputItem';
 import TextAreaItem from '../../components/TextAreaItem/TextAreaItem';
-import { Formik, Form, useField, FieldArray } from 'formik';
+import { Formik, Form, useField, FieldArray, useFormikContext } from 'formik';
 import Button from '../../components/Button';
 import * as yup from 'yup';
 
-const Ticket = ({ form, index, pop, creator }) => {
-    const [field, meta, helpers] = useField(`ticketTypes.${index}.ticketTypeName`);
-    const [fieldIsFree, metaIsFree, helpersIsFree] = useField(`ticketTypes.${index}.ticketTypePrice`);
-    const [fieldFreeBool, metaFreeBool, helpersFreeBool] = useField(`ticketTypes.${index}.isFree`);
-    const [fieldColor, metaColor, helperColor] = useField(`ticketTypes.${index}.ticketColor`);
-    const [fieldImage, metaImage, helperImage] = useField(`ticketTypes.${index}.ticketImage`);
+const Ticket = ({ index, remove }) => {
+    console.log(`render ticket ${index}`);
+    const $ = (prop) => {
+        return `ticketTypes.${index}.${prop.toString()}`;
+    };
+    const form = useFormikContext();
+    const field = form.values.ticketTypes[index];
+    const [fieldTicket, meta, helpers] = useField($('ticketTypeName'));
+    const [fieldIsFree, metaIsFree, helpersIsFree] = useField($('ticketTypePrice'));
+    const [fieldFreeBool, metaFreeBool, helpersFreeBool] = useField($('isFree'));
+    const [fieldColor, metaColor, helperColor] = useField($('ticketColor'));
+    const [fieldImage, metaImage, helperImage] = useField($('ticketImage'));
+    const [fieldEndDate, metaEndDate, helperEndDate] = useField($('ticketEndDate'));
     const items = ['Bến Tre', 'Hồ Chí Minh', 'Hà Nội'];
     const cx = classNames.bind(style);
     const fileRef = useRef();
@@ -39,14 +46,20 @@ const Ticket = ({ form, index, pop, creator }) => {
     const [color, setColor] = useState('');
     const [image, setImage] = useState('');
     const [isEditingTicketName, setEditingTicketName] = useState(false);
-    const [isEditingForm, setEditingForm] = useState(creator === form.values.ticketTypes[index].creator);
+    const [isEditingForm, setEditingForm] = useState(true);
+    const [errorLength, setErrorLength] = useState(0);
     const handleOpenFileChosen = () => {
         fileRef.current.click();
     };
+    // console.log(metaEndDate.value);
     // useEffect(() => {
-    //     const touched = { ...form.touched };
-    //     form.setTouched(touched);
-    // });
+    //     helperEndDate.setError('s kết thúc bán vé phải trước thời gian sự kiện bắt đầu');
+    // }, []);
+
+    // useEffect(() => {
+    //     // if (metaEndDate.value > formContext.values.showtimes[index].showTimeStartDate) {
+    //     // } else helperEndDate.setError('');
+    // }, [metaEndDate.value]);
     useEffect(() => {
         if (isFree == true) {
             helpersIsFree.setValue(0);
@@ -62,8 +75,8 @@ const Ticket = ({ form, index, pop, creator }) => {
                 {isEditingTicketName && isEditingForm && (
                     <div className={cx('header-edit')}>
                         <input
-                            name={`ticketTypes.${index}.ticketTypeName`}
-                            value={form.values.ticketTypes[index].ticketTypeName}
+                            name={$(`ticketTypeName`)}
+                            value={field.ticketTypeName}
                             type="text"
                             onBlur={() => {
                                 setEditingTicketName(false);
@@ -85,27 +98,26 @@ const Ticket = ({ form, index, pop, creator }) => {
                         <button
                             onClick={() => {
                                 if (isEditingForm) {
-                                    console.log('click button ticket type');
+                                    // console.log('click button ticket type');
                                     setEditingTicketName(true);
                                 }
                             }}
                             type="button"
                             className={cx('ticket-type-name')}
                         >
-                            {form.values.ticketTypes[index].ticketTypeName
-                                ? form.values.ticketTypes[index].ticketTypeName
-                                : 'Tên loại vé'}
+                            {field.ticketTypeName ? field.ticketTypeName : 'Tên loại vé'}
                         </button>
 
                         <div>
                             <FontAwesomeIcon
-                                onClick={() => setEditingForm(!isEditingForm)}
+                                onClick={() => setEditingForm(true)}
                                 icon={faPenToSquare}
                                 className={cx('action-icon')}
                             />
                             <FontAwesomeIcon
                                 onClick={() => {
-                                    pop(index);
+                                    console.log('index' + index);
+                                    remove(index);
                                 }}
                                 icon={faTrashCan}
                                 className={cx('action-icon')}
@@ -116,22 +128,27 @@ const Ticket = ({ form, index, pop, creator }) => {
                 {isEditingForm && (
                     <div className={cx('ticket-container')}>
                         <div className={cx('row col-12')}>
-                            {form.touched?.ticketTypes && form.touched?.ticketTypes[index] && (
-                                <div>{JSON.stringify(form.touched.ticketTypes[index])}</div>
-                            )}
+                            {/* form.touched?.ticketTypes && form.touched?.ticketTypes[index] && ( */}
+                            {/* // <div>{JSON.stringify(form.touched.ticketTypes[index])}</div> */}
+                            {/* )} */}
                             {form.errors &&
                             form.errors?.ticketTypes &&
                             form.errors?.ticketTypes[index] &&
                             form.touched &&
                             form.touched?.ticketTypes &&
                             form.touched?.ticketTypes[index] ? (
-                                <div className={cx('ticket-errors')}>
+                                <div
+                                    className={cx('ticket-errors', {
+                                        errorHide: errorLength === 0,
+                                    })}
+                                >
                                     {Object.entries(form.errors.ticketTypes[index]).map(([key, value]) => {
                                         if (
                                             1 &&
                                             form.touched.ticketTypes[index][key] &&
                                             form.touched.ticketTypes[index][key] === true
                                         ) {
+                                            if (errorLength == 0) setErrorLength(1);
                                             return (
                                                 <div className={cx('ticket-label')} key={key}>
                                                     {value}
@@ -157,7 +174,7 @@ const Ticket = ({ form, index, pop, creator }) => {
                                         </div>
                                     </div>
                                     <InputItem
-                                        name={`ticketTypes.${index}.ticketTypePrice`}
+                                        name={$('ticketTypePrice')}
                                         type="number"
                                         placeholder="Giá vé"
                                         // readOnly={isFree}
@@ -169,11 +186,7 @@ const Ticket = ({ form, index, pop, creator }) => {
                                     <div className={cx('input-header')}>
                                         <div className={cx('input-label')}>Tổng lượng vé</div>
                                     </div>
-                                    <InputItem
-                                        name={`ticketTypes.${index}.totalTicket`}
-                                        type="number"
-                                        placeholder="Tổng lượng vé"
-                                    />
+                                    <InputItem name={$('totalTicket')} type="number" placeholder="Tổng lượng vé" />
                                 </div>
                             </div>
                             <div className="col-md-3">
@@ -181,11 +194,7 @@ const Ticket = ({ form, index, pop, creator }) => {
                                     <div className={cx('input-header')}>
                                         <div className={cx('input-label')}>Số vé tối thiểu trên đơn hàng</div>
                                     </div>
-                                    <InputItem
-                                        name={`ticketTypes.${index}.minPerOrder`}
-                                        type="number"
-                                        placeholder="Vé tối thiểu"
-                                    />
+                                    <InputItem name={$('minPerOrder')} type="number" placeholder="Vé tối thiểu" />
                                 </div>
                             </div>
                             <div className="col-md-3">
@@ -193,11 +202,7 @@ const Ticket = ({ form, index, pop, creator }) => {
                                     <div className={cx('input-header')}>
                                         <div className={cx('input-label')}>Số vé tối đa trên đơn hàng</div>
                                     </div>
-                                    <InputItem
-                                        name={`ticketTypes.${index}.maxPerOrder`}
-                                        type="number"
-                                        placeholder="Vé tối đa"
-                                    />
+                                    <InputItem name={$('maxPerOrder')} type="number" placeholder="Vé tối đa" />
                                 </div>
                             </div>
                         </div>
@@ -220,7 +225,7 @@ const Ticket = ({ form, index, pop, creator }) => {
                             <div className="col-md-4">
                                 <div className={cx('input-container')}>
                                     <InputItem
-                                        name={`ticketTypes.${index}.ticketTypePrice`}
+                                        name={$(ticketTypePrice)}
                                         type="number"
                                         placeholder="Giá vé"
                                         readOnly={isFree}
@@ -238,7 +243,7 @@ const Ticket = ({ form, index, pop, creator }) => {
                             <div className="col-md-4">
                                 <div className={cx('input-container')}>
                                     <InputItem
-                                        name={`ticketTypes.${index}.totalTicket`}
+                                        name={$(totalTicket)}
                                         type="number"
                                         placeholder="Tổng lượng vé"
                                     />
@@ -257,7 +262,7 @@ const Ticket = ({ form, index, pop, creator }) => {
                             <div className="col-md-4">
                                 <div className={cx('input-container')}>
                                     <InputItem
-                                        name={`ticketTypes.${index}.minPerOrder`}
+                                        name={$(minPerOrder)}
                                         type="number"
                                         placeholder="Vé tối thiểu"
                                     />
@@ -273,7 +278,7 @@ const Ticket = ({ form, index, pop, creator }) => {
 
                             <div className="col-md-4">
                                 <InputItem
-                                    name={`ticketTypes.${index}.maxPerOrder`}
+                                    name={$(maxPerOrder)}
                                     type="number"
                                     placeholder="Vé tối đa"
                                 />
@@ -287,16 +292,16 @@ const Ticket = ({ form, index, pop, creator }) => {
                                     </div>
                                     <div className="col-md-4">
                                         <DatePicker
-                                            name={`ticketTypes.${index}.ticketStartDate`}
+                                            name={$('ticketStartDate')}
                                             type="text"
                                             placeholder="Ngày bắt đầu"
                                         />
                                     </div>
                                     <div className="col-md-4">
                                         <TimePicker
-                                            date={form.values.ticketTypes[index].ticketStartDate}
-                                            isDisabled={form.values.ticketTypes[index].ticketStartDate === null}
-                                            name={`ticketTypes.${index}.ticketStartDate`}
+                                            date={field.ticketStartDate}
+                                            isDisabled={field.ticketStartDate === null}
+                                            name={$('ticketStartDate')}
                                             type="text"
                                             placeholder="Giờ bắt đầu"
                                         />
@@ -307,17 +312,13 @@ const Ticket = ({ form, index, pop, creator }) => {
                                         <div className={cx('input-label')}>Ngày kết thúc bán</div>
                                     </div>
                                     <div className="col-md-4">
-                                        <DatePicker
-                                            name={`ticketTypes.${index}.ticketEndDate`}
-                                            type="text"
-                                            placeholder="Ngày kết thúc"
-                                        />
+                                        <DatePicker name={$('ticketEndDate')} type="text" placeholder="Ngày kết thúc" />
                                     </div>
                                     <div className="col-md-4">
                                         <TimePicker
-                                            date={form.values.ticketTypes[index].ticketEndDate}
-                                            isDisabled={form.values.ticketTypes[index].ticketEndDate === null}
-                                            name={`ticketTypes.${index}.ticketEndDate`}
+                                            date={field.ticketEndDate}
+                                            isDisabled={field.ticketEndDate === null}
+                                            name={$('ticketEndDate')}
                                             type="text"
                                             placeholder="Giờ kết thúc"
                                         />
@@ -337,7 +338,7 @@ const Ticket = ({ form, index, pop, creator }) => {
                                                 setColor(e.target.value);
                                                 helperColor.setValue('color');
                                             }}
-                                            name={`ticketTypes.${index}.ticketColor`}
+                                            name={$('ticketColor')}
                                             type="color"
                                         ></input>
                                     </div>
@@ -349,15 +350,11 @@ const Ticket = ({ form, index, pop, creator }) => {
                         <div className={cx('divider')}></div>
                         <div className={cx('row col-12')}>
                             <div className="col-md-9">
-                                <TextAreaItem
-                                    name={`ticketTypes.${index}.ticketInfomation`}
-                                    type="text"
-                                    placeholder="Thông tin vé"
-                                />
+                                <TextAreaItem name={$('ticketInfomation')} type="text" placeholder="Thông tin vé" />
                             </div>
                             <div className="col-md-3">
                                 <input
-                                    name={`ticketTypes.${index}.ticketImage`}
+                                    name={$('ticketImage')}
                                     className={cx('file-input')}
                                     type="file"
                                     // value={image ?? ''}
@@ -395,24 +392,14 @@ const Ticket = ({ form, index, pop, creator }) => {
                                 onClick={() => {
                                     const newTouched = { ...form.touched };
 
-                                    // Mark the specific field as touched in the copy
-                                    // newTouched[`ticketTypes[${index}].totalTicket`] = true;
-
-                                    // Set the updated touched state back to the form
-                                    // const ticketType = form.values.ticketTypes[index]; // Get the specific ticket type object
-                                    // const fieldsToMarkAsTouched = Object.keys(ticketType);
-
-                                    // fieldsToMarkAsTouched.forEach((field) => {
-                                    //     newTouched[`ticketTypes[${index}].${field}`] = true;
-                                    // });
-                                    // form.setFieldTouched(newTouched, true);
-                                    // console.log(form.touched);
-                                    // form.setFieldTouched(`ticketTypes[${index}].totalTicket`, true);
-                                    const fieldsToMarkAsTouched = form.values.ticketTypes[index];
+                                    const fieldsToMarkAsTouched = field;
 
                                     Object.keys(fieldsToMarkAsTouched).forEach((field) => {
                                         form.setFieldTouched(`ticketTypes[${index}].${field}`, true);
                                     });
+                                    if (!form.errors?.ticketTypes || !form.errors?.ticketTypes[index]) {
+                                        setEditingForm(false);
+                                    }
                                 }}
                             >
                                 Hoàn thành
@@ -427,17 +414,13 @@ const Ticket = ({ form, index, pop, creator }) => {
                                 <div className={cx('input-label')}>Ngày bắt đầu bán</div>
                             </div>
                             <div className="col-md-4">
-                                <DatePicker
-                                    name={`ticketTypes.${index}.ticketStartDate`}
-                                    type="text"
-                                    placeholder="Ngày bắt đầu"
-                                />
+                                <DatePicker name={$('ticketStartDate')} type="text" placeholder="Ngày bắt đầu" />
                             </div>
                             <div className="col-md-4">
                                 <TimePicker
-                                    date={form.values.ticketTypes[index].ticketStartDate}
-                                    isDisabled={form.values.ticketTypes[index].ticketStartDate === null}
-                                    name={`ticketTypes.${index}.ticketStartDate`}
+                                    date={field.ticketStartDate}
+                                    isDisabled={field.ticketStartDate === null}
+                                    name={$('ticketStartDate')}
                                     type="text"
                                     placeholder="Giờ bắt đầu"
                                 />
@@ -448,17 +431,13 @@ const Ticket = ({ form, index, pop, creator }) => {
                                 <div className={cx('input-label')}>Ngày kết thúc bán</div>
                             </div>
                             <div className="col-md-4">
-                                <DatePicker
-                                    name={`ticketTypes.${index}.ticketEndDate`}
-                                    type="text"
-                                    placeholder="Ngày kết thúc"
-                                />
+                                <DatePicker name={$('ticketEndDate')} type="text" placeholder="Ngày kết thúc" />
                             </div>
                             <div className="col-md-4">
                                 <TimePicker
-                                    date={form.values.ticketTypes[index].ticketEndDate}
-                                    isDisabled={form.values.ticketTypes[index].ticketEndDate === null}
-                                    name={`ticketTypes.${index}.ticketEndDate`}
+                                    date={field.ticketEndDate}
+                                    isDisabled={field.ticketEndDate === null}
+                                    name={$('ticketEndDate')}
                                     type="text"
                                     placeholder="Giờ kết thúc"
                                 />
@@ -471,4 +450,4 @@ const Ticket = ({ form, index, pop, creator }) => {
     );
 };
 
-export default Ticket;
+export default memo(Ticket);
