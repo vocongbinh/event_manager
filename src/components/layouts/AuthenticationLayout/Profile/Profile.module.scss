@@ -1,6 +1,6 @@
 .wrapper {
     // margin: 10px auto;
-    height: 100%;
+    height: auto;
     max-width: 100%;
     box-sizing: border-box;
     margin: auto;
@@ -12,6 +12,7 @@
     border: 1.5px solid rgb(231, 237, 249);
     padding: 20px;
     overflow: hidden;
+    // overflow: visible;
 }
 .login-button {
     background: white;
@@ -41,4 +42,34 @@
     background: transparent;
     margin-bottom: 20px;
     margin-top: -10px;
+}
+.error-errors {
+    background: rgb(255, 216, 216);
+    border-radius: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+    height: auto;
+}
+.error-label {
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 13px;
+    color: rgb(241, 105, 105);
+    font-weight: 500;
+}
+.success-wrapper {
+    background: rgb(255, 216, 216);
+    border-radius: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+    height: auto;
+}
+.success-label {
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 13px;
+    color: rgb(241, 105, 105);
+    font-weight: 500;
 }

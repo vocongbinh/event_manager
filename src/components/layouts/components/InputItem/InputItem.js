@@ -8,6 +8,7 @@ const InputItem = ({ label, ...props }) => {
     const cx = classNames.bind(styles);
     // const [inputFocus, setInputFocus] = useState(false);
     const [field, meta, helpers] = useField(props.name);
+
     const handleClear = () => {
         console.log('reset input');
         helpers.setValue('');
@@ -31,7 +32,13 @@ const InputItem = ({ label, ...props }) => {
                         // onChange={(e) => onValueChange(value, e.target.value)}
                     ></input>
                     {field.value != '' && (
-                        <button type="button" className={cx('post-icon')} onClick={handleClear}>
+                        <button
+                            type="button"
+                            className={cx('post-icon', {
+                                hideClearIcon: props.readOnly == true,
+                            })}
+                            onClick={handleClear}
+                        >
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
                     )}

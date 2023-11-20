@@ -1,21 +1,25 @@
 import { set } from 'date-fns';
 import { createContext, useContext, useState } from 'react';
+
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-    const [userData, setUser] = useState({});
     const [registerData, setRegister] = useState({});
+    const [userInfo, setUserInfo] = useState({});
     const logIn = (values) => {
-        setUser(values);
+        console.log(values);
+        if (values.userToken) localStorage.setItem('userToken', values.userToken);
+        setUserInfo(values);
     };
+
     const logOut = () => {
-        setUser({});
+        setUserInfo({});
     };
     const register = (data) => {
         setRegister(data);
     };
     return (
-        <AuthContext.Provider value={{ userData, registerData, logIn, logOut, register }}>
+        <AuthContext.Provider value={{ userInfo, registerData, logIn, logOut, register, setUserInfo }}>
             {children}
         </AuthContext.Provider>
     );

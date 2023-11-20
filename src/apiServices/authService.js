@@ -53,6 +53,19 @@ const authService = {
             }
         });
     },
+    editProfile: (values) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await request.post(`api/user/editProfile`, {
+                    ...values,
+                });
+                console.log(res.data);
+                resolve(res.data);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    },
     // register: async (phoneNumber, password) => {
     //     try {
     //         const res = await request.get(`api/auth/login`, {

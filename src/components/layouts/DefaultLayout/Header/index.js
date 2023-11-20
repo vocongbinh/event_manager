@@ -15,7 +15,7 @@ function Header() {
         {
             title: 'Edit Profile',
             icon: <FontAwesomeIcon icon={faGear} />,
-            path: '/edit_profile',
+            path: '/auth/profile',
         },
         {
             title: 'My organization Profile',
