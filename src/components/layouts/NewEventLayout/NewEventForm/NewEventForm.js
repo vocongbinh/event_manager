@@ -56,7 +56,6 @@ const NewEventForm = ({ next }) => {
             >
                 {(formik) => (
                     <form onSubmit={formik.handleSubmit}>
-                        <div>{JSON.stringify(formik.errors)}</div>
                         <div className={cx('input-container')}>
                             <div className={cx('title-icon')}>
                                 {(formik.touched?.eventName && formik.errors?.eventName && (
