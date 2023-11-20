@@ -24,6 +24,7 @@ import Promote from '../pages/myEvent/Events/OptionManager/Promote';
 import Moderator from '../pages/myEvent/Events/OptionManager/Moderator';
 import Otp from '../components/layouts/AuthenticationLayout/Otp/OtpForm';
 import RegisterSuccess from '../components/layouts/AuthenticationLayout/RegisterSuccess';
+import TypeEvent from '../pages/TypeEvent';
 
 //private router
 const privateRouter = [{}];
@@ -102,6 +103,7 @@ const publicRouter = [
         layout: ManageEventLayout,
         index: 4,
     },
+
     {
         path: '/my_event/events/:id/moderator',
         component: Discount,
@@ -138,7 +140,10 @@ const publicRouter = [
         layout: AuthenticationLayout,
         component: RegisterSuccess,
     },
-
+    {
+        path: '/events/typeEvent',
+        component: TypeEvent,
+    },
     // manager even
 ];
 export { privateRouter, publicRouter };

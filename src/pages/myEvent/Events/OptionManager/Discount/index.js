@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import eventService from '../../../../../apiServices/eventService';
-import * as ticketService from '../../../../../apiServices/ticketService';
+import ticketService from '../../../../../apiServices/ticketService';
 import { useLocation, useParams } from 'react-router-dom';
 import format from 'date-fns/format';
 import Button from '../../../../../components/layouts/components/Button';

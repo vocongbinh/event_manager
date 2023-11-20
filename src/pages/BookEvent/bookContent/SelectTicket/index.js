@@ -17,7 +17,7 @@ import {
 import Images from '../../../../assets/images';
 import { useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-import * as ticketService from '../../../../apiServices/ticketService';
+import ticketService from '../../../../apiServices/ticketService';
 import TicketTypeItem from '../../TicketTypeItem';
 import { BookContext } from '../..';
 function SelectTicket() {

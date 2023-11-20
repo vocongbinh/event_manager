@@ -12,5 +12,6 @@ const Images = {
     neLogo: require('./ne_logo.svg').default,
     iconStep: require('./icon-step.svg'),
     zalopayLogo: require('./zalopay_logo.png'),
+    typeEventImg: require('./type_event_img.jpg'),
 };
 export default Images;

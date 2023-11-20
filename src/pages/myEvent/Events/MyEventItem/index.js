@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import * as showtimeService from '../../../../apiServices/showtimeService';
+import showtimeService from '../../../../apiServices/showtimeService';
 function MyEventItem({ data }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();

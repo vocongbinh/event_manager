@@ -11,7 +11,7 @@ import { extendMoment } from 'moment-range';
 import Button from '../../../../../components/layouts/components/Button';
 import 'react-datepicker/dist/react-datepicker.css';
 import eventService from '../../../../../apiServices/eventService';
-import * as ticketService from '../../../../../apiServices/ticketService';
+import ticketService from '../../../../../apiServices/ticketService';
 import Chart, { Colors } from 'chart.js/auto';
 import { format } from 'date-fns';
 

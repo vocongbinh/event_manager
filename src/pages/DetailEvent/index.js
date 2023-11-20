@@ -11,12 +11,11 @@ import Organizer from './indexing/Organizer';
 import React, { useEffect, useRef, useState } from 'react';
 import $ from 'jquery';
 import eventService from '../../../src/apiServices/eventService';
-import * as ticketService from '../../../src/apiServices/ticketService';
-import * as showtimeService from '../../../src/apiServices/showtimeService';
+import ticketService from '../../apiServices/ticketService';
 import Recommended from './indexing/Recommended';
 import { useParams } from 'react-router-dom';
 import Calendar from './indexing/Calendar';
-
+import showtimeService from '../../apiServices/showtimeService';
 function DetailEvent({ children }) {
     const cx = classNames.bind(styles);
     const [activeIndex, setActiveIndex] = useState(0);

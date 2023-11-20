@@ -61,5 +61,26 @@ const eventService = {
             console.log(error);
         }
     },
+    filterEvent: async ({ address, start, end, price, types }) => {
+        try {
+            console.log(types);
+            const res = await request.get('api/event/filter', {
+                params: {
+                    address: address,
+                    start: start,
+                    end: end,
+                    price: price,
+                    types: types,
+                },
+                paramsSerializer: {
+                    indexes: null,
+                },
+            });
+            console.log(res.data);
+            return res.data;
+        } catch (e) {
+            console.log(e);
+        }
+    },
 };
 export default eventService;
