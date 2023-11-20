@@ -45,7 +45,7 @@ function Sidebar() {
     return (
         <div className={cx('wrapper')}>
             {listCategorys.map((category) => (
-                <CategoryItem data={category} />
+                <CategoryItem data={category} to="/events/typeEvent" />
             ))}
         </div>
     );

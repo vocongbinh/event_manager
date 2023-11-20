@@ -1,13 +1,15 @@
+import { format } from 'date-fns';
 import styles from './EventItem.module.scss';
 import classNames from 'classnames/bind';
 function EventItem({ data }) {
     const cx = classNames.bind(styles);
-    console.log(data);
+    const time = data.showtimes[0].startAt;
+    const startTime = format(new Date(time), 'dd/MM/yyyy');
     return (
         <a target="_blank" href={`/events/${data._id}/`} className={cx('wrapper')}>
             <img className={cx('content-img')} src={data.coverImage} />
             <p className={cx('name')}>{data.eventName}</p>
-            <p className={cx('time')}>{data.showtimes[0].startAt}</p>
+            <p className={cx('time')}>{startTime}</p>
             <p className={cx('type')}>{data.eventType}</p>
         </a>
     );

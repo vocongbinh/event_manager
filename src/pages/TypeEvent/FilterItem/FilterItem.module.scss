@@ -1,0 +1,50 @@
+.wrapper {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    > button {
+        background-color: transparent;
+        width: 100%;
+        padding: 10px 8px 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--white);
+        border: none;
+        border-radius: 0px;
+        border-right: 1px solid #eee;
+        &:active {
+            background-color: transparent !important;
+        }
+        &:hover {
+            background-color: transparent;
+            border-right: 1px solid #eee !important;
+        }
+        span {
+            margin-left: 12px;
+            color: #666;
+            font-size: 1.4rem;
+        }
+        .icon {
+            color: #ccc;
+        }
+
+        .suf-icon {
+            align-content: end;
+        }
+    }
+}
+.item {
+    padding: 8px 10px;
+    &:hover {
+        span {
+            color: var(--white);
+        }
+        background-color: #90ba3e !important;
+    }
+}
+.custom-date {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}

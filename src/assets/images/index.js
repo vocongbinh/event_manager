@@ -11,5 +11,6 @@ const Images = {
     headingRight: require('./heading-img-1-right.svg'),
     iconStep: require('./icon-step.svg'),
     zalopayLogo: require('./zalopay_logo.png'),
+    typeEventImg: require('./type_event_img.jpg'),
 };
 export default Images;

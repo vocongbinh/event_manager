@@ -15,6 +15,7 @@ import Summary from '../pages/myEvent/Events/OptionManager/Summary';
 import Discount from '../pages/myEvent/Events/OptionManager/Discount';
 import Promote from '../pages/myEvent/Events/OptionManager/Promote';
 import Moderator from '../pages/myEvent/Events/OptionManager/Moderator';
+import TypeEvent from '../pages/TypeEvent';
 
 //private router
 const privateRouter = [{}];
@@ -89,11 +90,16 @@ const publicRouter = [
         layout: ManageEventLayout,
         index: 4,
     },
+
     {
         path: '/my_event/events/:id/moderator',
         component: Discount,
         layout: ManageEventLayout,
         index: 5,
+    },
+    {
+        path: '/events/typeEvent',
+        component: TypeEvent,
     },
     // manager even
 ];

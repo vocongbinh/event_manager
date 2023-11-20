@@ -1,0 +1,116 @@
+.wrapper {
+    width: 100%;
+    height: 100vh;
+}
+.header-layout {
+    background-image: url('https://static.tkbcdn.com/site/global/content-v2/img/home-search-bg-05.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 100%;
+    height: 250px;
+}
+.header {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-color: transparent;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 0;
+    min-height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+}
+.search {
+    width: 40%;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .search-title {
+        text-align: center;
+        font-size: 2.8rem;
+        line-height: 27px;
+        text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.5);
+        font-weight: 700;
+        color: var(--white);
+    }
+    .search-layout {
+        margin-top: 20px;
+        display: flex;
+        width: 100%;
+        padding: 0px 20px;
+        align-items: center;
+        background-color: var(--white);
+        input {
+            padding: 12px 0px;
+            width: 100%;
+            font-size: 1.6rem;
+            border: none;
+            outline: none;
+            background-color: transparent;
+        }
+    }
+}
+//container
+.container {
+    background-color: #f1f1f1;
+}
+.container-header {
+    padding: 16px 0px;
+    background-color: var(--white);
+}
+.filter-layout {
+    width: 70%;
+    margin: 0px auto;
+    border: 3px solid #eee;
+    border-radius: 3px;
+    display: flex;
+
+    select {
+        border: none;
+        outline: none;
+        border-right: 1px solid #eee;
+        font-size: 1.4rem;
+        padding: 10px 20px;
+        width: 25%;
+    }
+}
+.event-layout {
+    width: 70%;
+    margin: 0px auto;
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    height: 500px;
+}
+
+//tippy
+.tippy-wrapper {
+    width: 100%;
+    background: rgb(255, 255, 255);
+    box-shadow: rgba(42, 45, 52, 0.2) 0px 4px 20px;
+    border-radius: 8px;
+
+    z-index: 2;
+    display: block;
+}
+.see-all-btn {
+    padding: 6px 16px;
+    display: block;
+    font-size: 14px;
+}
+.test {
+    width: 200px;
+}

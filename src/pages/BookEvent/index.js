@@ -25,6 +25,8 @@ import * as ticketService from '../../apiServices/ticketService';
 import TicketTypeItem from './TicketTypeItem';
 import SelectTicket from './bookContent/SelectTicket';
 import PaymentInfo from './bookContent/PaymentInfo';
+import { useQueries, useQuery } from 'react-query';
+import eventService from '../../apiServices/eventService';
 export const BookContext = createContext();
 function BookEvent({ children, ...props }) {
     const cx = classNames.bind(styles);
@@ -41,8 +43,12 @@ function BookEvent({ children, ...props }) {
     const [reEmail, setReEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const navigate = useNavigate();
-
+    const [event, setEvent] = useState();
     const nf = new Intl.NumberFormat();
+    const {} = useQuery('book', async () => {
+        const eventData = await eventService.detailEvent(params.id);
+        setEvent(eventData);
+    });
     let total = 0;
     let propsProvider = {};
     switch (props.index) {
@@ -133,11 +139,9 @@ function BookEvent({ children, ...props }) {
                     <div className="col-xs-12">
                         <div className="row w-100">
                             <div className={`col-8 ${cx('infor-event')}`}>
-                                <p className={cx('name')}>[FLOWER 1969’s] SOAP WORKSHOP - HỌC LÀM XÀ PHÒNG</p>
-                                <p className={cx('address-time')}>
-                                    Flower 1969’s - The Seat Cafe - 491/2 Lê Văn Sỹ, Phường 12, Quận 3, TP.HCM
-                                </p>
-                                <p className={cx('address-time')}>Saturday, 14 October 2023, 2:00 PM+0700</p>
+                                <p className={cx('name')}>{event.eventName}</p>
+                                <p className={cx('address-time')}>{event.address}</p>
+                                <p className={cx('address-time')}>{event.startTime}</p>
                             </div>
                         </div>
                     </div>

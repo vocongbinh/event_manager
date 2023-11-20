@@ -1,0 +1,48 @@
+.wrapper {
+    // height: 100&;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+}
+.header {
+    width: 100%;
+}
+.body {
+    padding: 20px;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+.title {
+    font-size: 2rem;
+    color: #333;
+    font-weight: bold;
+}
+.information {
+    font-size: 1.6rem;
+}
+.price {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+}
+.location {
+    padding: 0px 4px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    color: #666;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+.time {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+}
