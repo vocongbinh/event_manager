@@ -68,10 +68,10 @@ function DetailEvent({ children }) {
             },
         },
     ];
-    useEffect(() => {
-        const scrollEvent = window.addEventListener('scroll', () => {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('scroll', () => {
             const offsetTop = window.scrollY + 60;
-
+            console.log('dffd');
             for (let i = 0; i < listOption.length; i++) {
                 if (offsetTop <= listOption[i].ref.current.offsetTop + listOption[i].ref.current.clientHeight) {
                     setActiveIndex(i);
@@ -80,7 +80,36 @@ function DetailEvent({ children }) {
                 }
             }
         });
+    });
+    useEffect(() => {
+        let scrollEvent;
+        if (document.readyState !== 'loading') {
+            scrollEvent = window.addEventListener('scroll', () => {
+                const offsetTop = window.scrollY + 60;
 
+                for (let i = 0; i < listOption.length; i++) {
+                    if (offsetTop <= listOption[i].ref.current.offsetTop + listOption[i].ref.current.clientHeight) {
+                        setActiveIndex(i);
+
+                        break;
+                    }
+                }
+            });
+        } else {
+            document.addEventListener('DOMContentLoaded', function () {
+                scrollEvent = window.addEventListener('scroll', () => {
+                    const offsetTop = window.scrollY + 60;
+
+                    for (let i = 0; i < listOption.length; i++) {
+                        if (offsetTop <= listOption[i].ref.current.offsetTop + listOption[i].ref.current.clientHeight) {
+                            setActiveIndex(i);
+
+                            break;
+                        }
+                    }
+                });
+            });
+        }
         const fetchAPi = async () => {
             try {
                 const event = await eventService.detailEvent(params.id);

@@ -21,7 +21,7 @@ function DropdownButton({ data, preIcon, sufIcon, text, className }) {
         {
             title: 'My Events',
             icon: <FontAwesomeIcon icon={faCalendar} />,
-            href: '/',
+            href: '/my_event/events',
         },
         {
             title: 'My Profile',

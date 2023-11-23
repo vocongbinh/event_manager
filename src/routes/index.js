@@ -16,7 +16,8 @@ import Discount from '../pages/myEvent/Events/OptionManager/Discount';
 import Promote from '../pages/myEvent/Events/OptionManager/Promote';
 import Moderator from '../pages/myEvent/Events/OptionManager/Moderator';
 import TypeEvent from '../pages/TypeEvent';
-
+import MyTickets from '../pages/MyTickets';
+import ComponentRSVP from '../pages/myEvent/Events/OptionManager/RSVPs';
 //private router
 const privateRouter = [{}];
 //public router
@@ -98,9 +99,19 @@ const publicRouter = [
         index: 5,
     },
     {
+        path: '/my_event/events/:id/SRVPs',
+        component: ComponentRSVP,
+        layout: ManageEventLayout,
+        index: 6,
+    },
+    {
         path: '/events/typeEvent',
         component: TypeEvent,
     },
-    // manager even
+    {
+        path: '/my_tickets',
+        layout: DefaultLayout,
+        component: MyTickets,
+    },
 ];
 export { privateRouter, publicRouter };
