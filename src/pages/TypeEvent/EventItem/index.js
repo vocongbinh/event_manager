@@ -7,27 +7,17 @@ import { format, min } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import showtimeService from '../../../apiServices/showtimeService';
 import { faCalendar, faCalendarDay, faCalendarDays, faGrip, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 function EventItem({ data }) {
     const cx = classNames.bind(styles);
-    // const {} = useQuery(
-    //     'ticketType',
-    //     async () => {
-    //         const ticketData = await ticketService.getTicketOfEvent(data._id);
-    //         console.log('haha');
-    //         setTicketTypes(ticketData);
-    //     },
-    //     {
-    //         refetchOnWindowFocus: false,
-    //     },
-    // );
-
+    const navigate = useNavigate();
     const listPrice = data.ticketTypes.map((item) => item.price);
     const minPrice = Math.min(...listPrice);
     const dateTime = new Date(data.showtimes[0].startAt);
     const time = format(dateTime, 'dd, MMMM.yyyy');
 
     return (
-        <div className={cx('wrapper')}>
+        <a target="_blank" href={`/events/${data._id}/`} className={cx('wrapper')}>
             <img className={cx('header')} alt="" src={data.coverImage} />
             <div className={cx('body')}>
                 <p className={cx('title')}>{data.eventName}</p>
@@ -53,7 +43,7 @@ function EventItem({ data }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     );
 }
 

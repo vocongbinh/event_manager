@@ -63,7 +63,7 @@ function MyEventItem({ data }) {
                     </p>
                 </div>
             </div>
-            <table className={cx('footer')}>
+            <div className={cx('footer')}>
                 <tr>
                     {listOptions.map((option) => (
                         <td className={cx('option-item')}>
@@ -73,7 +73,7 @@ function MyEventItem({ data }) {
                         </td>
                     ))}
                 </tr>
-            </table>
+            </div>
         </div>
     );
 }

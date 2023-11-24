@@ -25,7 +25,8 @@ import Moderator from '../pages/myEvent/Events/OptionManager/Moderator';
 import Otp from '../components/layouts/AuthenticationLayout/Otp/OtpForm';
 import RegisterSuccess from '../components/layouts/AuthenticationLayout/RegisterSuccess';
 import TypeEvent from '../pages/TypeEvent';
-
+import MyTickets from '../pages/MyTickets';
+import ComponentRSVP from '../pages/myEvent/Events/OptionManager/RSVPs';
 //private router
 const privateRouter = [{}];
 //public router
@@ -111,39 +112,13 @@ const publicRouter = [
         index: 5,
     },
     {
-        path: '/auth/login',
-        layout: AuthenticationLayout,
-        component: LoginForm,
-    },
-    {
-        path: '/auth/resetpassword',
-        layout: AuthenticationLayout,
-        component: ResetPassword,
-    },
-    {
-        path: '/auth/otp',
-        layout: AuthenticationLayout,
-        component: Otp,
-    },
-    {
-        path: '/auth/profile',
-        layout: AuthenticationLayout,
-        component: Profile,
-    },
-    {
-        path: '/auth/register',
-        layout: AuthenticationLayout,
-        component: Register,
-    },
-    {
-        path: '/auth/registersuccess',
-        layout: AuthenticationLayout,
-        component: RegisterSuccess,
-    },
-    {
         path: '/events/typeEvent',
         component: TypeEvent,
     },
-    // manager even
+    {
+        path: '/my_tickets',
+        layout: DefaultLayout,
+        component: MyTickets,
+    },
 ];
 export { privateRouter, publicRouter };

@@ -1,0 +1,65 @@
+.wrapper {
+    width: 96%;
+    margin: 10px auto;
+    background: var(--white);
+    height: 100%;
+    padding: 0px 40px;
+}
+.title {
+    text-align: left;
+    font-size: 32px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 40px;
+    padding: 24px 0px 16px;
+    background: transparent;
+    display: block;
+}
+.header {
+    display: flex;
+    align-items: center;
+}
+.tab-item {
+    cursor: pointer;
+    text-align: center;
+    width: 50%;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgb(175, 184, 201);
+    padding: 12px;
+    border-bottom: 3px solid rgb(175, 184, 201);
+    &:hover {
+        color: #000;
+    }
+}
+.selected {
+    color: #000;
+    border-color: var(--primary);
+}
+.content {
+    display: flex;
+    padding-top: 60px;
+    align-items: center;
+    flex-direction: column;
+    span {
+        font-size: 1.6rem;
+        line-height: 24px;
+        text-align: center;
+        margin-top: 16px;
+        color: rgb(175, 184, 201);
+    }
+}
+.book-btn {
+    margin: 0px auto;
+    margin-top: 40px;
+    background: rgb(45, 194, 117);
+    color: rgb(255, 255, 255);
+    border-radius: 20px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 1.6rem;
+    line-height: 24px;
+    min-width: 88px;
+    padding: 0px 90px;
+}

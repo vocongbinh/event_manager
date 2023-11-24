@@ -26,6 +26,7 @@ function SelectTicket() {
     const [tickets, setTickets] = useState([]);
     const books = useContext(BookContext);
     const nf = new Intl.NumberFormat();
+
     useEffect(() => {
         const fetchAPI = async () => {
             try {

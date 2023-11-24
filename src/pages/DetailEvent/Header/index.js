@@ -38,21 +38,14 @@ function Header() {
                         Select your Location
                     </Button>
                     <ul className={`dropdown-menu ${cx('location-list')}`} aria-labelledby="dropdownMenuButton1">
-                        <li>
-                            <a className={`${cx('location-item')} dropdown-item`} href="#">
-                                Ho Chi Minh
-                            </a>
-                        </li>
-                        <li>
-                            <a className={`${cx('location-item')} dropdown-item`} href="#">
-                                Ha Noi
-                            </a>
-                        </li>
-                        <li>
-                            <a className={`${cx('location-item')} dropdown-item`} href="#">
-                                Other locations
-                            </a>
-                        </li>
+                        {listLocation.map((location) => (
+                            <li
+                                className={`${cx('location-item')} dropdown-item`}
+                                onClick={() => navigate(`/events/typeEvent?address=${location}`)}
+                            >
+                                {location}
+                            </li>
+                        ))}
                     </ul>
                 </div>
                 <div className={cx('action')}>
@@ -68,10 +61,16 @@ function Header() {
                 </div>
             </div>
             <div className={cx('nav-bar')}>
-                <h3 className={cx('event-tab')}>Hot Events</h3>
+                <h3 className={cx('event-tab', 'hot')}>Hot Events</h3>
                 <ul className={cx('categories')}>
                     {categories.map((category) => (
-                        <li>{category}</li>
+                        <li
+                            onClick={() => {
+                                navigate(`/events/typeEvent?types=${category}`);
+                            }}
+                        >
+                            {category}
+                        </li>
                     ))}
                 </ul>
             </div>

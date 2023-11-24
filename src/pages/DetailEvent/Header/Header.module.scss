@@ -76,12 +76,18 @@
     }
 }
 //category tabs
+.hot {
+    color: var(--sub-color);
+    border-bottom: 3px solid var(--sub-color);
+    text-align: center;
+}
 .nav-bar {
     width: 100%;
     height: 48px;
     padding: 0px 60px;
     display: flex;
     background-color: var(--white);
+    padding-bottom: 4px;
 }
 .event-tab {
     position: relative;

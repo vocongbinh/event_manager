@@ -13,16 +13,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './FilterType.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { format } from 'date-fns';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { useSearchParams } from 'react-router-dom';
 import eventService from '../../../apiServices/eventService';
-function FilterType({ setEvents }) {
-    const [listChecked, setListChecked] = useState(['All Categories']);
+function FilterType({ setEvents, listChecked, setListChecked }) {
+    // const [listChecked, setListChecked] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
-
     const listCategories = [
         {
             index: 1,
@@ -91,7 +90,6 @@ function FilterType({ setEvents }) {
         setListChecked(newList);
     };
     const cx = classNames.bind(styles);
-
     return (
         <div class={`dropdown ${cx('wrapper')}`}>
             <button
@@ -117,30 +115,33 @@ function FilterType({ setEvents }) {
                         <FontAwesomeIcon icon={faCalendar} />
                     </div>
                     <div style={{ overflowX: 'hidden', display: 'flex', flexDirection: 'row', flex: 1 }}>
-                        {listChecked.map((item) => (
-                            <button
-                                onClick={(e) => {
-                                    console.log(2);
-
-                                    e.stopPropagation();
-                                }}
-                                className={cx('btn-item')}
-                            >
-                                <FontAwesomeIcon
+                        {listChecked.map((item) => {
+                            console.log(item);
+                            return (
+                                <button
                                     onClick={(e) => {
-                                        console.log(3);
-                                        //if (e.target !== e.currentTarget) {
+                                        console.log(2);
+
                                         e.stopPropagation();
-                                        //  }
-                                        handleRemoveCategory(item);
                                     }}
-                                    className={cx('close-btn')}
-                                    color="#999"
-                                    icon={faClose}
-                                />
-                                {item}
-                            </button>
-                        ))}
+                                    className={cx('btn-item')}
+                                >
+                                    <FontAwesomeIcon
+                                        onClick={(e) => {
+                                            console.log(3);
+                                            //if (e.target !== e.currentTarget) {
+                                            e.stopPropagation();
+                                            //  }
+                                            handleRemoveCategory(item);
+                                        }}
+                                        className={cx('close-btn')}
+                                        color="#999"
+                                        icon={faClose}
+                                    />
+                                    {item}
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
                 <FontAwesomeIcon className={cx('icon', 'suf-Icon')} icon={faCaretDown} />

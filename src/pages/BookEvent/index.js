@@ -45,7 +45,7 @@ function BookEvent({ children, ...props }) {
     const navigate = useNavigate();
     const [event, setEvent] = useState();
     const nf = new Intl.NumberFormat();
-    const {} = useQuery('book', async () => {
+    const { refetch } = useQuery('book', async () => {
         const eventData = await eventService.detailEvent(params.id);
         setEvent(eventData);
     });
@@ -139,9 +139,9 @@ function BookEvent({ children, ...props }) {
                     <div className="col-xs-12">
                         <div className="row w-100">
                             <div className={`col-8 ${cx('infor-event')}`}>
-                                <p className={cx('name')}>{event.eventName}</p>
-                                <p className={cx('address-time')}>{event.address}</p>
-                                <p className={cx('address-time')}>{event.startTime}</p>
+                                <p className={cx('name')}>{event && event.eventName}</p>
+                                <p className={cx('address-time')}>{event && event.address}</p>
+                                <p className={cx('address-time')}>{event && event.startTime}</p>
                             </div>
                         </div>
                     </div>

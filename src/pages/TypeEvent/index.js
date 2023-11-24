@@ -17,16 +17,30 @@ import { keyboard } from '@testing-library/user-event/dist/keyboard';
 function TypeEvent() {
     const cx = classNames.bind(styles);
     const listLocation = ['All locations', 'Ho Chi Minh', 'Ha Noi', 'Other locations'];
+
     const listPrices = ['All prices', 'Free', 'Paid'];
     const [events, setEvents] = useState([]);
     const [results, setResults] = useState([]);
+    const [location, setLocation] = useState();
+    const [listChecked, setListChecked] = useState([]);
     const [valueSearch, setValueSearch] = useState('');
     const debounceValue = useDebounce(valueSearch, 500);
     const [searchParams, setSearchParams] = useSearchParams();
     const { data } = useQuery(
         'type-event',
         async () => {
-            const eventData = await eventService.allEvents();
+            let params = {};
+            searchParams.forEach((va, k) => (params[k] = va));
+            if (params.address) {
+                setLocation(params.address);
+            }
+            if (params.types) {
+                setListChecked([params.types]);
+            } else {
+                setListChecked(['All Categories']);
+            }
+
+            const eventData = await eventService.filterEvent(params);
             console.log(eventData);
             setEvents(eventData);
         },
@@ -49,6 +63,7 @@ function TypeEvent() {
         setEvents(data);
     };
     const handleLocationChange = async (value) => {
+        setLocation(value);
         let newParams = {};
         if (searchParams.has('address')) {
             searchParams.delete('address');
@@ -124,13 +139,13 @@ function TypeEvent() {
             <div className={cx('container')}>
                 <div className={cx('container-header')}>
                     <div className={cx('filter-layout')}>
-                        <select onChange={(e) => handleLocationChange(e.target.value)}>
+                        <select value={location} onChange={(e) => handleLocationChange(e.target.value)}>
                             {listLocation.map((item) => (
                                 <option value={item}>{item}</option>
                             ))}
                         </select>
                         <FilterItem setEvents={setEvents} />
-                        <FilterType setEvents={setEvents} />
+                        <FilterType setEvents={setEvents} listChecked={listChecked} setListChecked={setListChecked} />
                         <select onChange={(e) => handlePriceChange(e.target.value)}>
                             {listPrices.map((item) => (
                                 <option value={item}>{item}</option>
