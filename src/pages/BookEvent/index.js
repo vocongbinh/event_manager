@@ -289,19 +289,35 @@ function BookEvent({ children, ...props }) {
                                                 </div>
                                                 {bookings.map((item) => {
                                                     const price = item.count * item.price;
-
+                                                    let seats;
+                                                    if (item.seats) {
+                                                    }
                                                     total += price;
-                                                    return (
+                                                    return item.count > 0 ? (
                                                         <div className={`row ${cx('book-item')}`}>
                                                             <div className="col-8 p-0 ">
                                                                 <h5>{item.name}</h5>
                                                                 <p>{nf.format(item.price)} VND</p>
+                                                                {item.seats && (
+                                                                    <div className="d-flex">
+                                                                        {item.seats.map((seat, index) => (
+                                                                            <div
+                                                                                className={cx('seat-item')}
+                                                                                key={index}
+                                                                            >
+                                                                                {seat}
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                             <div className="col-4 text-end p-0 ">
                                                                 <h5>{nf.format(item.count)}</h5>
                                                                 <p>{nf.format(price)} VND</p>
                                                             </div>
                                                         </div>
+                                                    ) : (
+                                                        <div></div>
                                                     );
                                                 })}
                                             </div>
