@@ -22,8 +22,8 @@
 }
 
 .header-devide {
-    display: flex;
-    align-items: center;
+    display: inline-flex;
+    align-items: flex-end;
     justify-content: center;
     font-style: normal;
     font-weight: bold;
@@ -31,5 +31,5 @@
     line-height: 40px;
     color: rgb(45, 194, 117);
     margin-bottom: 8px;
-    align-self: flex-end;
+    border-bottom: 3px solid var(--black);
 }

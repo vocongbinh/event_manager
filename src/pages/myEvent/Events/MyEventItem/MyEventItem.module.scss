@@ -46,6 +46,9 @@
     width: auto;
     cursor: pointer;
     color: var(--white) !important;
+    &:last-child {
+        flex: 1;
+    }
 }
 .option {
     width: 100%;

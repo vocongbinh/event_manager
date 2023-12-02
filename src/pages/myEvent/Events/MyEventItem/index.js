@@ -49,30 +49,34 @@ function MyEventItem({ data }) {
     });
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('container')}>
-                <img src={data.coverImage} className={cx('event-img')} alt="" />
-                <div className={cx('content')}>
-                    <p className={cx('name-event')}>{data.eventName}</p>
-                    <p className={cx('time-location')}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faClockFour} />
-                        {startTime}
-                    </p>
-                    <p className={cx('time-location')}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
-                        {data.stageId.stageName}
-                    </p>
+            <div className="d-flex align-items-start justify-content-between">
+                <div className={cx('container')}>
+                    <img src={data.coverImage} className={cx('event-img')} alt="" />
+                    <div className={cx('content')}>
+                        <p className={cx('name-event')}>{data.eventName}</p>
+                        <p className={cx('time-location')}>
+                            <FontAwesomeIcon className={cx('icon')} icon={faClockFour} />
+                            {startTime}
+                        </p>
+                        <p className={cx('time-location')}>
+                            <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
+                            {data.stageId.stageName}
+                        </p>
+                    </div>
                 </div>
+                <div>binhh</div>
             </div>
+
             <div className={cx('footer')}>
-                <tr>
+                <div className="d-flex">
                     {listOptions.map((option) => (
-                        <td className={cx('option-item')}>
+                        <div className={cx('option-item')}>
                             <Link to={option.path} target="_blank" className={cx('option')}>
                                 {option.icon} {option.title}
                             </Link>
-                        </td>
+                        </div>
                     ))}
-                </tr>
+                </div>
             </div>
         </div>
     );
