@@ -17,7 +17,7 @@ import { useState } from 'react';
 import Events from '../../../pages/myEvent/Events';
 import OrganizerProfile from '../../../pages/myEvent/OrganizerProfile';
 import Summary from '../../../pages/myEvent/Events/OptionManager/Summary';
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 import { useLocation } from 'react-router-dom';
 function ManageEventLayout({ children, ...props }) {
     const location = useLocation();

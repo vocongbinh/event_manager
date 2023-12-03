@@ -12,7 +12,21 @@ export const stageRequest = axios.create({
 export const myRequest = axios.create({
     baseURL: 'https://26ba083f-3e7e-4f12-ae0e-9e2662c66bc8.mock.pstmn.io/',
 });
-
-export const request = axios.create({
+const request = axios.create({
     baseURL: 'http://localhost:8000/',
 });
+request.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('userToken');
+        console.log(token);
+        if (token) {
+            config.headers['token'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+
+    (error) => {
+        return Promise.reject(error);
+    },
+);
+export { request };

@@ -6,15 +6,24 @@ import Home from '../pages/Home';
 import { faAddressCard, faCalendar, faMoneyBill, faPiggyBank } from '@fortawesome/free-solid-svg-icons';
 import Events from '../pages/myEvent/Events';
 import OrganizerProfile from '../pages/myEvent/OrganizerProfile';
+import EventTypeList from '../components/layouts/NewEventLayout/EventTypeList';
+import NewEventLayout from '../components/layouts/NewEventLayout/NewEventLayout';
 import BankAccount from '../pages/myEvent/BankAccount';
 import BookEvent from '../pages/BookEvent';
 import SelectTicket from '../pages/BookEvent/bookContent/SelectTicket';
 import PaymentInfo from '../pages/BookEvent/bookContent/PaymentInfo';
 import ManageEventLayout from '../components/layouts/ManageEventLayout';
 import Summary from '../pages/myEvent/Events/OptionManager/Summary';
+import AuthenticationLayout from '../components/layouts/AuthenticationLayout/AuthenticationLayout';
+import LoginForm from '../components/layouts/AuthenticationLayout/Login/LoginForm';
+import Profile from '../components/layouts/AuthenticationLayout/Profile';
+import ResetPassword from '../components/layouts/AuthenticationLayout/ResetPassword';
+import Register from '../components/layouts/AuthenticationLayout/Register';
 import Discount from '../pages/myEvent/Events/OptionManager/Discount';
 import Promote from '../pages/myEvent/Events/OptionManager/Promote';
 import Moderator from '../pages/myEvent/Events/OptionManager/Moderator';
+import Otp from '../components/layouts/AuthenticationLayout/Otp/OtpForm';
+import RegisterSuccess from '../components/layouts/AuthenticationLayout/RegisterSuccess';
 import TypeEvent from '../pages/TypeEvent';
 import MyTickets from '../pages/MyTickets';
 import ComponentRSVP from '../pages/myEvent/Events/OptionManager/RSVPs';
@@ -26,6 +35,10 @@ const publicRouter = [
         path: '/',
         layout: DefaultLayout,
         component: Home,
+    },
+    {
+        path: '/newEvent',
+        layout: NewEventLayout,
     },
     {
         path: '/events/:id/book',
@@ -97,12 +110,6 @@ const publicRouter = [
         component: Discount,
         layout: ManageEventLayout,
         index: 5,
-    },
-    {
-        path: '/my_event/events/:id/SRVPs',
-        component: ComponentRSVP,
-        layout: ManageEventLayout,
-        index: 6,
     },
     {
         path: '/events/typeEvent',

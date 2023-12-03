@@ -8,6 +8,7 @@ import Button from '../../../components/layouts/components/Button';
 import { useEffect, useState } from 'react';
 import * as myService from '../../../apiServices/myService';
 import MyEventItem from './MyEventItem';
+import { useNavigate } from 'react-router-dom';
 function Events() {
     const cx = classNames.bind(styles);
 
@@ -19,7 +20,7 @@ function Events() {
     const [currentPage, setCurrentPage] = useState(1);
     let displayPage;
     //page navigation
-
+    const navigate = useNavigate();
     const indexOfLastRecord = currentPage * maxPageDisplay;
     const indexOfFirstRecord = indexOfLastRecord - maxPageDisplay;
     const nPages = Math.ceil(events.length / maxPageDisplay);
@@ -34,6 +35,9 @@ function Events() {
     };
     const handleNextPage = () => {
         if (currentPage < nPages) setCurrentPage((prev) => prev + 1);
+    };
+    const handleCreateEvent = () => {
+        navigate('/newEvent');
     };
     useEffect(() => {
         const fetchApi = async () => {
@@ -77,7 +81,12 @@ function Events() {
         <div className={cx('wrapper')}>
             <div className={cx('header-container')}>
                 <h3>Events you manage</h3>
-                <Button className={cx('create-btn')} size="min" preIcon={<FontAwesomeIcon icon={faPlus} />}>
+                <Button
+                    onClick={handleCreateEvent}
+                    className={cx('create-btn')}
+                    size="min"
+                    preIcon={<FontAwesomeIcon icon={faPlus} />}
+                >
                     Create event
                 </Button>
             </div>
