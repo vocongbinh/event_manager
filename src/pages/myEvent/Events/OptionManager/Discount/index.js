@@ -212,12 +212,6 @@ function Discount() {
             setCheckedAll(false);
         } else setListCheck([...listCheck, id]);
     };
-    const handleCheckAll = (e) => {
-        setCheckedAll(!checkedAll);
-        if (!checkedAll) {
-            setListCheck(ticketTypes.map((item) => item._id));
-        } else setListCheck([]);
-    };
 
     //form
     const handleChange = (e) => {

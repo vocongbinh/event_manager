@@ -27,6 +27,7 @@ import RegisterSuccess from '../components/layouts/AuthenticationLayout/Register
 import TypeEvent from '../pages/TypeEvent';
 import MyTickets from '../pages/MyTickets';
 import ComponentRSVP from '../pages/myEvent/Events/OptionManager/RSVPs';
+import ComponentRPVPs from '../pages/myEvent/Events/OptionManager/RSVPs';
 //private router
 const privateRouter = [{}];
 //public router
@@ -87,8 +88,8 @@ const publicRouter = [
         index: 1,
     },
     {
-        path: '/my_event/events/:id/moderator',
-        component: Moderator,
+        path: '/my_event/events/:id/RSVPs',
+        component: ComponentRPVPs,
         layout: ManageEventLayout,
         index: 2,
     },
@@ -107,7 +108,7 @@ const publicRouter = [
 
     {
         path: '/my_event/events/:id/moderator',
-        component: Discount,
+        component: Moderator,
         layout: ManageEventLayout,
         index: 5,
     },

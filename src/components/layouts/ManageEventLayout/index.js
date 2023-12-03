@@ -38,10 +38,10 @@ function ManageEventLayout({ children, ...props }) {
             index: 1,
         },
         {
-            title: 'Moderator',
+            title: 'RSVPs',
             icon: <FontAwesomeIcon icon={faUsersRays} />,
-            path: current.split('/').slice(0, -1).join('/') + '/moderator',
-            index: 5,
+            path: current.split('/').slice(0, -1).join('/') + '/RSVPs',
+            index: 2,
         },
         {
             title: 'Promote',
@@ -54,6 +54,12 @@ function ManageEventLayout({ children, ...props }) {
             icon: <FontAwesomeIcon icon={faGift} />,
             path: current.split('/').slice(0, -1).join('/') + '/discount',
             index: 4,
+        },
+        {
+            title: 'Moderator',
+            icon: <FontAwesomeIcon icon={faGift} />,
+            path: current.split('/').slice(0, -1).join('/') + '/moderator',
+            index: 5,
         },
     ];
     return (

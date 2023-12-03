@@ -37,5 +37,18 @@ const ticketService = {
             console.log(error);
         }
     },
+    filterTicket: async (showtimeId, { type, sort }) => {
+        try {
+            const res = await request.get(`api/ticket/${showtimeId}/filter`, {
+                params: {
+                    type: type,
+                    sort: sort,
+                },
+            });
+            return res.data;
+        } catch (e) {
+            throw e;
+        }
+    },
 };
 export default ticketService;

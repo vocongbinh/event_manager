@@ -10,6 +10,7 @@ import {
     faLocationDot,
     faPenToSquare,
     faUserGroup,
+    faUsersRays,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -24,7 +25,7 @@ function MyEventItem({ data }) {
             icon: <FontAwesomeIcon icon={faChartLine} />,
             path: `./${data._id}/summary?showId=${showtime._id} `,
         },
-        { title: 'Manage moderator', icon: <FontAwesomeIcon icon={faUserGroup} />, path: `./${data._id}/moderator` },
+        { title: 'Manage RSVPs', icon: <FontAwesomeIcon icon={faUserGroup} />, path: `./${data._id}/RSVPs` },
         { title: 'Promote', icon: <FontAwesomeIcon icon={faBullhorn} /> },
         {
             title: 'Discount',
@@ -64,7 +65,9 @@ function MyEventItem({ data }) {
                         </p>
                     </div>
                 </div>
-                <div>binhh</div>
+                <div onClick={() => navigate('./${data._id}/moderator')} className={cx('moderator-btn')}>
+                    <FontAwesomeIcon size="xl" icon={faUsersRays} />
+                </div>
             </div>
 
             <div className={cx('footer')}>
