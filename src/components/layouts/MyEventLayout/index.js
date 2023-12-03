@@ -10,7 +10,7 @@ import { useState } from 'react';
 import Events from '../../../pages/myEvent/Events';
 import OrganizerProfile from '../../../pages/myEvent/OrganizerProfile';
 import { useAuthContext } from '../../../utils/authContext';
-function MyEventLayout({ children }) {
+function MyEventLayout({ children, ...props }) {
     const authContext = useAuthContext();
     const cx = classNames.bind(styles);
     const listOptions = [
@@ -18,21 +18,25 @@ function MyEventLayout({ children }) {
             title: 'Organizer Profile',
             icon: <FontAwesomeIcon icon={faAddressCard} />,
             path: '/my_event/organizer_profile',
+            index: 0,
         },
         {
             title: 'Created Events',
             icon: <FontAwesomeIcon icon={faCalendar} />,
             path: '/my_event/events',
+            index: 1,
         },
         {
             title: 'My account balance',
             icon: <FontAwesomeIcon icon={faMoneyBill} />,
             path: '/my_event/account_balance',
+            index: 2,
         },
         {
             title: 'Bank account information',
             icon: <FontAwesomeIcon icon={faPiggyBank} />,
             path: '/my_event/bank_account',
+            index: 3,
         },
     ];
     return (
@@ -57,7 +61,12 @@ function MyEventLayout({ children }) {
                     </button> */}
                 </div>
                 {listOptions.map((item, index) => (
-                    <InforItem className={cx('infor-item')} data={item} />
+                    <InforItem
+                        className={cx('infor-item', {
+                            active: item.index === props.index,
+                        })}
+                        data={item}
+                    />
                 ))}
             </div>
             <div className={cx('container')}>{children}</div>

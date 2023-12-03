@@ -70,16 +70,19 @@ const publicRouter = [
         path: '/my_event/events',
         component: Events,
         layout: MyEventLayout,
+        index: 1,
     },
     {
         path: '/my_event/organizer_profile',
         component: OrganizerProfile,
         layout: MyEventLayout,
+        index: 0,
     },
     {
         path: '/my_event/bank_account',
         component: BankAccount,
         layout: MyEventLayout,
+        index: 3,
     },
     {
         path: '/my_event/events/:id/summary',

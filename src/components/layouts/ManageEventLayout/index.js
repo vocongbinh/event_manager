@@ -28,7 +28,7 @@ function ManageEventLayout({ children, ...props }) {
         {
             title: 'Back to my event',
             icon: <FontAwesomeIcon icon={faCircleArrowLeft} />,
-            path: '/my_event/organizer_profile',
+            path: '/my_event/events/',
             index: 0,
         },
         {
