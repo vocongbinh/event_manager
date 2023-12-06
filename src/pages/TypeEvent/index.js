@@ -6,7 +6,7 @@ import { faLocation, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons
 import FilterItem from './FilterItem';
 import FilterType from './FilterType';
 import { createContext, useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import eventService from '../../apiServices/eventService';
 import EventItem from './EventItem';
 import Tippy from '@tippyjs/react/headless';

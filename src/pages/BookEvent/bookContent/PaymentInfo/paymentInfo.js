@@ -1,8 +1,8 @@
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import Images from '../../../../assets/images';
 import styles from './PaymentInfo.module.scss';
 import classNames from 'classnames/bind';
-import { BookContext } from '../..';
+import { BookContext } from '../../bookingLayout';
 
 function PaymentInfo() {
     const cx = classNames.bind(styles);
@@ -104,4 +104,4 @@ function PaymentInfo() {
     );
 }
 
-export default PaymentInfo;
+export default memo(PaymentInfo);

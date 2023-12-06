@@ -14,7 +14,7 @@ export const myRequest = axios.create({
 });
 
 const request = axios.create({
-    baseURL: 'http://localhost:5001/',
+    baseURL: 'http://localhost:8000/',
 });
 request.interceptors.request.use(
     (config) => {
@@ -26,8 +26,8 @@ request.interceptors.request.use(
         return config;
     },
 
-    (error) => {
-        return Promise.reject(error);
-    },
+    // (error) => {
+    //     return Promise.reject(error);
+    // },
 );
 export { request };

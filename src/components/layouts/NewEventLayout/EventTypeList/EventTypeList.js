@@ -52,7 +52,7 @@ const EventTypeList = ({ next }) => {
             setShowError(true);
         } else {
             // console.log(eventFormContext);
-            eventFormContext.updateNewEvent({ eventTypeList: [...selectedList] });
+            eventFormContext.setEventTypes([...selectedList]);
             next(1);
         }
     };

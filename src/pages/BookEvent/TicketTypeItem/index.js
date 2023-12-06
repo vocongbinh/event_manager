@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useState } from 'react';
-import { BookContext } from '..';
+import { BookContext } from '../bookingLayout';
 function TicketTypeItem({ item }) {
     const cx = classNames.bind(styles);
     let initValue = 0;

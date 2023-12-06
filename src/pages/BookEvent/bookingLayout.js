@@ -23,19 +23,19 @@ import { createContext, useEffect, useState } from 'react';
 import { request } from '../../utils/request';
 import * as ticketService from '../../apiServices/ticketService';
 import TicketTypeItem from './TicketTypeItem';
-import SelectTicket from './bookContent/SelectTicket';
-import PaymentInfo from './bookContent/PaymentInfo';
-import { useQueries, useQuery } from 'react-query';
+import SelectTicket from './bookContent/SelectTicket/selectTicket';
+import PaymentInfo from './bookContent/PaymentInfo/paymentInfo';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import eventService from '../../apiServices/eventService';
+import { useHoldTickets, useHoldToken } from '../../lib/react-query/useQueryAndMutation';
 export const BookContext = createContext();
 function BookEvent({ children, ...props }) {
     const cx = classNames.bind(styles);
     const params = useParams();
     const location = useLocation();
-    const [tickets, setTickets] = useState([]);
     const [bookings, setBookings] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
-
+    const [selectedTickets, setSelectedTickets] = useState('');
     // state of payment infor
     const [firstName, setFirstName] = useState('');
     const [latstName, setLastName] = useState('');
@@ -44,11 +44,22 @@ function BookEvent({ children, ...props }) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const navigate = useNavigate();
     const [event, setEvent] = useState();
+    const eventKey = 'fa36d0b8-0198-4414-bd29-0efe24257239';
     const nf = new Intl.NumberFormat();
-    const { refetch } = useQuery('book', async () => {
-        const eventData = await eventService.detailEvent(params.id);
-        setEvent(eventData);
+    const { data: holdToken, isPending: isCreatingHoldToken } = useHoldToken();
+
+    // const { refetch } = useQuery('book', async () => {
+    //     const eventData = await eventService.detailEvent(params.id);
+    //     setEvent(eventData);
+    // });
+    useQuery({
+        queryKey: 'book',
+        queryFn: async () => {
+            const eventData = await eventService.detailEvent(params.id);
+            setEvent(eventData);
+        },
     });
+    const { mutateAsync: holdTickets } = useHoldTickets();
     let total = 0;
     let propsProvider = {};
     switch (props.index) {
@@ -56,6 +67,9 @@ function BookEvent({ children, ...props }) {
             propsProvider = {
                 bookings,
                 setBookings,
+                holdToken,
+                selectedTickets,
+                setSelectedTickets,
             };
             break;
 
@@ -66,11 +80,15 @@ function BookEvent({ children, ...props }) {
                 email,
                 reEmail,
                 phoneNumber,
+                selectedTickets,
+                isCreatingHoldToken,
+                holdToken,
                 setFirstName,
                 setLastName,
                 setEmail,
                 setReEmail,
                 setPhoneNumber,
+                setSelectedTickets,
             };
             break;
         default:
@@ -122,6 +140,7 @@ function BookEvent({ children, ...props }) {
         if (activeStep < listSteps.length - 1) {
             const value = activeStep + 1;
             navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
+            holdTickets({ bookings, eventKey, holdToken });
             setActiveStep((prev) => prev + 1);
         }
     };

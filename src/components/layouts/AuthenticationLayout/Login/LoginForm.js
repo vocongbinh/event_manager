@@ -8,7 +8,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import authService from '../../../../apiServices/authService';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { AuthProvider, useAuthContext } from '../../../../utils/authContext';
 import { request } from '../../../../utils/request';
 import * as yup from 'yup';

@@ -16,11 +16,12 @@ import ShowTime from '../ShowTime/ShowTime';
 import Button from '../../components/Button';
 import { v4 as uuidv4 } from 'uuid';
 import { useNewEventFormContext } from '../../../../utils/newEventContext';
+import { useNavigate } from 'react-router-dom';
 
-const ShowTimes = () => {
+const ShowTimes = ({ next }) => {
     const cx = classNames.bind(style);
     const newEventContext = useNewEventFormContext();
-
+    const navigate = useNavigate();
     const formSchema = yup.object().shape({
         showtimes: yup.array().of(
             yup.object().shape({
@@ -112,12 +113,11 @@ const ShowTimes = () => {
                 validationSchema={formSchema}
                 onSubmit={(values, { setSubmitting }) => {
                     console.log(newEventContext.newEvent);
-                    const fullEventData = {
-                        ...newEventContext.newEvent,
-
-                        ...values,
-                    };
-                    alert(JSON.stringify(fullEventData));
+                    newEventContext.setShowtimes(values.showtimes);
+                    newEventContext.setTickets(values.ticketTypes);
+                    // alert(JSON.stringify(fullEventData));
+                    // next(3);
+                    navigate('/newEvent/new-stage-model');
                 }}
             >
                 <Form>
@@ -150,7 +150,7 @@ const ShowTimes = () => {
                                                 size="max"
                                                 background="blue"
                                             >
-                                                Tạo sự kiện
+                                                Tiếp theo
                                             </Button>
                                         </div>
                                     </div>
