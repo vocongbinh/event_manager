@@ -65,9 +65,9 @@ function MyEventItem({ data }) {
                         </p>
                     </div>
                 </div>
-                <div onClick={() => navigate('./${data._id}/moderator')} className={cx('moderator-btn')}>
+                <Link to={`./${data._id}/moderator`} target="_blank" className={cx('moderator-btn')}>
                     <FontAwesomeIcon size="xl" icon={faUsersRays} />
-                </div>
+                </Link>
             </div>
 
             <div className={cx('footer')}>

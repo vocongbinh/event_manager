@@ -20,7 +20,7 @@ import { useContext, useEffect, useState } from 'react';
 import ticketService from '../../../../apiServices/ticketService';
 import TicketTypeItem from '../../TicketTypeItem';
 import { BookContext } from '../..';
-import { SeatsioSeatingChart } from '@seatsio/seatsio-react';
+import { SeatsioDesigner, SeatsioSeatingChart } from '@seatsio/seatsio-react';
 
 function SelectTicket() {
     const cx = classNames.bind(styles);
@@ -97,7 +97,8 @@ function SelectTicket() {
                     backgroundColor: 'transparent',
                 }}
             >
-                <SeatsioSeatingChart
+                <SeatsioDesigner  secretKey="ce25e325-9589-4562-9c5c-08f64b152d6b" region="oc" />
+                {/* <SeatsioSeatingChart
                     showSeatLabels="true"
                     showLegend="true"
                     colorScheme="dark"
@@ -114,7 +115,8 @@ function SelectTicket() {
                     onObjectDeselected={(obj) => {
                         deselectedObjectHandler(obj);
                     }}
-                />
+                /> */}
+                
             </div>
             {/* <div className={cx('type-header')}>
                 <div className="row">

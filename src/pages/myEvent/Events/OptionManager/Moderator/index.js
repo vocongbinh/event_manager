@@ -13,6 +13,7 @@ import { faCheck, faCirclePlus, faEnvelope, faTriangleExclamation, faUser } from
 import modalStyles from '../../../../../styles/modal.module.scss';
 import userService from '../../../../../apiServices/useService';
 import moderatorService from '../../../../../apiServices/moderatorService';
+import { param } from 'jquery';
 function Moderator() {
     const cx = classNames.bind(styles);
     const modalCx = classNames.bind(modalStyles);
@@ -65,7 +66,7 @@ function Moderator() {
             const user = await userService.getUserByEmail(formValue.email);
             if (user !== null) {
                 data.userId = user._id;
-                await eventService.addModerator(params.id, data);
+                await userService.sendMailModerator({ eventId: params.id, userId: user._id, role: formValue.role });
                 setShow(false);
                 setCheckEmail(true);
                 refetch();
@@ -229,7 +230,7 @@ function Moderator() {
                 </Modal.Body>
                 <Modal.Footer className={modalCx('footer')}>
                     <Button className={modalCx('save-btn')} size="max" onClick={handleSave}>
-                        Save
+                        Add moderator
                     </Button>
                 </Modal.Footer>
             </Modal>
