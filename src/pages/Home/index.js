@@ -17,6 +17,7 @@ function Home() {
     const spinnerCx = classNames.bind(spinnerStyles);
     const [events, setEvents] = useState([]);
     const slickRef = useRef(null);
+    const [loading, setLoading] = useState(false);
     const handleLeftSlick = () => {
         slickRef?.current?.slickPrev();
     };
@@ -26,10 +27,12 @@ function Home() {
     useEffect(() => {
         const getListEvents = async () => {
             try {
+                setLoading(true);
                 const eventsData = await eventServices.allEvents();
                 setEvents(eventsData || []);
-                console.log(eventsData);
+                setLoading(false);
             } catch (err) {
+                setLoading(false);
                 console.log('error');
             }
         };
@@ -66,7 +69,7 @@ function Home() {
                         </div>
                     ))}
                 </div>
-                {/* <Spinner className={spinnerCx} animation="grow" variant="light" /> */}
+                {loading && <Spinner className={spinnerCx('spinner')} animation="grow" variant="success" />}
             </div>
         </div>
     );

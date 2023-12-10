@@ -16,14 +16,18 @@ import Recommended from './indexing/Recommended';
 import { useParams } from 'react-router-dom';
 import Calendar from './indexing/Calendar';
 import showtimeService from '../../apiServices/showtimeService';
+import { Spinner } from 'react-bootstrap';
+import spinnerStyles from '../../styles/spinner.module.scss';
 function DetailEvent({ children }) {
     const cx = classNames.bind(styles);
+    const spinnerCx = classNames.bind(spinnerStyles);
     const [activeIndex, setActiveIndex] = useState(0);
     const aboutRef = useRef(null);
     const informationRef = useRef(null);
     const calendarRef = useRef(null);
     const organizerRef = useRef(null);
     const recommendRef = useRef(null);
+    const [loading, setLoading] = useState(false);
     const scrollHandler = (ref, index) => {
         window.scrollTo({ top: ref.current.offsetTop - 70, behavior: 'smooth' });
     };
@@ -91,6 +95,7 @@ function DetailEvent({ children }) {
         }
         const fetchAPi = async () => {
             try {
+                setLoading(true);
                 const event = await eventService.detailEvent(params.id);
                 console.log(event);
                 setEvent(event);
@@ -98,8 +103,11 @@ function DetailEvent({ children }) {
                 setShowtimes(showtimes);
 
                 const ticketTypes = await ticketService.getTicketOfEvent(params.id);
+                setLoading(false);
                 setTicketTypes(ticketTypes);
             } catch (error) {
+                setLoading(false);
+
                 console.log(error);
             }
         };
@@ -153,9 +161,7 @@ function DetailEvent({ children }) {
                                 </Button>
                             ) : (
                                 <Button
-                                    href={
-                                        localStorage.getItem('user') != null ? `book/${event._id}/step1` : '/auth/login'
-                                    }
+                                    href={`book/${Object.keys(event).length > 0 ? event.showtimes[0]._id : ''}/step1`}
                                     type="highlight"
                                     size="max"
                                     className={cx('book-btn')}
@@ -271,6 +277,7 @@ function DetailEvent({ children }) {
                     </div>
                 </div>
             </div>
+            {loading && <Spinner className={spinnerCx('spinner')} animation="grow" variant="success" />}
         </div>
     );
 }

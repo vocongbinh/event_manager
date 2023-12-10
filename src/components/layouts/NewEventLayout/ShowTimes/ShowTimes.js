@@ -57,7 +57,7 @@ const ShowTimes = ({ next }) => {
                                                 size="max"
                                                 background="blue"
                                             >
-                                                Tiếp theo
+                                                Continue
                                             </Button>
                                         </div>
                                     </div>

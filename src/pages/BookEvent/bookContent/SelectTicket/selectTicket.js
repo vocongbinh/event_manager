@@ -7,6 +7,7 @@ import { BookContext } from '../../bookingLayout';
 import { SeatsioSeatingChart } from '@seatsio/seatsio-react';
 import showtimeService from '../../../../apiServices/showtimeService';
 import { useGetShowtime } from '../../../../lib/react-query/useQueryAndMutation';
+import { da } from 'date-fns/locale';
 
 function SelectTicket() {
     console.log('render again');
@@ -20,6 +21,7 @@ function SelectTicket() {
         const fetchAPI = async () => {
             try {
                 const data = await ticketService.getTicketOfShowtime(params.showtime_id);
+                console.log(data);
                 setTickets(data);
                 const initBookings = data.map((item) => {
                     return {
