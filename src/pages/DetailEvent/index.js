@@ -147,9 +147,15 @@ function DetailEvent({ children }) {
                             <p className={cx('address')}>{event.address}</p>
                         </div>
                         <div className={cx('interact')}>
-                            <Button onClick={() => scrollHandler(calendarRef, 2)} type="highlight" size="max">
-                                {showtimes.length > 1 ? 'Select showtime' : 'Book'}
-                            </Button>
+                            {showtimes.length > 1 ? (
+                                <Button onClick={() => (calendarRef, 2)} type="highlight" size="max">
+                                    Select showtime
+                                </Button>
+                            ) : (
+                                <Button onC type="highlight" size="max">
+                                    Book
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </div>

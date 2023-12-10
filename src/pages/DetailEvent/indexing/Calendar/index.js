@@ -27,7 +27,7 @@ const Calendar = forwardRef(({ data }, ref) => {
                                 href={
                                     Object.keys(authContext.userInfo).length > 0
                                         ? `book/${item._id}/step1`
-                                        : 'auth/login'
+                                        : '/auth/login'
                                 }
                                 type="highlight"
                                 size="max"
