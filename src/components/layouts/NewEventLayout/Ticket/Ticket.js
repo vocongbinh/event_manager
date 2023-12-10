@@ -1,31 +1,14 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import style from './Ticket.module.scss';
+import { useField, useFormikContext } from 'formik';
+import { useRef, useState, useEffect, memo } from 'react';
 import classNames from 'classnames/bind';
-import {
-    faCheckCircle,
-    faClose,
-    faDeleteLeft,
-    faEdit,
-    faInfoCircle,
-    faPenToSquare,
-    faPlusCircle,
-    faTicket,
-    faTrashCan,
-    faUserEdit,
-} from '@fortawesome/free-solid-svg-icons';
-import Images from '../../../../assets/images';
-import Image from '../../components/Image';
-import DatePicker from '../../components/DatePicker';
-import { useRef, useState, useCallback, useEffect, memo } from 'react';
-import TimePicker from '../../components/TimePicker/TimePicker';
-import MenuItem from '../../components/MenuItem/MenuItem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle, faTicket, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { uploadImage } from '../../../../apiServices/imageService';
+import style from './Ticket.module.scss';
 import InputItem from '../../components/InputItem/InputItem';
 import TextAreaItem from '../../components/TextAreaItem/TextAreaItem';
-import { Formik, Form, useField, FieldArray, useFormikContext } from 'formik';
-import Button from '../../components/Button';
-import * as yup from 'yup';
 
-const Ticket = ({ index, remove }) => {
+const Ticket2 = ({ index, remove }) => {
     console.log(`render ticket ${index}`);
     const $ = (prop) => {
         return `ticketTypes.${index}.${prop.toString()}`;
@@ -42,24 +25,13 @@ const Ticket = ({ index, remove }) => {
     const cx = classNames.bind(style);
     const fileRef = useRef();
     const [isFree, setIsFree] = useState(helpersFreeBool.value);
-    const [ticketTypeName, setTicketTypeName] = useState('');
     const [color, setColor] = useState('');
     const [image, setImage] = useState('');
     const [isEditingTicketName, setEditingTicketName] = useState(false);
-    const [isEditingForm, setEditingForm] = useState(true);
     const [errorLength, setErrorLength] = useState(0);
     const handleOpenFileChosen = () => {
         fileRef.current.click();
     };
-    // console.log(metaEndDate.value);
-    // useEffect(() => {
-    //     helperEndDate.setError('s kết thúc bán vé phải trước thời gian sự kiện bắt đầu');
-    // }, []);
-
-    // useEffect(() => {
-    //     // if (metaEndDate.value > formContext.values.showtimes[index].showTimeStartDate) {
-    //     // } else helperEndDate.setError('');
-    // }, [metaEndDate.value]);
     useEffect(() => {
         if (isFree == true) {
             helpersIsFree.setValue(0);
@@ -72,7 +44,7 @@ const Ticket = ({ index, remove }) => {
     return (
         <div className={cx('wrapper')}>
             <div key={index} className={cx('container')}>
-                {isEditingTicketName && isEditingForm && (
+                {isEditingTicketName && (
                     <div className={cx('header-edit')}>
                         <input
                             name={$(`ticketTypeName`)}
@@ -82,7 +54,6 @@ const Ticket = ({ index, remove }) => {
                                 setEditingTicketName(false);
                             }}
                             onChange={(value) => {
-                                setTicketTypeName(value.target.value);
                                 helpers.setValue(value.target.value);
                             }}
                             focus={() => setEditingTicketName(true)}
@@ -97,10 +68,7 @@ const Ticket = ({ index, remove }) => {
                         <FontAwesomeIcon icon={faTicket} className={cx('ticket-icon')} />
                         <button
                             onClick={() => {
-                                if (isEditingForm) {
-                                    // console.log('click button ticket type');
-                                    setEditingTicketName(true);
-                                }
+                                setEditingTicketName(true);
                             }}
                             type="button"
                             className={cx('ticket-type-name')}
@@ -109,11 +77,6 @@ const Ticket = ({ index, remove }) => {
                         </button>
 
                         <div>
-                            <FontAwesomeIcon
-                                onClick={() => setEditingForm(true)}
-                                icon={faPenToSquare}
-                                className={cx('action-icon')}
-                            />
                             <FontAwesomeIcon
                                 onClick={() => {
                                     console.log('index' + index);
@@ -125,43 +88,40 @@ const Ticket = ({ index, remove }) => {
                         </div>
                     </div>
                 )}
-                {isEditingForm && (
-                    <div className={cx('ticket-container')}>
-                        <div className={cx('row col-12')}>
-                            {/* form.touched?.ticketTypes && form.touched?.ticketTypes[index] && ( */}
-                            {/* // <div>{JSON.stringify(form.touched.ticketTypes[index])}</div> */}
-                            {/* )} */}
-                            {form.errors &&
-                            form.errors?.ticketTypes &&
-                            form.errors?.ticketTypes[index] &&
-                            form.touched &&
-                            form.touched?.ticketTypes &&
-                            form.touched?.ticketTypes[index] ? (
-                                <div
-                                    className={cx('ticket-errors', {
-                                        errorHide: errorLength === 0,
-                                    })}
-                                >
-                                    {Object.entries(form.errors.ticketTypes[index]).map(([key, value]) => {
-                                        if (
-                                            1 &&
-                                            form.touched.ticketTypes[index][key] &&
-                                            form.touched.ticketTypes[index][key] === true
-                                        ) {
-                                            if (errorLength == 0) setErrorLength(1);
-                                            return (
-                                                <div className={cx('ticket-label')} key={key}>
-                                                    {value}
-                                                </div>
-                                            );
-                                        } else return null;
-                                    })}
-                                </div>
-                            ) : null}
-                        </div>
-                        <div className={cx('row col-12')}>
-                            <div className="col-md-3">
-                                <div className={cx('input-container')}>
+                <div className={cx('ticket-container')}>
+                    <div className={cx('row col-12')}>
+                        {form.errors &&
+                        form.errors?.ticketTypes &&
+                        form.errors?.ticketTypes[index] &&
+                        form.touched &&
+                        form.touched?.ticketTypes &&
+                        form.touched?.ticketTypes[index] ? (
+                            <div
+                                className={cx('ticket-errors', {
+                                    errorHide: errorLength === 0,
+                                })}
+                            >
+                                {Object.entries(form.errors.ticketTypes[index]).map(([key, value]) => {
+                                    if (
+                                        1 &&
+                                        form.touched.ticketTypes[index][key] &&
+                                        form.touched.ticketTypes[index][key] === true
+                                    ) {
+                                        if (errorLength == 0) setErrorLength(1);
+                                        return (
+                                            <div className={cx('ticket-label')} key={key}>
+                                                {value}
+                                            </div>
+                                        );
+                                    } else return null;
+                                })}
+                            </div>
+                        ) : null}
+                    </div>
+                    <div className={cx('row col-12')}>
+                        <div className=" col-md-9">
+                            <div className="row">
+                                <div className={`${cx('col-wrapper')} col`}>
                                     <div className={cx('input-header')}>
                                         <div className={cx('input-label')}>Giá vé</div>
                                         <div className={cx('free-container')}>
@@ -177,277 +137,126 @@ const Ticket = ({ index, remove }) => {
                                         name={$('ticketTypePrice')}
                                         type="number"
                                         placeholder="Giá vé"
-                                        // readOnly={isFree}
+                                        readOnly={isFree}
                                     />
                                 </div>
-                            </div>
-                            <div className="col-md-3">
-                                <div className={cx('input-container')}>
-                                    <div className={cx('input-header')}>
+                                <div className={`${cx('col-wrapper')} col`}>
+                                    <div className={cx('input-container')}>
                                         <div className={cx('input-label')}>Tổng lượng vé</div>
                                     </div>
+
                                     <InputItem name={$('totalTicket')} type="number" placeholder="Tổng lượng vé" />
                                 </div>
-                            </div>
-                            <div className="col-md-3">
-                                <div className={cx('input-container')}>
-                                    <div className={cx('input-header')}>
-                                        <div className={cx('input-label')}>Số vé tối thiểu trên đơn hàng</div>
+                            </div>{' '}
+                        </div>{' '}
+                        <div className="col-md-3">
+                            <div className={cx('ticket-color-wrapper')}>
+                                <div className={cx('color-container')}>
+                                    <div>
+                                        <div className={cx('input-label')}>Màu vé</div>
+                                        <div>(để phân biệt các loại vé)</div>
                                     </div>
+                                    {/* </div> */}
+                                    <input
+                                        className={cx('color-picker')}
+                                        color={color}
+                                        onChange={(e) => {
+                                            setColor(e.target.value);
+                                            helperColor.setValue('color');
+                                        }}
+                                        name={$('ticketColor')}
+                                        type="color"
+                                    ></input>
+                                </div>
+                                <div className={cx('button-view-ticket')}>Xem vé mẫu</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={cx('row col-12')}>
+                        <div className="col-md-9">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div className={cx('input-container')}>
+                                        <div className={cx('input-header')}>
+                                            <div className={cx('input-label')}>Số vé tối thiểu trên đơn hàng</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-8">
                                     <InputItem name={$('minPerOrder')} type="number" placeholder="Vé tối thiểu" />
                                 </div>
                             </div>
-                            <div className="col-md-3">
-                                <div className={cx('input-container')}>
-                                    <div className={cx('input-header')}>
-                                        <div className={cx('input-label')}>Số vé tối đa trên đơn hàng</div>
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div className={cx('input-container')}>
+                                        <div className={cx('input-header')}>
+                                            <div className={cx('input-label')}>Số vé tối đa trên đơn hàng</div>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div className="col-md-8">
                                     <InputItem name={$('maxPerOrder')} type="number" placeholder="Vé tối đa" />
                                 </div>
                             </div>
                         </div>
-
-                        {/* <div className={cx('row col-12')}>
-                            <div className="col-md-2">
-                                <div className={cx('input-header')}>
-                                    <div className={cx('input-label')}>Giá vé</div>
-                                    <div className={cx('free-container')}>
-                                        <input
-                                            value={isFree}
-                                            onChange={() => setIsFree(!isFree)}
-                                            type="checkbox"
-                                        ></input>
-                                        <div className={cx('free-label')}>Miễn phí</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-md-4">
-                                <div className={cx('input-container')}>
-                                    <InputItem
-                                        name={$(ticketTypePrice)}
-                                        type="number"
-                                        placeholder="Giá vé"
-                                        readOnly={isFree}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-md-2">
-                                <div className={cx('input-container')}>
-                                    <div className={cx('input-header')}>
-                                        <div className={cx('input-label')}>Tổng lượng vé</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-md-4">
-                                <div className={cx('input-container')}>
-                                    <InputItem
-                                        name={$(totalTicket)}
-                                        type="number"
-                                        placeholder="Tổng lượng vé"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('row col-12')}>
-                            <div className="col-md-2">
-                                <div className={cx('input-container')}>
-                                    <div className={cx('input-header')}>
-                                        <div className={cx('input-label')}>Số vé tối thiểu trên đơn hàng</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-md-4">
-                                <div className={cx('input-container')}>
-                                    <InputItem
-                                        name={$(minPerOrder)}
-                                        type="number"
-                                        placeholder="Vé tối thiểu"
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-md-2">
-                                <div className={cx('input-container')}>
-                                    <div className={cx('input-header')}>
-                                        <div className={cx('input-label')}>Số vé tối đa trên đơn hàng</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="col-md-4">
-                                <InputItem
-                                    name={$(maxPerOrder)}
-                                    type="number"
-                                    placeholder="Vé tối đa"
-                                />
-                            </div>
-                        </div> */}
-                        <div className={cx('row col-12')}>
-                            <div className="col-md-9">
-                                <div className="row">
-                                    <div className="col-md-4">
-                                        <div className={cx('input-label')}>Ngày bắt đầu bán</div>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <DatePicker
-                                            name={$('ticketStartDate')}
-                                            type="text"
-                                            placeholder="Ngày bắt đầu"
-                                        />
-                                    </div>
-                                    <div className="col-md-4">
-                                        <TimePicker
-                                            date={field.ticketStartDate}
-                                            isDisabled={field.ticketStartDate === null}
-                                            name={$('ticketStartDate')}
-                                            type="text"
-                                            placeholder="Giờ bắt đầu"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-md-4">
-                                        <div className={cx('input-label')}>Ngày kết thúc bán</div>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <DatePicker name={$('ticketEndDate')} type="text" placeholder="Ngày kết thúc" />
-                                    </div>
-                                    <div className="col-md-4">
-                                        <TimePicker
-                                            date={field.ticketEndDate}
-                                            isDisabled={field.ticketEndDate === null}
-                                            name={$('ticketEndDate')}
-                                            type="text"
-                                            placeholder="Giờ kết thúc"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-3">
-                                <div className={cx('ticket-color-wrapper')}>
-                                    <div className={cx('color-container')}>
-                                        <div className={cx('input-container')}>
-                                            <div className={cx('input-label')}>Màu vé</div>
-                                            <div>(để phân biệt các loại vé)</div>
-                                        </div>
-                                        <input
-                                            color={color}
-                                            onChange={(e) => {
-                                                setColor(e.target.value);
-                                                helperColor.setValue('color');
-                                            }}
-                                            name={$('ticketColor')}
-                                            type="color"
-                                        ></input>
-                                    </div>
-                                    <div className={cx('button-view-ticket')}>Xem vé mẫu</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className={cx('divider')}></div>
-                        <div className={cx('row col-12')}>
-                            <div className="col-md-9">
-                                <TextAreaItem name={$('ticketInfomation')} type="text" placeholder="Thông tin vé" />
-                            </div>
-                            <div className="col-md-3">
-                                <input
-                                    name={$('ticketImage')}
-                                    className={cx('file-input')}
-                                    type="file"
-                                    // value={image ?? ''}
-                                    ref={fileRef}
-                                    onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        if (file) {
-                                            const imageUrl = URL.createObjectURL(file);
-                                            setImage(imageUrl);
-                                            helperImage.setValue(imageUrl);
+                        <div className="col-md-3">
+                            <input
+                                name={$('ticketImage')}
+                                className={cx('file-input')}
+                                type="file"
+                                // value={image ?? ''}
+                                ref={fileRef}
+                                onChange={async (e) => {
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                        const image = await uploadImage(file);
+                                        if (image) {
+                                            setImage(image.url);
+                                            helperImage.setValue(image.url);
                                         }
-                                    }}
-                                    accept="image/png, image/jpeg"
-                                />
-                                {image && (
-                                    <div
-                                        onClick={() => handleOpenFileChosen()}
-                                        className={cx('ticket-image-container')}
-                                    >
-                                        <img src={image} className={cx('ticket-image')} alt="Hình ảnh"></img>
-                                    </div>
-                                )}
-                                {!image && (
-                                    <div onClick={() => handleOpenFileChosen()} className={cx('image-container')}>
-                                        <FontAwesomeIcon style={{ height: '30px' }} icon={faPlusCircle} />
-                                        <div style={{ fontSize: '10px' }}>Thêm hình vé </div>
-                                        <div style={{ fontWeight: '700' }}>(Tỉ lệ 2:1)</div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                        <div className="row col-12">
-                            <div
-                                className={cx('button')}
-                                onClick={() => {
-                                    const newTouched = { ...form.touched };
-
-                                    const fieldsToMarkAsTouched = field;
-
-                                    Object.keys(fieldsToMarkAsTouched).forEach((field) => {
-                                        form.setFieldTouched(`ticketTypes[${index}].${field}`, true);
-                                    });
-                                    if (!form.errors?.ticketTypes || !form.errors?.ticketTypes[index]) {
-                                        setEditingForm(false);
                                     }
                                 }}
-                            >
-                                Hoàn thành
-                            </div>
+                                accept="image/png, image/jpeg"
+                            />
+                            {image && (
+                                <div onClick={() => handleOpenFileChosen()} className={cx('ticket-image-container')}>
+                                    <img src={image} className={cx('ticket-image')} alt="Hình ảnh"></img>
+                                </div>
+                            )}
+                            {!image && (
+                                <div onClick={() => handleOpenFileChosen()} className={cx('image-container')}>
+                                    <FontAwesomeIcon style={{ height: '30px' }} icon={faPlusCircle} />
+                                    <div style={{ fontSize: '10px' }}>Thêm hình vé </div>
+                                    <div style={{ fontWeight: '700' }}>(Tỉ lệ 2:1)</div>
+                                </div>
+                            )}
                         </div>
                     </div>
-                )}
-                {!isEditingForm && (
-                    <div className={cx('ticket-container')}>
-                        <div className={cx('row col-12')}>
-                            <div className="col-md-4">
-                                <div className={cx('input-label')}>Ngày bắt đầu bán</div>
-                            </div>
-                            <div className="col-md-4">
-                                <DatePicker name={$('ticketStartDate')} type="text" placeholder="Ngày bắt đầu" />
-                            </div>
-                            <div className="col-md-4">
-                                <TimePicker
-                                    date={field.ticketStartDate}
-                                    isDisabled={field.ticketStartDate === null}
-                                    name={$('ticketStartDate')}
-                                    type="text"
-                                    placeholder="Giờ bắt đầu"
-                                />
-                            </div>
-                        </div>
-                        <div className="row col-12">
-                            <div className="col-md-4">
-                                <div className={cx('input-label')}>Ngày kết thúc bán</div>
-                            </div>
-                            <div className="col-md-4">
-                                <DatePicker name={$('ticketEndDate')} type="text" placeholder="Ngày kết thúc" />
-                            </div>
-                            <div className="col-md-4">
-                                <TimePicker
-                                    date={field.ticketEndDate}
-                                    isDisabled={field.ticketEndDate === null}
-                                    name={$('ticketEndDate')}
-                                    type="text"
-                                    placeholder="Giờ kết thúc"
-                                />
-                            </div>
+
+                    <div className={cx('divider')}></div>
+                    <div className={cx('row col-12')}>
+                        <TextAreaItem name={$('ticketInfomation')} type="text" placeholder="Thông tin vé" />
+                    </div>
+                    <div className="row col-12">
+                        <div
+                            className={cx('button')}
+                            onClick={() => {
+                                const fieldsToMarkAsTouched = field;
+
+                                Object.keys(fieldsToMarkAsTouched).forEach((field) => {
+                                    form.setFieldTouched(`ticketTypes[${index}].${field}`, true);
+                                });
+                            }}
+                        >
+                            Hoàn thành
                         </div>
                     </div>
-                )}
+                </div>
             </div>
         </div>
     );
 };
 
-export default memo(Ticket);
+export default memo(Ticket2);

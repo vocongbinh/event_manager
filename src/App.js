@@ -5,12 +5,21 @@ import { Fragment } from 'react';
 import MyEventLayout from './components/layouts/MyEventLayout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './utils/authContext';
-import { NewEventFormProvider } from './utils/newEventContext';
+import { NewEventFormProvider, NewEventStepProvider } from './utils/newEventContext';
 import NewStageChart from './components/layouts/NewEventLayout/NewStage/NewStageChart';
+import NewEventLayout from './components/layouts/NewEventLayout/NewEventLayout';
+import EventTypeList from './components/layouts/NewEventLayout/EventTypeList';
+import Tickets from './components/layouts/NewEventLayout/Tickets/Tickets';
+import ShowTimes from './components/layouts/NewEventLayout/ShowTimes/ShowTimes';
+import NewEventForm from './components/layouts/NewEventLayout/NewEventForm/NewEventForm';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 const client = new QueryClient();
 function App() {
     return (
         <QueryClientProvider client={client}>
+            <ReactQueryDevtools initialIsOpen={true} />
+
             <BrowserRouter>
                 <AuthProvider>
                     <div className="App">
@@ -39,6 +48,7 @@ function App() {
                                     />
                                 );
                             })}
+
                             <Route
                                 path="/newEvent/new-stage-model"
                                 element={
@@ -47,6 +57,30 @@ function App() {
                                     </NewEventFormProvider>
                                 }
                             />
+                            <Route
+                                path="/newEvent"
+                                element={
+                                    <NewEventStepProvider>
+                                        <NewEventFormProvider>
+                                            <NewEventLayout />
+                                        </NewEventFormProvider>
+                                    </NewEventStepProvider>
+                                }
+                            >
+                                <Route index element={<EventTypeList />}></Route>
+                                <Route path="eventInfo" element={<NewEventForm />} />
+                                <Route path="tickets" element={<Tickets />} />
+                                <Route path="showtimes" element={<ShowTimes />} />
+                                <Route path="stage" element={<NewStageChart />} />
+                                {/* <Route
+                                path="/new-stage-model"
+                                element={
+                                    <NewEventFormProvider>
+                                        <NewStageChart></NewStageChart>
+                                    </NewEventFormProvider>
+                                }
+                            /> */}
+                            </Route>
                         </Routes>
                     </div>
                 </AuthProvider>

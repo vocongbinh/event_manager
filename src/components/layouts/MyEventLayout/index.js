@@ -46,7 +46,7 @@ function MyEventLayout({ children }) {
                         src="https://cdn.pixabay.com/photo/2020/07/21/16/10/pokemon-5426712_960_720.png"
                     />
                     <button>
-                        {authContext.userData.fullName}
+                        {authContext.userInfo.fullName}
                         <span className={cx('name')}>
                             <img
                                 alt=""

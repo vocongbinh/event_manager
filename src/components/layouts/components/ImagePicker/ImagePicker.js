@@ -4,6 +4,7 @@ import { forwardRef, useState, memo, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faCloudUpload, faFileUpload, faImage, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useField } from 'formik';
+import { uploadImage } from '../../../../apiServices/imageService';
 const ImagePicker = ({ label, ...props }) => {
     const cx = classNames.bind(styles);
     // const [inputFocus, setInputFocus] = useState(false);
@@ -24,21 +25,21 @@ const ImagePicker = ({ label, ...props }) => {
                         className={cx('file-input')}
                         type="file"
                         ref={fileRef}
-                        onChange={(e) => {
+                        onChange={async (e) => {
                             const file = e.target.files[0];
                             if (file) {
-                                const imageUrl = URL.createObjectURL(file);
-                                helpers.setValue(imageUrl);
+                                const image = await uploadImage(file);
+                                helpers.setValue(image.url);
                             }
                         }}
                         accept="image/png, image/jpeg"
                     />
-                    {field.value != '' && (
+                    {field.value && (
                         <div onClick={() => handleOpenFileChosen()} className={cx('image-container')}>
                             <img src={field.value} className={cx('image-img')} alt="Hình ảnh" />
                         </div>
                     )}
-                    {field.value == '' && (
+                    {!field.value && (
                         <div className={cx('image-container')}>
                             <div onClick={() => handleOpenFileChosen()} className={cx('image-button')}>
                                 <FontAwesomeIcon

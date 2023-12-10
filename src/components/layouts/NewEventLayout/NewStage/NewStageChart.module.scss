@@ -9,11 +9,11 @@
 }
 .button {
     height: 50px;
+    width: 200px;
 }
 .action {
     margin-top: 5px;
     flex-shrink: none;
-    margin-left: auto;
-    margin-right: 10px;
-    width: 200px;
+    display: flex;
+    justify-content: space-between;
 }

@@ -26,9 +26,9 @@ function TypeEvent() {
     const [valueSearch, setValueSearch] = useState('');
     const debounceValue = useDebounce(valueSearch, 500);
     const [searchParams, setSearchParams] = useSearchParams();
-    const { data } = useQuery(
-        'type-event',
-        async () => {
+    const { data } = useQuery({
+        queryKey: ['type-event'],
+        queryFn: async () => {
             let params = {};
             searchParams.forEach((va, k) => (params[k] = va));
             if (params.address) {
@@ -44,11 +44,9 @@ function TypeEvent() {
             console.log(eventData);
             setEvents(eventData);
         },
-        {
-            refetchOnWindowFocus: false,
-            retry: false,
-        },
-    );
+        refetchOnWindowFocus: false,
+        retry: false,
+    });
     const handlePriceChange = async (value) => {
         let newParams = {};
         if (searchParams.has('price')) {

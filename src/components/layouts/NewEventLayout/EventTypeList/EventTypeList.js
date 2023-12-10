@@ -1,59 +1,24 @@
 import styles from './EventTypeList.module.scss';
 import classNames from 'classnames/bind';
-import Images from '../../../../assets/images';
 import { memo, useState } from 'react';
 import Button from '../../components/Button';
-import { useNewEventFormContext } from '../../../../utils/newEventContext';
-const listCategorys = [
-    {
-        icon: Images.music,
-        title: 'Live music',
-        categories: [8],
-    },
-    {
-        icon: Images.curture,
-        title: 'Theater-Alt',
-        categories: [9, 10],
-    },
-    {
-        icon: Images.night,
-        title: 'nightlife',
-        categories: [11],
-    },
-    {
-        icon: Images.community,
-        title: 'Community',
-        categories: [2, 3, 5, 7],
-    },
-    {
-        icon: Images.course,
-        title: 'Course',
-        categories: [4],
-    },
-    {
-        icon: Images.attraction,
-        title: 'Attractions',
-        categories: [13],
-    },
-    {
-        icon: Images.sport,
-        title: 'Sport',
-        categories: [6, 12],
-    },
-];
+import { useNewEventFormContext, useNewEventStepContext } from '../../../../utils/newEventContext';
+import { listCategorys } from '../../../../constants';
 
 const EventTypeList = ({ next }) => {
     const [selectedList, setSelectedList] = useState([]);
     const [showError, setShowError] = useState(false);
     const cx = classNames.bind(styles);
     const eventFormContext = useNewEventFormContext();
+    const eventStepContext = useNewEventStepContext();
     const handleNext = () => {
         if (selectedList.length == 0) {
             setShowError(true);
         } else {
-            // console.log(eventFormContext);
-            eventFormContext.setEventTypes([...selectedList]);
-            next(1);
+            const selectedCate = selectedList.map((item) => listCategorys[item].title);
+            console.log(selectedCate);
+            eventFormContext.setEventTypes(selectedCate);
+            eventStepContext.setStep(1);
         }
     };
     console.log('render eventlist');
@@ -77,7 +42,6 @@ const EventTypeList = ({ next }) => {
                         }}
                         className={cx('event-item', {
                             isSelected: selectedList.includes(index),
-                            // isSelected: true,
                         })}
                     >
                         <img className={cx('icon')} src={category.icon} />

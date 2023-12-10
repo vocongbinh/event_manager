@@ -10,8 +10,11 @@ import eventService from '../../../../../apiServices/eventService';
 function Promote() {
     const cx = classNames.bind(styles);
     const params = useParams();
-    const { data } = useQuery('event', async () => {
-        return await eventService.getEventById(params.id);
+    const { data } = useQuery({
+        queryKey: ['event'],
+        queryFn: async () => {
+            return await eventService.getEventById(params.id);
+        },
     });
     console.log(data);
     return (
