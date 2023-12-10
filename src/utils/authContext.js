@@ -9,11 +9,13 @@ export const AuthProvider = ({ children }) => {
     const logIn = (values) => {
         console.log(values);
         if (values.userToken) localStorage.setItem('userToken', values.userToken);
+        localStorage.setItem('user', JSON.stringify(userInfo));
         setUserInfo(values);
     };
 
     const logOut = () => {
         setUserInfo({});
+        localStorage.removeItem('user');
     };
     const register = (data) => {
         setRegister(data);
