@@ -28,12 +28,12 @@ function Promote() {
                     Promote link:
                     <span>
                         <a className={cx('link')} href={window.location.href}>
-                            {` http://localhost:3000/events/${params.id}/`}
+                            {`https://dev-seatmap--tiny-kitsune-f8476a.netlify.app/${params.id}/`}
                         </a>
                     </span>
                 </p>
                 <FacebookShareButton
-                    url={`https://24hstore.vn/upload_images/images/2023/hinh-nen-may-tinh/1-1-hinh-nen-may-tinh-chill-win-10-1.jpg`}
+                    url={`https://dev-seatmap--tiny-kitsune-f8476a.netlify.app/${params.id}`}
                     quote="share event"
                     hashtag="event"
                 >
