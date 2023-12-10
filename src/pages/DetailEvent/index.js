@@ -148,12 +148,19 @@ function DetailEvent({ children }) {
                         </div>
                         <div className={cx('interact')}>
                             {showtimes.length > 1 ? (
-                                <Button onClick={() => (calendarRef, 2)} type="highlight" size="max">
+                                <Button onClick={() => scrollHandler(calendarRef, 2)} type="highlight" size="max">
                                     Select showtime
                                 </Button>
                             ) : (
-                                <Button onC type="highlight" size="max">
-                                    Book
+                                <Button
+                                    href={
+                                        localStorage.getItem('user') != null ? `book/${event._id}/step1` : '/auth/login'
+                                    }
+                                    type="highlight"
+                                    size="max"
+                                    className={cx('book-btn')}
+                                >
+                                    Book now
                                 </Button>
                             )}
                         </div>

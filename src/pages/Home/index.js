@@ -9,9 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import Images from '../../assets/images';
 import SlickComponent from '../../components/SlickComponent';
+import Spinner from 'react-bootstrap/Spinner';
+import spinnerStyles from '../../styles/spinner.module.scss';
 
 function Home() {
     const cx = classNames.bind(styles);
+    const spinnerCx = classNames.bind(spinnerStyles);
     const [events, setEvents] = useState([]);
     const slickRef = useRef(null);
     const handleLeftSlick = () => {
@@ -25,6 +28,7 @@ function Home() {
             try {
                 const eventsData = await eventServices.allEvents();
                 setEvents(eventsData || []);
+                console.log(eventsData);
             } catch (err) {
                 console.log('error');
             }
@@ -62,6 +66,7 @@ function Home() {
                         </div>
                     ))}
                 </div>
+                {/* <Spinner className={spinnerCx} animation="grow" variant="light" /> */}
             </div>
         </div>
     );
