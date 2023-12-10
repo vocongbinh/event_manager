@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './EventItem.module.scss';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import ticketService from '../../../apiServices/ticketService';
 import { format, min } from 'date-fns';

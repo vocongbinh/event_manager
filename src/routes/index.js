@@ -9,9 +9,9 @@ import OrganizerProfile from '../pages/myEvent/OrganizerProfile';
 import EventTypeList from '../components/layouts/NewEventLayout/EventTypeList';
 import NewEventLayout from '../components/layouts/NewEventLayout/NewEventLayout';
 import BankAccount from '../pages/myEvent/BankAccount';
-import BookEvent from '../pages/BookEvent';
-import SelectTicket from '../pages/BookEvent/bookContent/SelectTicket';
-import PaymentInfo from '../pages/BookEvent/bookContent/PaymentInfo';
+import BookEvent from '../pages/BookEvent/bookingLayout';
+import SelectTicket from '../pages/BookEvent/bookContent/SelectTicket/selectTicket';
+import PaymentInfo from '../pages/BookEvent/bookContent/PaymentInfo/paymentInfo';
 import ManageEventLayout from '../components/layouts/ManageEventLayout';
 import Summary from '../pages/myEvent/Events/OptionManager/Summary';
 import AuthenticationLayout from '../components/layouts/AuthenticationLayout/AuthenticationLayout';
@@ -28,6 +28,7 @@ import TypeEvent from '../pages/TypeEvent';
 import MyTickets from '../pages/MyTickets';
 import ComponentRSVP from '../pages/myEvent/Events/OptionManager/RSVPs';
 import ComponentRPVPs from '../pages/myEvent/Events/OptionManager/RSVPs';
+import NewStageChart from '../components/layouts/NewEventLayout/NewStage/NewStageChart';
 //private router
 const privateRouter = [{}];
 //public router
@@ -123,6 +124,36 @@ const publicRouter = [
         path: '/my_tickets',
         layout: DefaultLayout,
         component: MyTickets,
+    },
+    {
+        path: '/auth/login',
+        layout: AuthenticationLayout,
+        component: LoginForm,
+    },
+    {
+        path: '/auth/resetpassword',
+        layout: AuthenticationLayout,
+        component: ResetPassword,
+    },
+    {
+        path: '/auth/otp',
+        layout: AuthenticationLayout,
+        component: Otp,
+    },
+    {
+        path: '/auth/profile',
+        layout: AuthenticationLayout,
+        component: Profile,
+    },
+    {
+        path: '/auth/register',
+        layout: AuthenticationLayout,
+        component: Register,
+    },
+    {
+        path: '/auth/registersuccess',
+        layout: AuthenticationLayout,
+        component: RegisterSuccess,
     },
 ];
 export { privateRouter, publicRouter };

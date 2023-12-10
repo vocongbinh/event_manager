@@ -12,6 +12,7 @@ import EventTypeList from '../NewEventLayout/EventTypeList';
 import NewEventForm from './NewEventForm/NewEventForm';
 import ShowTimes from './ShowTimes/ShowTimes';
 import { NewEventFormProvider } from '../../../utils/newEventContext';
+import NewStageChart from './NewStage/NewStageChart';
 const NewEventLayout = () => {
     const cx = classNames.bind(style);
     const [step, setStep] = useState(0);
@@ -32,6 +33,11 @@ const NewEventLayout = () => {
         {
             title: 'Thời gian',
             header: 'Chọn thời gian cho sự kiện',
+            icon: <FontAwesomeIcon icon={faMoneyBill} />,
+        },
+        {
+            title: 'Tạo sân khấu mới',
+            header: 'Tạo sân khấu mới cho sự kiện',
             icon: <FontAwesomeIcon icon={faMoneyBill} />,
         },
     ];
@@ -77,7 +83,7 @@ const NewEventLayout = () => {
             </div>
             <NewEventFormProvider>
                 <div className={cx('container')}>
-                    <FormHeader header={listOptions[step].header} />
+                    <FormHeader header={listOptions[step].header ?? ''} />
 
                     <div hidden={step != 0} className={cx('container1')}>
                         <EventTypeList next={setNext} />
@@ -87,7 +93,10 @@ const NewEventLayout = () => {
                     </div>
 
                     <div hidden={step != 2} className={cx('container1')}>
-                        <ShowTimes />
+                        <ShowTimes next={setNext} />
+                    </div>
+                    <div hidden={step != 3}>
+                        <NewStageChart />
                     </div>
                 </div>
             </NewEventFormProvider>

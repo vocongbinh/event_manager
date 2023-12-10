@@ -42,14 +42,14 @@ const NewEventForm = ({ next }) => {
         <div className={cx('wrapper')}>
             <Formik
                 initialValues={{
-                    eventName: 'dd',
-                    description: 'ss',
+                    eventName: '',
+                    description: '',
                     coverImage: '',
                     // embeddedLinks: [],
                 }}
                 validationSchema={formSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                    eventFormContext.updateNewEvent(values);
+                    eventFormContext.setEventInfor(values);
                     // alert(JSON.stringify(values));
                     next(2);
                 }}
@@ -72,7 +72,7 @@ const NewEventForm = ({ next }) => {
                         </div>
                         <div className={cx('input-container')}>
                             <div className={cx('title-icon')}>
-                                {(formik.errors.description && formik.touched.description && (
+                                {(formik.errors.coverImage && formik.touched.coverImage && (
                                     <FontAwesomeIcon icon={faInfoCircle} className={cx('info-icon')} />
                                 )) || <FontAwesomeIcon icon={faCheckCircle} className={cx('check-icon')} />}
                                 <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />

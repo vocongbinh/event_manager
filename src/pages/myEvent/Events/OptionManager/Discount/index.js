@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import CheckboxItem from './CheckboxItem';
 import ReactDatePicker from 'react-datepicker';
 import * as discountService from '../../../../../apiServices/discountService';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 function Discount() {
     const cx = classNames.bind(styles);
     //set state

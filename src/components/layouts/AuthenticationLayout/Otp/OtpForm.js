@@ -8,7 +8,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import authService from '../../../../apiServices/authService';
 import { redirect, useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useAuthContext } from '../../../../utils/authContext';
 import OtpInputItem from '../../components/OtpInputItem/OtpInputItem';
 import { set } from 'date-fns';

@@ -3,8 +3,10 @@ import { publicRouter } from './routes';
 import DefaultLayout from './components/layouts/DefaultLayout';
 import { Fragment } from 'react';
 import MyEventLayout from './components/layouts/MyEventLayout';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './utils/authContext';
+import { NewEventFormProvider } from './utils/newEventContext';
+import NewStageChart from './components/layouts/NewEventLayout/NewStage/NewStageChart';
 const client = new QueryClient();
 function App() {
     return (
@@ -37,6 +39,14 @@ function App() {
                                     />
                                 );
                             })}
+                            <Route
+                                path="/newEvent/new-stage-model"
+                                element={
+                                    <NewEventFormProvider>
+                                        <NewStageChart></NewStageChart>
+                                    </NewEventFormProvider>
+                                }
+                            />
                         </Routes>
                     </div>
                 </AuthProvider>

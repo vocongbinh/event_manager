@@ -24,7 +24,7 @@ function Home() {
         const getListEvents = async () => {
             try {
                 const eventsData = await eventServices.allEvents();
-                setEvents(eventsData);
+                setEvents(eventsData || []);
             } catch (err) {
                 console.log('error');
             }
