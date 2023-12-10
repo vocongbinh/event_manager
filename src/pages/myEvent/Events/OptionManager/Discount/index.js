@@ -40,6 +40,8 @@ function Discount() {
         quantity: '',
         timeStart: '12:00 AM',
         timeEnd: '12:00 AM',
+        discountType: '',
+        itemId: '',
     });
     let dateStart, dateEnd;
     const [errors, setErrors] = useState({});
@@ -101,11 +103,14 @@ function Discount() {
         });
     }
     const showtimeId = showId.get('showId');
-    const { isLoading, isError, data, refetch } = useQuery(['discounts', stid], async () => {
-        if (stid !== undefined) {
-            const discountData = await discountService.getAll(stid);
-            setDiscounts(discountData);
-        }
+    const { isLoading, isError, data, refetch } = useQuery({
+        queryKey: ['discounts', stid],
+        queryFn: async () => {
+            if (stid !== undefined) {
+                const discountData = await discountService.getAll(stid);
+                setDiscounts(discountData);
+            }
+        },
     });
 
     useEffect(() => {
@@ -297,7 +302,7 @@ function Discount() {
                         size="max"
                         sufIcon={<FontAwesomeIcon icon={faCirclePlus} />}
                     >
-                        create New Discount Code
+                        Add New Discount Code
                     </Button>
                 )}
 

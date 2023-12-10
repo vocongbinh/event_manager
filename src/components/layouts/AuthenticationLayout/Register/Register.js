@@ -26,7 +26,7 @@ const RegisterForm = () => {
             .then((values) => {
                 console.log(values);
                 setErrors('');
-                authContext.regisrter({ phoneNumber, password });
+                authContext.register({ phoneNumber, password });
                 navigate('/auth/otp');
             })
             .catch((error) => {
@@ -43,7 +43,7 @@ const RegisterForm = () => {
         retypePassword: yup
             .string()
             .required('Password is required')
-            .test('min-max-validation', 'Ngày kết thúc phải trễ hơn ngày bắt đầu', function (value) {
+            .test('min-max-validation', 'Password is not equal', function (value) {
                 const password = this.parent.password;
                 return value == password;
             }),
@@ -79,6 +79,20 @@ const RegisterForm = () => {
                                 <div className={cx('title')}>Đăng ký tài khoản</div>
                             </div>
                             <Form>
+                                <InputItem
+                                    name="phoneNumber"
+                                    type="text"
+                                    placeholder="Số điện thoại"
+                                    label="Số điện thoại"
+                                    readOnly="true"
+                                />
+                                <InputItem type="password" name="password" placeholder="Mật khẩu" label="Mật khẩu" />
+                                <InputItem
+                                    type="password"
+                                    name="retypePassword"
+                                    placeholder="Nhập lại mật khẩu"
+                                    label="Nhập lại mật khẩu"
+                                />
                                 <div>
                                     {formik.errors ? (
                                         <div className={cx('error-errors')}>
@@ -98,20 +112,6 @@ const RegisterForm = () => {
                                         </div>
                                     ) : null}
                                 </div>
-                                <InputItem
-                                    name="phoneNumber"
-                                    type="text"
-                                    placeholder="Số điện thoại"
-                                    label="Số điện thoại"
-                                    readOnly="true"
-                                />
-                                <InputItem type="password" name="password" placeholder="Mật khẩu" label="Mật khẩu" />
-                                <InputItem
-                                    type="password"
-                                    name="retypePassword"
-                                    placeholder="Nhập lại mật khẩu"
-                                    label="Nhập lại mật khẩu"
-                                />
                                 <div>
                                     <Button type="round" className={cx('login-button')} size="max" background="blue">
                                         Đăng ký
