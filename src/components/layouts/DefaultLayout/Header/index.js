@@ -45,8 +45,8 @@ function Header() {
                 <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
                 {/* {Object.keys(authContext.userInfo).length > 0 ? ( */}
                 <Tippy
+                    maxWidth="100%"
                     placement="bottom-end"
-                    interactive
                     render={(attrs) => (
                         <div className={cx('tippy-wrapper')} tab {...attrs}>
                             {userOptions.map((option) => (
