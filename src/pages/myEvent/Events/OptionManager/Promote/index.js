@@ -33,7 +33,7 @@ function Promote() {
                     </span>
                 </p>
                 <FacebookShareButton
-                    url={`https://dev-seatmap--tiny-kitsune-f8476a.netlify.app/${params.id}`}
+                    url={`https://dev-seatmap--tiny-kitsune-f8476a.netlify.app/events/${params.id}`}
                     quote="share event"
                     hashtag="event"
                 >
