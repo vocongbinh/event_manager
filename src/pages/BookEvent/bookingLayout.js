@@ -27,7 +27,8 @@ import SelectTicket from './bookContent/SelectTicket/selectTicket';
 import PaymentInfo from './bookContent/PaymentInfo/paymentInfo';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import eventService from '../../apiServices/eventService';
-import { useHoldTickets, useHoldToken } from '../../lib/react-query/useQueryAndMutation';
+import { useCreateNewBooking, useHoldTickets, useHoldToken } from '../../lib/react-query/useQueryAndMutation';
+import { createNewBooking } from '../../apiServices/bookingService';
 export const BookContext = createContext();
 function BookEvent({ children, ...props }) {
     const cx = classNames.bind(styles);
@@ -36,6 +37,7 @@ function BookEvent({ children, ...props }) {
     const [bookings, setBookings] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const [selectedTickets, setSelectedTickets] = useState('');
+    const [showtime, setShowtime] = useState('');
     // state of payment infor
     const [firstName, setFirstName] = useState('');
     const [latstName, setLastName] = useState('');
@@ -44,7 +46,8 @@ function BookEvent({ children, ...props }) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const navigate = useNavigate();
     const [event, setEvent] = useState();
-    const eventKey = 'af5019ac-f204-4ba5-97d8-c029e3a07f8b';
+    const [eventKey, setEventKey] = useState('');
+    // const eventKey = 'af5019ac-f204-4ba5-97d8-c029e3a07f8b';
     const nf = new Intl.NumberFormat();
     const { data: holdToken, isPending: isCreatingHoldToken, refetch: refetchToken } = useHoldToken();
     console.log(holdToken);
@@ -75,6 +78,9 @@ function BookEvent({ children, ...props }) {
                 selectedTickets,
                 setSelectedTickets,
                 refetchToken,
+                eventKey,
+                setEventKey,
+                setShowtime,
             };
             break;
 
@@ -141,12 +147,31 @@ function BookEvent({ children, ...props }) {
         },
     ];
     const listLayout = [<SelectTicket />, <PaymentInfo />];
-    const nextHandler = () => {
-        if (activeStep < listSteps.length - 1) {
+    const nextHandler = async () => {
+        if (activeStep <= 1) {
+            console.log('do step 1');
             const value = activeStep + 1;
             navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
             holdTickets({ bookings, eventKey, holdToken });
             setActiveStep((prev) => prev + 1);
+        } else {
+            console.log('do step 2');
+            // navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
+
+            const receiverInformation = {
+                receiverName: firstName + latstName,
+                receiverEmail: email,
+                receiverPhoneNumber: phoneNumber,
+            };
+            const data = await createNewBooking({
+                tickets: bookings,
+                discounts: [],
+                eventKey,
+                holdToken,
+                ...receiverInformation,
+                showtime,
+            });
+            console.log(data);
         }
     };
     return (

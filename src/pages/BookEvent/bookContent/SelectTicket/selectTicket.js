@@ -16,6 +16,7 @@ function SelectTicket() {
     //useQuery
     //get book context
     const bookContext = useContext(BookContext);
+    bookContext.setShowtime(params.showtime_id);
     useEffect(() => {
         const fetchAPI = async () => {
             try {
@@ -38,6 +39,14 @@ function SelectTicket() {
         fetchAPI();
     }, []);
     const { data: showtimeInfo, isPending: isFetchingShowtime } = useGetShowtime(params.showtime_id);
+    useEffect(() => {
+        console.log(bookContext.bookings);
+    }, [bookContext.bookings]);
+    useEffect(() => {
+        if (showtimeInfo && showtimeInfo.showTimeStage) {
+            bookContext.setEventKey(showtimeInfo.showTimeStage);
+        }
+    }, [showtimeInfo]);
     const selectedObjectHandler = (obj) => {
         bookContext.setBookings((prev) => {
             return prev.map((item) => {

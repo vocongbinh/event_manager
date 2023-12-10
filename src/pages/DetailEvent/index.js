@@ -95,6 +95,7 @@ function DetailEvent({ children }) {
                 console.log(event);
                 setEvent(event);
                 const showtimes = await showtimeService.getShowtimeOfEvent(params.id);
+                console.log(showtimes);
                 setShowtimes(showtimes);
 
                 const ticketTypes = await ticketService.getTicketOfEvent(params.id);
