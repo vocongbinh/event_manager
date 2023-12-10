@@ -28,6 +28,7 @@ function Summary() {
     const navigate = useNavigate();
     const [showId, setShowId] = useSearchParams();
     const [ticketTypes, setTicketTypes] = useState([]);
+    const [error, setError] = useState(false);
     let totalCount = 0;
     let totalPrice = 0;
     let startTime;
@@ -48,52 +49,54 @@ function Summary() {
         });
     }
     const handleApply = () => {
-        const range = moment.range(startDate, endDate);
-        const labelsConfig = Array.from(range.by('day')).map((x) => x.format('DD/MM'));
-        labels = Array.from(range.by('day')).map((x) => x.format('DD-MM-yyyy'));
-        let datasets = [];
-
-        ticketTypes.forEach((type) => {
-            let data = {};
-            data.label = type.ticketName;
-            let dataOfset = [];
-            labels.forEach((label) => {
-                let count = 0;
-                type.ticketsales.forEach((ticket) => {
-                    console.log(format(new Date(Date.parse(ticket.createdAt)), 'dd-MM-yyyy'), label);
-                    if (format(new Date(Date.parse(ticket.createdAt)), 'dd-MM-yyyy') === label) {
-                        count++;
-                    }
+        if (startDate >= endDate) setError(true);
+        else {
+            const range = moment.range(startDate, endDate);
+            const labelsConfig = Array.from(range.by('day')).map((x) => x.format('DD/MM'));
+            labels = Array.from(range.by('day')).map((x) => x.format('DD-MM-yyyy'));
+            let datasets = [];
+            ticketTypes.forEach((type) => {
+                let data = {};
+                data.label = type.ticketName;
+                let dataOfset = [];
+                labels.forEach((label) => {
+                    let count = 0;
+                    type.ticketsales.forEach((ticket) => {
+                        console.log(format(new Date(Date.parse(ticket.createdAt)), 'dd-MM-yyyy'), label);
+                        if (format(new Date(Date.parse(ticket.createdAt)), 'dd-MM-yyyy') === label) {
+                            count++;
+                        }
+                    });
+                    dataOfset.push(count * type.price);
                 });
-                dataOfset.push(count * type.price);
+                data.data = dataOfset;
+                datasets.push(data);
             });
-            data.data = dataOfset;
-            datasets.push(data);
-        });
-        const config = {
-            type: 'line',
-            data: {
-                labels: labelsConfig,
-                datasets,
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Ticket sale by date',
+            const config = {
+                type: 'line',
+                data: {
+                    labels: labelsConfig,
+                    datasets,
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Ticket sale by date',
+                        },
                     },
                 },
-            },
-        };
-        if (chart) {
-            chart.destroy();
-            setChart(new Chart(graph, config));
-        } else {
-            setChart(new Chart(graph, config));
+            };
+            if (chart) {
+                chart.destroy();
+                setChart(new Chart(graph, config));
+            } else {
+                setChart(new Chart(graph, config));
+            }
         }
     };
 
@@ -180,6 +183,7 @@ function Summary() {
                     Apply
                 </Button>
             </div>
+            <span className={cx('error')}>End date must be after start date</span>
             <div className={cx('status-layout')}>
                 <div className={cx('status-item', 'paid')}>
                     <FontAwesomeIcon className={cx('status-icon')} icon={faCheck} />
@@ -211,19 +215,19 @@ function Summary() {
                             <th style={{ width: 20, padding: 5 }}>
                                 <input checked type="checkbox" />
                             </th>
-                            <th style={{ width: 250 }}>
+                            <th style={{ width: 250, textAlign: 'center' }}>
                                 <p>Ticket Type</p>
                             </th>
                             <th>
-                                <span style={{ fontWeight: 400 }}>Sold Price</span>
-                                <p>VND</p>
+                                <p style={{ fontWeight: 400, textAlign: 'center' }}>Sold Price</p>
+                                <p style={{ textAlign: 'center' }}>VND</p>
                             </th>
                             <th>
-                                <p>Paid Tickets</p>
+                                <p style={{ textAlign: 'center' }}>Paid Tickets</p>
                             </th>
 
                             <th>
-                                <p>Total Tickets</p>
+                                <p style={{ textAlign: 'center' }}>Total Tickets</p>
                             </th>
                         </tr>
                     </thead>

@@ -7,19 +7,22 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { FacebookShareButton } from 'react-share';
 import eventService from '../../../../../apiServices/eventService';
+import { useState } from 'react';
 function Promote() {
     const cx = classNames.bind(styles);
     const params = useParams();
-    const { data } = useQuery({
+    const [event, setEvent] = useState();
+    const {} = useQuery({
         queryKey: ['event'],
         queryFn: async () => {
-            return await eventService.getEventById(params.id);
+            const data = await eventService.getEventById(params.id);
+            setEvent(data);
         },
     });
-    console.log(data);
+
     return (
         <div className={cx('wrapper')}>
-            <p className={cx('border-layout', 'header')}>{data.event}</p>
+            <p className={cx('border-layout', 'header')}>{event && event.eventName}</p>
             <div className={cx('border-layout')}>
                 <p style={{ fontSize: '2rem' }}>
                     Promote link:
@@ -29,7 +32,11 @@ function Promote() {
                         </a>
                     </span>
                 </p>
-                <FacebookShareButton url={` localhost:3000/events/${params.id}/`} quote="share event" hashtag="event">
+                <FacebookShareButton
+                    url={`https://24hstore.vn/upload_images/images/2023/hinh-nen-may-tinh/1-1-hinh-nen-may-tinh-chill-win-10-1.jpg`}
+                    quote="share event"
+                    hashtag="event"
+                >
                     <Button className={cx('share-btn')} preIcon={<FontAwesomeIcon size="xl" icon={faSquareFacebook} />}>
                         Share on Facebook
                     </Button>
