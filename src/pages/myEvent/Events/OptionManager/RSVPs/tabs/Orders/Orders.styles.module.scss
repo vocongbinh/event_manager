@@ -1,0 +1,105 @@
+.wrapper {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: #f1f1f1;
+    padding: 10px 20px;
+    font-size: 1.4rem;
+    height: 50px;
+}
+.dropdown-menu {
+    width: 100%;
+    li {
+        text-align: left;
+        cursor: pointer;
+        padding: 6px 10px 6px 20px;
+        font-size: 14px !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &:hover {
+            background-color: #e7e7e7;
+        }
+    }
+}
+.type-btn {
+    text-align: center;
+    padding: 8px 20px !important;
+
+    background: none repeat scroll 0 0 #e7e7e7 !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    color: #555 !important;
+    font-family: 'Roboto Slab', Arial, Serif !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    h3 {
+        font-size: 14px !important;
+        margin-right: 40px;
+    }
+}
+.type-checked {
+    display: none;
+}
+.typeActive {
+    background-color: #e7e7e7 !important;
+    .type-checked {
+        display: inline-block;
+    }
+}
+.sortActive {
+    background-color: #e7e7e7 !important;
+    .type-checked {
+        display: inline-block;
+    }
+}
+.search-layout {
+    background-color: var(--white);
+    border-radius: 4px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    input {
+        border: none;
+        outline: none;
+    }
+}
+.table {
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: separate;
+    font-size: 1.6rem;
+    thead {
+        th {
+            font-weight: 700;
+        }
+    }
+    tr {
+        th {
+            border-bottom: 2px solid #eaeaea;
+            border-top: 2px solid #eaeaea;
+            padding: 10px 20px;
+        }
+        td {
+            padding: 10px 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+    }
+}
+.user-item {
+    display: flex;
+    flex-direction: column;
+    span {
+        font-size: 1.2rem;
+        &:first-child {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+        }
+    }
+}

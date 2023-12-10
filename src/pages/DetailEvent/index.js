@@ -31,6 +31,7 @@ function DetailEvent({ children }) {
     const [event, setEvent] = useState({});
     const [ticketTypes, setTicketTypes] = useState([]);
     const [showtimes, setShowtimes] = useState([]);
+    const [options, setOptions] = useState([]);
     let listOption = [
         {
             title: 'About',
@@ -68,46 +69,24 @@ function DetailEvent({ children }) {
             },
         },
     ];
-    document.addEventListener('DOMContentLoaded', () => {
-        window.addEventListener('scroll', () => {
-            const offsetTop = window.scrollY + 60;
-            console.log('dffd');
-            for (let i = 0; i < listOption.length; i++) {
-                if (offsetTop <= listOption[i].ref.current.offsetTop + listOption[i].ref.current.clientHeight) {
-                    setActiveIndex(i);
+    const scrollEvent = () => {
+        const offset = window.scrollY + 60;
 
+        for (let i = 0; i < listOption.length; i++) {
+            if (listOption[i].ref.current !== null) {
+                if (offset <= listOption[i].ref.current.offsetTop + listOption[i].ref.current.clientHeight) {
+                    setActiveIndex(i);
                     break;
                 }
             }
-        });
-    });
+        }
+    };
     useEffect(() => {
-        let scrollEvent;
         if (document.readyState !== 'loading') {
-            scrollEvent = window.addEventListener('scroll', () => {
-                const offsetTop = window.scrollY + 60;
-
-                for (let i = 0; i < listOption.length; i++) {
-                    if (offsetTop <= listOption[i].ref.current.offsetTop + listOption[i].ref.current.clientHeight) {
-                        setActiveIndex(i);
-
-                        break;
-                    }
-                }
-            });
+            window.addEventListener('scroll', scrollEvent);
         } else {
             document.addEventListener('DOMContentLoaded', function () {
-                scrollEvent = window.addEventListener('scroll', () => {
-                    const offsetTop = window.scrollY + 60;
-
-                    for (let i = 0; i < listOption.length; i++) {
-                        if (offsetTop <= listOption[i].ref.current.offsetTop + listOption[i].ref.current.clientHeight) {
-                            setActiveIndex(i);
-
-                            break;
-                        }
-                    }
-                });
+                window.addEventListener('scroll', scrollEvent);
             });
         }
         const fetchAPi = async () => {
@@ -117,7 +96,7 @@ function DetailEvent({ children }) {
                 setEvent(event);
                 const showtimes = await showtimeService.getShowtimeOfEvent(params.id);
                 setShowtimes(showtimes);
-                console.log(showtimes);
+
                 const ticketTypes = await ticketService.getTicketOfEvent(params.id);
                 setTicketTypes(ticketTypes);
             } catch (error) {
@@ -126,12 +105,9 @@ function DetailEvent({ children }) {
         };
         fetchAPi();
         return () => {
-            window.removeEventListener('scroll', scrollEvent);
+            window.removeEventListener('scroll', () => scrollEvent());
         };
     }, []);
-    if (showtimes.length === 1) {
-        listOption.splice(2, 1);
-    }
     const listPrices = ticketTypes.map((item) => item.price);
     const minPrice = Math.min(...listPrices);
 
@@ -150,7 +126,7 @@ function DetailEvent({ children }) {
         <div className={`container-fluid ${cx('wrapper')}`}>
             <Header />
             <div className={cx('container')}>
-                event.coverImage ? <img className={cx('background-event')} src={event.coverImage} /> : null
+                {event.coverImage && <img className={cx('background-event')} src={event.coverImage} />}
                 <div className="container">
                     <div className={cx('infor-event')}>
                         <div className={cx('calendar')}>
@@ -181,21 +157,7 @@ function DetailEvent({ children }) {
                     <div className="container">
                         <div className={`mx-auto ${cx('tab-layout')}`}>
                             {listOption.map((option, index) => {
-                                if (option.ref === calendarRef) {
-                                    if (showtimes.length > 1)
-                                        return (
-                                            <span
-                                                className={cx('option', {
-                                                    active: index === activeIndex,
-                                                })}
-                                                onClick={(e) => {
-                                                    option.handleClick(index);
-                                                }}
-                                            >
-                                                {option.title}
-                                            </span>
-                                        );
-                                } else
+                                if (showtimes.length > 1) {
                                     return (
                                         <span
                                             className={cx('option', {
@@ -208,6 +170,23 @@ function DetailEvent({ children }) {
                                             {option.title}
                                         </span>
                                     );
+                                } else {
+                                    if (option.title !== 'Event calendar') {
+                                        return (
+                                            <span
+                                                className={cx('option', {
+                                                    active: index === activeIndex,
+                                                })}
+                                                onClick={(e) => {
+                                                    console.log(index);
+                                                    option.handleClick(index);
+                                                }}
+                                            >
+                                                {option.title}
+                                            </span>
+                                        );
+                                    }
+                                }
                             })}
                         </div>
                     </div>

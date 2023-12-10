@@ -13,11 +13,7 @@ const eventService = {
     },
     headerEvents: async () => {
         try {
-            const res = await eventRequest.get('api/event', {
-                params: {
-                    limit: 5,
-                },
-            });
+            const res = await eventRequest.get('api/event/recommended');
             return res.data;
         } catch (error) {
             console.log(error);

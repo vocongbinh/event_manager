@@ -8,7 +8,7 @@ import ShowTime from '../ShowTime/ShowTime';
 import { useNewEventFormContext, useNewEventStepContext } from '../../../../utils/newEventContext';
 import { showtimesSchema } from '../../../../lib/validation';
 
-const ShowTimes = () => {
+const ShowTimes = ({ next }) => {
     const cx = classNames.bind(style);
     const newEventContext = useNewEventFormContext();
     const navigate = useNavigate();

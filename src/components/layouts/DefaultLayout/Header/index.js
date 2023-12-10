@@ -9,8 +9,12 @@ import SearchLayout from '../../components/SearchLayout';
 import Tippy from '@tippyjs/react/headless';
 import CategoryItem from '../Sidebar/CategoryItem';
 import InforItem from './InforItem';
+import { useContext } from 'react';
+import { useAuthContext } from '../../../../utils/authContext';
+import { Link } from 'react-router-dom';
 function Header() {
     const cx = classNames.bind(styles);
+    const authContext = useAuthContext();
     const userOptions = [
         {
             title: 'Edit Profile',
@@ -35,26 +39,35 @@ function Header() {
             />
             <SearchLayout className={cx('search-layout')} />
             <div className={cx('action')}>
-                <Button type="round" size="min">
+                <Button className={cx('create-btn')} to="/newevent" target="_blank" type="round" size="min">
                     Create event
                 </Button>
                 <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
-
-                <Tippy
-                    placement="bottom-end"
-                    interactive
-                    render={(attrs) => (
-                        <div className={cx('tippy-wrapper')} tab {...attrs}>
-                            {userOptions.map((option) => (
-                                <InforItem data={option} />
-                            ))}
-                        </div>
-                    )}
-                >
-                    <Button type="primary" size="min" preIcon={<Image src={Images.avatar} className={cx('avatar')} />}>
-                        bình nè
-                    </Button>
-                </Tippy>
+                {Object.keys(authContext.userInfo).length > 0 ? (
+                    <Tippy
+                        placement="bottom-end"
+                        interactive
+                        render={(attrs) => (
+                            <div className={cx('tippy-wrapper')} tab {...attrs}>
+                                {userOptions.map((option) => (
+                                    <InforItem data={option} />
+                                ))}
+                            </div>
+                        )}
+                    >
+                        <Button
+                            type="primary"
+                            size="min"
+                            preIcon={<Image src={Images.avatar} className={cx('avatar')} />}
+                        >
+                            bình nè
+                        </Button>
+                    </Tippy>
+                ) : (
+                    <Link to="/auth/login" className={cx('signUp-btn')}>
+                        Log in | sign up
+                    </Link>
+                )}
             </div>
         </div>
     );

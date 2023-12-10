@@ -10,6 +10,7 @@ import {
     faLocationDot,
     faPenToSquare,
     faUserGroup,
+    faUsersRays,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -24,7 +25,7 @@ function MyEventItem({ data }) {
             icon: <FontAwesomeIcon icon={faChartLine} />,
             path: `./${data._id}/summary?showId=${showtime._id} `,
         },
-        { title: 'Manage moderator', icon: <FontAwesomeIcon icon={faUserGroup} />, path: `./${data._id}/moderator` },
+        { title: 'Manage RSVPs', icon: <FontAwesomeIcon icon={faUserGroup} />, path: `./${data._id}/RSVPs` },
         { title: 'Promote', icon: <FontAwesomeIcon icon={faBullhorn} /> },
         {
             title: 'Discount',
@@ -49,30 +50,36 @@ function MyEventItem({ data }) {
     });
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('container')}>
-                <img src={data.coverImage} className={cx('event-img')} alt="" />
-                <div className={cx('content')}>
-                    <p className={cx('name-event')}>{data.eventName}</p>
-                    <p className={cx('time-location')}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faClockFour} />
-                        {startTime}
-                    </p>
-                    <p className={cx('time-location')}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
-                        {data.stageId.stageName}
-                    </p>
+            <div className="d-flex align-items-start justify-content-between">
+                <div className={cx('container')}>
+                    <img src={data.coverImage} className={cx('event-img')} alt="" />
+                    <div className={cx('content')}>
+                        <p className={cx('name-event')}>{data.eventName}</p>
+                        <p className={cx('time-location')}>
+                            <FontAwesomeIcon className={cx('icon')} icon={faClockFour} />
+                            {startTime}
+                        </p>
+                        <p className={cx('time-location')}>
+                            <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
+                            {data.stageId.stageName}
+                        </p>
+                    </div>
                 </div>
+                <Link to={`./${data._id}/moderator`} target="_blank" className={cx('moderator-btn')}>
+                    <FontAwesomeIcon size="xl" icon={faUsersRays} />
+                </Link>
             </div>
+
             <div className={cx('footer')}>
-                <tr>
+                <div className="d-flex">
                     {listOptions.map((option) => (
-                        <td className={cx('option-item')}>
+                        <div className={cx('option-item')}>
                             <Link to={option.path} target="_blank" className={cx('option')}>
                                 {option.icon} {option.title}
                             </Link>
-                        </td>
+                        </div>
                     ))}
-                </tr>
+                </div>
             </div>
         </div>
     );

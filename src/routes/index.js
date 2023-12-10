@@ -26,7 +26,7 @@ import Otp from '../components/layouts/AuthenticationLayout/Otp/OtpForm';
 import RegisterSuccess from '../components/layouts/AuthenticationLayout/RegisterSuccess';
 import TypeEvent from '../pages/TypeEvent';
 import MyTickets from '../pages/MyTickets';
-import ComponentRSVP from '../pages/myEvent/Events/OptionManager/RSVPs';
+import ComponentRPVPs from '../pages/myEvent/Events/OptionManager/RSVPs';
 import NewStageChart from '../components/layouts/NewEventLayout/NewStage/NewStageChart';
 //private router
 const privateRouter = [{}];
@@ -70,16 +70,19 @@ const publicRouter = [
         path: '/my_event/events',
         component: Events,
         layout: MyEventLayout,
+        index: 1,
     },
     {
         path: '/my_event/organizer_profile',
         component: OrganizerProfile,
         layout: MyEventLayout,
+        index: 0,
     },
     {
         path: '/my_event/bank_account',
         component: BankAccount,
         layout: MyEventLayout,
+        index: 3,
     },
     {
         path: '/my_event/events/:id/summary',
@@ -88,8 +91,8 @@ const publicRouter = [
         index: 1,
     },
     {
-        path: '/my_event/events/:id/moderator',
-        component: Moderator,
+        path: '/my_event/events/:id/RSVPs',
+        component: ComponentRPVPs,
         layout: ManageEventLayout,
         index: 2,
     },
@@ -108,7 +111,7 @@ const publicRouter = [
 
     {
         path: '/my_event/events/:id/moderator',
-        component: Discount,
+        component: Moderator,
         layout: ManageEventLayout,
         index: 5,
     },

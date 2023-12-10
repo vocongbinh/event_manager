@@ -48,12 +48,14 @@ function Home() {
                     </Button>
                 </div>
 
-                <div className={cx('header-devide')}>
-                    <img src={Images.headingLeft} alt="" />
-                    Feature events
-                    <img src={Images.headingRight} alt="" />
+                <div className="d-flex align-items-center justify-content-center">
+                    <div className={cx('header-devide')}>
+                        {Images.headingLeft}
+                        Feature events
+                        {Images.headingRight}
+                    </div>
                 </div>
-                <div className="row">
+                <div className="row mt-5;">
                     {events.map((eventItem) => (
                         <div className="col-3">
                             <EventItem data={eventItem} />

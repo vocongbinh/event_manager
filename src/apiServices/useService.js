@@ -12,5 +12,18 @@ const userService = {
             console.log(error);
         }
     },
+    sendMailModerator: async ({ eventId, userId, role }) => {
+        try {
+            const data = {
+                userId,
+                role,
+            };
+            const res = await request.post(`api/user/${eventId}/confirmModerator`, data);
+            return res.data;
+        } catch (err) {
+            console.log(err);
+        }
+    },
 };
+
 export default userService;

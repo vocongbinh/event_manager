@@ -18,6 +18,10 @@
     color: white;
     background-color: #77c47f;
     padding: 10px 40px;
+    &:hover {
+        background: #77c47f;
+        opacity: 0.8;
+    }
 }
 
 //search
