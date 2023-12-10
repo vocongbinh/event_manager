@@ -3,8 +3,10 @@ import styles from './Calendar.module.scss';
 import classNames from 'classnames/bind';
 import Button from '../../../../components/layouts/components/Button';
 import { format } from 'date-fns';
+import { useAuthContext } from '../../../../utils/authContext';
 const Calendar = forwardRef(({ data }, ref) => {
     const cx = classNames.bind(styles);
+    const authContext = useAuthContext();
     return (
         <div ref={ref} className={cx('wrapper')}>
             <h1> calendar</h1>
@@ -22,7 +24,11 @@ const Calendar = forwardRef(({ data }, ref) => {
                         </div>
                         <div className="col-sm-3 col-12">
                             <Button
-                                href={`book/${item._id}/step1`}
+                                href={
+                                    Object.keys(authContext.userInfo).length > 0
+                                        ? `book/${item._id}/step1`
+                                        : 'auth/login'
+                                }
                                 type="highlight"
                                 size="max"
                                 className={cx('book-btn')}

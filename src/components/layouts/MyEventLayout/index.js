@@ -58,7 +58,7 @@ function MyEventLayout({ children, ...props }) {
                                 className={cx('avatar')}
                             />
                         </span>
-                    </button> */}
+                    </button>
                 </div>
                 {listOptions.map((item, index) => (
                     <InforItem

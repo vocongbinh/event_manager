@@ -26,7 +26,7 @@ import Otp from '../components/layouts/AuthenticationLayout/Otp/OtpForm';
 import RegisterSuccess from '../components/layouts/AuthenticationLayout/RegisterSuccess';
 import TypeEvent from '../pages/TypeEvent';
 import MyTickets from '../pages/MyTickets';
-import ComponentRSVP from '../pages/myEvent/Events/OptionManager/RSVPs';
+import ComponentRPVPs from '../pages/myEvent/Events/OptionManager/RSVPs';
 import NewStageChart from '../components/layouts/NewEventLayout/NewStage/NewStageChart';
 //private router
 const privateRouter = [{}];

@@ -4,7 +4,7 @@ import Button from '../../../../../components/layouts/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvira, faSquareFacebook } from '@fortawesome/free-brands-svg-icons';
 import { useLocation, useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { FacebookShareButton } from 'react-share';
 import eventService from '../../../../../apiServices/eventService';
 import { Table, Modal, Spinner } from 'react-bootstrap';

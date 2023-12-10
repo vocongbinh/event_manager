@@ -4,7 +4,6 @@ import DefaultLayout from './components/layouts/DefaultLayout';
 import { Fragment } from 'react';
 import MyEventLayout from './components/layouts/MyEventLayout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './utils/authContext';
 import { NewEventFormProvider, NewEventStepProvider } from './utils/newEventContext';
 import NewStageChart from './components/layouts/NewEventLayout/NewStage/NewStageChart';

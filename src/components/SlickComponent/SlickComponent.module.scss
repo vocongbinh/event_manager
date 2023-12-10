@@ -6,6 +6,8 @@
 
 .header-img {
     flex: 1;
-    width: 100px;
+    width: 100% !important;
+    height: 400px;
+
     padding: 0px 48px;
 }
