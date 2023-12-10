@@ -113,6 +113,7 @@ function DetailEvent({ children }) {
         const fetchAPi = async () => {
             try {
                 const event = await eventService.detailEvent(params.id);
+                console.log(event);
                 setEvent(event);
                 const showtimes = await showtimeService.getShowtimeOfEvent(params.id);
                 setShowtimes(showtimes);
@@ -149,8 +150,7 @@ function DetailEvent({ children }) {
         <div className={`container-fluid ${cx('wrapper')}`}>
             <Header />
             <div className={cx('container')}>
-                <img className={cx('background-event')} src={event.coverImage} />
-
+                event.coverImage ? <img className={cx('background-event')} src={event.coverImage} /> : null
                 <div className="container">
                     <div className={cx('infor-event')}>
                         <div className={cx('calendar')}>
@@ -212,7 +212,6 @@ function DetailEvent({ children }) {
                         </div>
                     </div>
                 </div>
-
                 <div className={`"container" ${cx('detail')}`}>
                     <div className={`mx-auto ${cx('detail-event')}`}>
                         <div className="row">

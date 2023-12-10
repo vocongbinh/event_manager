@@ -22,7 +22,7 @@ import * as yup from 'yup';
 import { v4 as uuidv4 } from 'uuid';
 
 import Ticket from '../Ticket/Ticket';
-import TicketTime from '../TicketTime/TicketTime';
+import TicketTime from '../Tickets/Tickets';
 const ShowTime = ({ form, index, remove }) => {
     console.log('render showtime ' + index);
     const $ = (prop) => {
@@ -107,16 +107,16 @@ const ShowTime = ({ form, index, remove }) => {
                         <div className="row col-12">
                             <div className="col-md-6">
                                 <DatePicker
-                                    name={`showtimes.${index}.showTimeStartDate`}
+                                    name={`showtimes.${index}.startAt`}
                                     placeholder="Ngày bắt đầu"
                                     label="Ngày bắt đầu"
                                 />
                             </div>
                             <div className="col-md-6">
                                 <TimePicker
-                                    date={showtime.showTimeStartDate}
-                                    isDisabled={showtime.showTimeStartDate === null}
-                                    name={`showtimes.${index}.showTimeStartDate`}
+                                    date={showtime.startAt}
+                                    isDisabled={showtime.startAt === null}
+                                    name={`showtimes.${index}.startAt`}
                                     placeholder="Giờ bắt đầu"
                                     label="Giờ bắt đầu"
                                 />
@@ -125,16 +125,16 @@ const ShowTime = ({ form, index, remove }) => {
                         <div className="row col-12">
                             <div className="col-md-6">
                                 <DatePicker
-                                    name={`showtimes.${index}.showTimeEndDate`}
+                                    name={`showtimes.${index}.endAt`}
                                     placeholder="Ngày kết thúc"
                                     label="Ngày kết thúc"
                                 />
                             </div>
                             <div className="col-md-6">
                                 <TimePicker
-                                    date={showtime.showTimeEndDate}
-                                    isDisabled={showtime.showTimeEndDate === null}
-                                    name={`showtimes.${index}.showTimeEndDate`}
+                                    date={showtime.endAt}
+                                    isDisabled={showtime.endAt === null}
+                                    name={`showtimes.${index}.endAt`}
                                     placeholder="Giờ kết thúc"
                                     label="Giờ kết thúc"
                                 />
@@ -156,48 +156,22 @@ const ShowTime = ({ form, index, remove }) => {
                     </div>
 
                     <div className={cx('item-container')}>
-                        <div className={cx('title-text')}>Danh sách vé</div>
+                        <div className={cx('title-text')}>Thời gian bán vé</div>
                         <div className="row col-12">
-                            <FieldArray name={`ticketTypes`}>
-                                {({ push, remove, form }) => {
-                                    return (
-                                        <div>
-                                            {form.values.ticketTypes.length > 0 &&
-                                                form.values.ticketTypes.map((ticket, ind) => {
-                                                    if (ticket.showTimeId == showtime.id)
-                                                        return <Ticket form={form} remove={remove} index={ind} />;
-                                                })}
-                                            <button
-                                                type="button"
-                                                className={cx('addbutton')}
-                                                onClick={() => {
-                                                    console.log(form.values);
-
-                                                    push({
-                                                        id: uuidv4(),
-                                                        showTimeId: showtime.id,
-                                                        isFree: false,
-                                                        ticketTypeName: '',
-                                                        ticketTypePrice: '',
-                                                        ticketTypeDescription: '',
-                                                        ticketImage: null,
-                                                        ticketColor: '',
-                                                        totalTicket: '',
-                                                        minPerOrder: '',
-                                                        maxPerOrder: '',
-                                                        ticketEndDate: null,
-                                                        ticketStartDate: null,
-                                                        ticketInfomation: '',
-                                                    });
-                                                    console.log(form.values);
-                                                }}
-                                            >
-                                                Thêm loại vé
-                                            </button>
-                                        </div>
-                                    );
-                                }}
-                            </FieldArray>
+                            <div className="col-md-6">
+                                <DatePicker
+                                    name={`showtimes.${index}.startSaleTicketDate`}
+                                    placeholder="Ngày bắt đầu"
+                                    label="Ngày bắt đầu"
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <DatePicker
+                                    name={`showtimes.${index}.endSaleTicketDate`}
+                                    placeholder="Ngày kết thúc"
+                                    label="Ngày kết thúc"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

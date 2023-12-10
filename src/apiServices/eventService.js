@@ -78,5 +78,15 @@ const eventService = {
             console.log(e);
         }
     },
+    addNewEvent: async (data) => {
+        try {
+            const res = await request.post('api/event/', {
+                ...data,
+            });
+            return { status: res.status, ...res.data };
+        } catch (e) {
+            console.log(e);
+        }
+    },
 };
 export default eventService;

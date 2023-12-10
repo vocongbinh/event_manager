@@ -21,16 +21,15 @@ function Moderator() {
     const [event, setEvent] = useState();
     const [errors, setErrors] = useState({});
     const [checkEmail, setCheckEmail] = useState(true);
-    const { refetch } = useQuery(
-        'event_moderator',
-        async () => {
+    const { refetch } = useQuery({
+        queryKey: ['event_moderator'],
+        queryFn: async () => {
             const eventData = await eventService.getEventById(params.id);
             setEvent(eventData);
         },
-        {
-            staleTime: Infinity,
-        },
-    );
+
+        staleTime: Infinity,
+    });
     const [show, setShow] = useState(false);
     const handleClose = () => {
         setShow(false);

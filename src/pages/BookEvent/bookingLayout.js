@@ -44,10 +44,14 @@ function BookEvent({ children, ...props }) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const navigate = useNavigate();
     const [event, setEvent] = useState();
-    const eventKey = 'fa36d0b8-0198-4414-bd29-0efe24257239';
+    const eventKey = 'af5019ac-f204-4ba5-97d8-c029e3a07f8b';
     const nf = new Intl.NumberFormat();
-    const { data: holdToken, isPending: isCreatingHoldToken } = useHoldToken();
-
+    const { data: holdToken, isPending: isCreatingHoldToken, refetch: refetchToken } = useHoldToken();
+    console.log(holdToken);
+    useEffect(() => {
+        refetchToken();
+        console.log('ee' + refetchToken);
+    }, [eventKey]);
     // const { refetch } = useQuery('book', async () => {
     //     const eventData = await eventService.detailEvent(params.id);
     //     setEvent(eventData);
@@ -70,6 +74,7 @@ function BookEvent({ children, ...props }) {
                 holdToken,
                 selectedTickets,
                 setSelectedTickets,
+                refetchToken,
             };
             break;
 

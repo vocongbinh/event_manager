@@ -3,7 +3,6 @@ import style from './NewEventHeader.module.scss';
 import classNames from 'classnames/bind';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import Images from '../../../../assets/images';
-import Image from '../../components/Image';
 
 const NewEventHeader = ({ header }) => {
     console.log(Images.neLogo);
