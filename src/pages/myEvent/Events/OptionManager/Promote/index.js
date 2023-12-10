@@ -19,7 +19,7 @@ function Promote() {
     console.log(data);
     return (
         <div className={cx('wrapper')}>
-            <p className={cx('border-layout', 'header')}>{data.eventName}</p>
+            <p className={cx('border-layout', 'header')}>{data.event}</p>
             <div className={cx('border-layout')}>
                 <p style={{ fontSize: '2rem' }}>
                     Promote link:

@@ -99,6 +99,7 @@ export const useGetShowtime = (showtimeId) => {
 
 export const useCreateNewBooking = () => {
     return useMutation({
-        mutationFn: () => {},
+        mutationFn: ({ tickets, discounts, eventKey, holdToken, receiverInformation }) =>
+            createNewBooking({ tickets, discounts, eventKey, holdToken, receiverInformation }),
     });
 };
