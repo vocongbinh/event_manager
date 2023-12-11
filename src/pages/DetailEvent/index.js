@@ -2,7 +2,7 @@ import styles from './DetailEvent.module.scss';
 import classNames from 'classnames/bind';
 import Header from './Header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faLocationDot, faTicket } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faEnvelope, faLocationDot, faPhone, faTicket } from '@fortawesome/free-solid-svg-icons';
 import { faClockFour } from '@fortawesome/free-regular-svg-icons';
 import Button from '../../components/layouts/components/Button';
 import About from './indexing/About';
@@ -118,20 +118,8 @@ function DetailEvent({ children }) {
     }, []);
     const listPrices = ticketTypes.map((item) => item.price);
     const minPrice = Math.min(...listPrices);
-
-    //date time
-    // let startTime = Date.parse(event.startTime);
-    // let time = new Date(startTime);
-    // const hours = ('0' + time.getHours()).slice(-2);
-    // const minutes = ('0' + time.getMinutes()).slice(-2);
-    // const month = months[time.getMonth()];
-    // const year = time.getFullYear();
-    // const day = days[time.getDay()];
-    // const date = time.getDate();
-    // startTime = `${day}, ${date} ${month} ${year} (${hours}:${minutes})`;
-
     return (
-        <div className={`${cx('wrapper')}`}>
+        <div className={cx('wrapper')}>
             <Header />
             <div className={cx('container')}>
                 {event.coverImage && <img className={cx('background-event')} src={event.coverImage} />}
@@ -276,6 +264,52 @@ function DetailEvent({ children }) {
                 </div>
             </div>
             {loading && <Spinner className={spinnerCx('spinner')} animation="grow" variant="success" />}
+            <footer className={cx('footer')}>
+                <div className={cx('footer-content')}>
+                    <div className="row">
+                        <div className="col-6">
+                            <p className={cx('title-footer')}>about</p>
+                            <p>
+                                Website Ticket Box is an online platform that provides online ticketing services for
+                                cultural, entertainment, sports events and many other types of events. With a friendly
+                                interface and diverse features, Ticket Box helps users easily search, buy tickets and
+                                manage information about the events they are interested in.
+                            </p>
+                        </div>
+                        <div className="col-3">
+                            <p className={cx('title-footer')}>for customer</p>
+                            <b style={{ color: '#c9c9c9' }}>Help center</b>
+                            <p className={cx('sub-title-footer')}>Frequently asked questions</p>
+                        </div>
+                        <div className="col-3 d-flex flex-column">
+                            <p className={cx('title-footer')}>Contact</p>
+                            <b style={{ color: '#c9c9c9' }}>Hotline</b>
+                            <p className={cx('sub-title-footer')}>
+                                <span style={{ marginRight: 10 }}>
+                                    <FontAwesomeIcon icon={faPhone} />
+                                </span>
+                                Monday - Friday (8.30 AM - 6:30 PM)
+                            </p>
+                            <b style={{ color: '#2DC275', fontSize: '1.6rem' }}>1900.6408</b>
+
+                            <b style={{ color: '#c9c9c9', marginTop: 12 }}>email</b>
+                            <p className={cx('sub-title-footer')}>
+                                <span style={{ marginRight: 10 }}>
+                                    <FontAwesomeIcon icon={faEnvelope} />
+                                </span>
+                                support@ticketbox.vn
+                            </p>
+                            <b style={{ color: '#c9c9c9', marginTop: 12 }}>Office</b>
+                            <p className={cx('sub-title-footer')}>
+                                <span style={{ marginRight: 10 }}>
+                                    <FontAwesomeIcon icon={faLocationDot} />
+                                </span>
+                                52 Ut Tich, Ward 4, Tan Binh District, HCMC
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }
