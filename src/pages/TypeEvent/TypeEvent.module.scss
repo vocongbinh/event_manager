@@ -113,6 +113,9 @@ div:has(> .tippy-wrapper) {
     padding: 6px 16px;
     display: block;
     font-size: 14px;
+    width: 100%;
+    text-align: left;
+    background-color: transparent;
 }
 .test {
     width: 200px;

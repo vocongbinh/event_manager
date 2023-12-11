@@ -16,6 +16,7 @@ function Home() {
     const cx = classNames.bind(styles);
     const spinnerCx = classNames.bind(spinnerStyles);
     const [events, setEvents] = useState([]);
+    const [headerEvents, setHeaderVents] = useState([]);
     const slickRef = useRef(null);
     const [loading, setLoading] = useState(false);
     const handleLeftSlick = () => {
@@ -29,7 +30,9 @@ function Home() {
             try {
                 setLoading(true);
                 const eventsData = await eventServices.allEvents();
+                const headerData = await eventServices.headerEvents();
                 setEvents(eventsData || []);
+                setHeaderVents(headerData);
                 setLoading(false);
             } catch (err) {
                 setLoading(false);
@@ -62,7 +65,7 @@ function Home() {
                         {Images.headingRight}
                     </div>
                 </div>
-                <div className="row mt-5;">
+                <div className="row" style={{ marginTop: 40, paddingBottom: 40 }}>
                     {events.map((eventItem) => (
                         <div className="col-3">
                             <EventItem data={eventItem} />

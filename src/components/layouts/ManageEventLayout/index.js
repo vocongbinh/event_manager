@@ -66,13 +66,16 @@ function ManageEventLayout({ children, ...props }) {
         <div className={cx('wrapper')}>
             <div className={cx('sidebar')}>
                 <div className={cx('header')}>
-                    <img
-                        alt=""
-                        width="48px"
-                        height="48px"
-                        src="https://cdn.pixabay.com/photo/2020/07/21/16/10/pokemon-5426712_960_720.png"
-                    />
-                    <Button className={cx('avt-btn')} href="/">
+                    <a href="/">
+                        <img
+                            alt=""
+                            width="48px"
+                            height="48px"
+                            src="https://cdn.pixabay.com/photo/2020/07/21/16/10/pokemon-5426712_960_720.png"
+                        />
+                    </a>
+
+                    <Button className={cx('avt-btn')}>
                         bình nè
                         <span className={cx('name')}>
                             <img

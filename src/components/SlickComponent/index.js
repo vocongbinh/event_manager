@@ -2,6 +2,7 @@ import Slider from 'react-slick';
 import styles from './SlickComponent.module.scss';
 import classNames from 'classnames/bind';
 import { forwardRef } from 'react';
+import { Link } from 'react-router-dom';
 const SlickComponent = forwardRef(({ data }, ref) => {
     const cx = classNames.bind(styles);
 
@@ -12,12 +13,16 @@ const SlickComponent = forwardRef(({ data }, ref) => {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
+        autoplay: true,
+        autoplaySpeed: 2000,
         dotsClass: 'button-bar',
     };
     return (
         <Slider ref={ref} {...settings}>
             {data.map((item) => (
-                <img className={cx('header-img')} alt="" src={item.coverImage} />
+                <Link target="_blank" to={`/events/${item._id}`}>
+                    <img className={cx('header-img')} alt="" src={item.coverImage} />
+                </Link>
             ))}
         </Slider>
     );

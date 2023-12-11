@@ -28,7 +28,7 @@ function Promote() {
                     Promote link:
                     <span>
                         <a className={cx('link')} href={window.location.href}>
-                            {`https://dev-seatmap--tiny-kitsune-f8476a.netlify.app/${params.id}/`}
+                            {`https://dev-seatmap--tiny-kitsune-f8476a.netlify.app/events/${params.id}`}
                         </a>
                     </span>
                 </p>

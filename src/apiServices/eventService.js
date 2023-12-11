@@ -57,7 +57,7 @@ const eventService = {
             console.log(error);
         }
     },
-    filterEvent: async ({ address, start, end, price, types }) => {
+    filterEvent: async ({ address, start, end, price, types, query }) => {
         try {
             console.log(types);
             const res = await request.get('api/event/filter', {
@@ -67,6 +67,7 @@ const eventService = {
                     end: end,
                     price: price,
                     types: types,
+                    query: query,
                 },
                 paramsSerializer: {
                     indexes: null,
@@ -84,6 +85,23 @@ const eventService = {
                 ...data,
             });
             return { status: res.status, ...res.data };
+        } catch (e) {
+            console.log(e);
+        }
+    },
+    suggestEvent: async (types) => {
+        try {
+            console.log(types);
+            const res = await request.get('api/event/suggest', {
+                params: {
+                    types: types,
+                },
+                paramsSerializer: {
+                    indexes: null,
+                },
+            });
+            console.log(res.data);
+            return res.data;
         } catch (e) {
             console.log(e);
         }

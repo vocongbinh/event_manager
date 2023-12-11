@@ -5,19 +5,21 @@ import classNames from 'classnames/bind';
 import { faLocation, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import FilterItem from './FilterItem';
 import FilterType from './FilterType';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, createRef, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import eventService from '../../apiServices/eventService';
 import EventItem from './EventItem';
 import Tippy from '@tippyjs/react/headless';
 import { useDebounce } from '../../hooks';
 import SearchItem from '../../components/layouts/components/SearchLayout/SearchItem';
-import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { keyboard } from '@testing-library/user-event/dist/keyboard';
 function TypeEvent() {
     const cx = classNames.bind(styles);
     const listLocation = ['All locations', 'Ho Chi Minh', 'Ha Noi', 'Other locations'];
-
+    const searchRef = createRef();
+    const [searchFocus, setSearchFocus] = useState(false);
+    const [tippyHide, setTippyHide] = useState(false);
     const listPrices = ['All prices', 'Free', 'Paid'];
     const [events, setEvents] = useState([]);
     const [results, setResults] = useState([]);
@@ -39,6 +41,9 @@ function TypeEvent() {
             } else {
                 setListChecked(['All Categories']);
             }
+            if (params.query) {
+                setValueSearch(params.query);
+            }
 
             const eventData = await eventService.filterEvent(params);
             console.log(eventData);
@@ -49,6 +54,7 @@ function TypeEvent() {
     });
     const handlePriceChange = async (value) => {
         let newParams = {};
+
         if (searchParams.has('price')) {
             searchParams.delete('price');
         }
@@ -62,6 +68,7 @@ function TypeEvent() {
     };
     const handleLocationChange = async (value) => {
         setLocation(value);
+        setSearchFocus(false);
         let newParams = {};
         if (searchParams.has('address')) {
             searchParams.delete('address');
@@ -69,6 +76,19 @@ function TypeEvent() {
         searchParams.forEach((va, k) => (newParams[k] = va));
         if (value !== 'All locations') {
             newParams.address = value;
+        }
+        setSearchParams(newParams);
+        const data = await eventService.filterEvent(newParams);
+        setEvents(data);
+    };
+    const handleSearchInputChange = async (value) => {
+        let newParams = {};
+        if (searchParams.has('query')) {
+            searchParams.delete('query');
+        }
+        searchParams.forEach((va, k) => (newParams[k] = va));
+        if (value !== '') {
+            newParams.query = value;
         }
         setSearchParams(newParams);
         const data = await eventService.filterEvent(newParams);
@@ -83,24 +103,30 @@ function TypeEvent() {
             const data = await eventService.searchEvent(debounceValue);
             setResults(data);
         };
-        fetchApi();
+        if (searchFocus) fetchApi();
     }, [debounceValue]);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header-layout')}>
                 <div className={cx('header')}>
-                    <img
-                        alt=""
-                        className={cx('logo')}
-                        src={'https://bloganchoi.com/wp-content/uploads/2022/12/stt-hoang-hon-hay-tam-trang-2.jpg'}
-                    />
+                    <Link to="/">
+                        <img
+                            alt=""
+                            className={cx('logo')}
+                            src={'https://bloganchoi.com/wp-content/uploads/2022/12/stt-hoang-hon-hay-tam-trang-2.jpg'}
+                        />
+                    </Link>
                     <DropdownButton />
                 </div>
                 <div className={cx('search')}>
                     <p className={cx('search-title')}>Discover upcoming events</p>
                     <Tippy
-                        visible
+                        visible={!tippyHide && valueSearch.length > 0}
                         interactive
+                        onClickOutside={(ins) => {
+                            setTippyHide(true);
+                            ins.hide();
+                        }}
                         placement="bottom"
                         maxWidth="100%"
                         className={cx('test')}
@@ -111,9 +137,6 @@ function TypeEvent() {
                                         {results.map((result) => (
                                             <SearchItem data={result} />
                                         ))}
-                                        <a className={cx('see-all-btn')} href="/">
-                                            See all results...
-                                        </a>
                                     </div>
                                 )}
                             </div>
@@ -121,15 +144,32 @@ function TypeEvent() {
                     >
                         <div className={cx('search-layout')}>
                             <input
+                                ref={searchRef}
                                 value={valueSearch}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleSearchInputChange(valueSearch);
+                                        searchRef.current.blur();
+                                    }
+                                }}
                                 onChange={(e) => {
+                                    if (!searchFocus) setSearchFocus(true);
                                     if (!e.target.value.startsWith(' ')) {
                                         setValueSearch(e.target.value);
+                                        setTippyHide(false);
                                     }
                                 }}
                                 placeholder="Search for events, shows, courses..."
                             />
-                            <FontAwesomeIcon color="#ccc" size="2x" icon={faMagnifyingGlass} />
+                            <FontAwesomeIcon
+                                onClick={() => {
+                                    handleSearchInputChange(valueSearch);
+                                    searchRef.current.blur();
+                                }}
+                                color="#ccc"
+                                size="2x"
+                                icon={faMagnifyingGlass}
+                            />
                         </div>
                     </Tippy>
                 </div>

@@ -8,7 +8,10 @@ function CategoryItem({ data, to }) {
         <Button
             type="primary"
             to={to}
-            className={cx('wrapper')}
+            target={data.title === 'Home' ? '_self' : '_blank'}
+            className={cx('wrapper', {
+                active: data.title === 'Home',
+            })}
             preIcon={<Image className={cx('category-icon')} src={data.icon} />}
         >
             {data.title}

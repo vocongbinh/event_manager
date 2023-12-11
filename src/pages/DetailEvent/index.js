@@ -131,7 +131,7 @@ function DetailEvent({ children }) {
     // startTime = `${day}, ${date} ${month} ${year} (${hours}:${minutes})`;
 
     return (
-        <div className={`container-fluid ${cx('wrapper')}`}>
+        <div className={`${cx('wrapper')}`}>
             <Header />
             <div className={cx('container')}>
                 {event.coverImage && <img className={cx('background-event')} src={event.coverImage} />}
@@ -150,9 +150,8 @@ function DetailEvent({ children }) {
                             </p>
                             <p className={cx('time-location')}>
                                 <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
-                                {event.stage}
+                                {event.address}
                             </p>
-                            <p className={cx('address')}>{event.address}</p>
                         </div>
                         <div className={cx('interact')}>
                             {showtimes.length > 1 ? (
@@ -230,15 +229,12 @@ function DetailEvent({ children }) {
                                     <div className={cx('detail-item')}>
                                         <Organizer ref={organizerRef} data={event.organizer} />
                                     </div>
-                                    <div className={cx('detail-item')}>
-                                        <Recommended ref={recommendRef} />
-                                    </div>
                                 </div>
                             </div>
                             <div className="col-4">
                                 <div
                                     className={cx('sub-detail', {
-                                        dock: activeIndex >= 2,
+                                        dock: activeIndex >= 2 && activeIndex < 3,
                                     })}
                                 >
                                     <p className={cx('sub-header')}>{event.eventName}</p>
@@ -248,9 +244,8 @@ function DetailEvent({ children }) {
                                     </p>
                                     <p className={cx('sub-time-location')}>
                                         <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
-                                        {event.stage}
+                                        {event.address}
                                     </p>
-                                    <p className={cx('sub-address')}>{event.address}</p>
                                     <p
                                         onClick={() => scrollHandler(informationRef, 1)}
                                         className={cx('sub-ticket', 'sub-time-location')}
@@ -273,6 +268,9 @@ function DetailEvent({ children }) {
                                     </Button>
                                 </div>
                             </div>
+                        </div>
+                        <div className={cx('recommended')}>
+                            <Recommended ref={recommendRef} types={event.eventType} />
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import styles from './Orders.styles.module.scss';
 import classNames from 'classnames/bind';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import ticketService from '../../../../../../../apiServices/ticketService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faMagnifyingGlass, faSortDown } from '@fortawesome/free-solid-svg-icons';
@@ -15,12 +15,26 @@ function Orders({ showtimeId }) {
     const [listOrder, setListOrder] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
     const listTypeSorts = ['Newest', 'Oldest'];
-    const { refetch } = useQuery(['orders', showtimeId], async () => {
-        const typesData = await ticketService.getTicketOfShowtime(showtimeId);
-        let types = ['All'];
-        typesData.map((type) => types.push(type.ticketName));
-        setTicketTypes(types);
+    const { refetch } = useQuery({
+        queryKey: ['orders', showtimeId],
+        queryFn: async () => {
+            if (showtimeId !== '' && showtimeId !== undefined) {
+                const typesData = await ticketService.getTicketOfShowtime(showtimeId);
+                console.log(typesData);
+                let types = ['All'];
+                typesData.map((type) => types.push(type.ticketName));
+                setTicketTypes(types);
+            } else {
+                setTicketTypes(['All']);
+            }
+        },
     });
+    // const { refetch } = useQuery(['orders', showtimeId], async () => {
+    //     const typesData = await ticketService.getTicketOfShowtime(showtimeId);
+    //     let types = ['All'];
+    //     typesData.map((type) => types.push(type.ticketName));
+    //     setTicketTypes(types);
+    // });
     useEffect(() => {
         const fetchApi = async () => {
             try {

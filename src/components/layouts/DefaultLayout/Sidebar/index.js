@@ -7,13 +7,18 @@ function Sidebar() {
     const cx = classNames.bind(styles);
     const listCategorys = [
         {
+            icon: Images.home,
+            title: 'Home',
+            categories: [8],
+        },
+        {
             icon: Images.music,
             title: 'Live music',
             categories: [8],
         },
         {
             icon: Images.curture,
-            title: 'Theater-Alt',
+            title: 'Theater-Art',
             categories: [9, 10],
         },
         {
@@ -45,7 +50,10 @@ function Sidebar() {
     return (
         <div className={cx('wrapper')}>
             {listCategorys.map((category) => (
-                <CategoryItem data={category} to="/events/typeEvent" />
+                <CategoryItem
+                    data={category}
+                    to={category.title === 'Home' ? '/' : `/events/typeEvent?types=${category.title}`}
+                />
             ))}
         </div>
     );

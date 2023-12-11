@@ -12,7 +12,7 @@ export const listCategorys = [
     },
     {
         icon: Images.curture,
-        title: 'Theater-Alt',
+        title: 'Theater-Art',
         categories: [9, 10],
     },
     {
