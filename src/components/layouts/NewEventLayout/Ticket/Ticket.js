@@ -27,7 +27,7 @@ const Ticket2 = ({ index, remove }) => {
     const [isFree, setIsFree] = useState(helpersFreeBool.value);
     const [color, setColor] = useState('');
     const [image, setImage] = useState('');
-    const [isEditingTicketName, setEditingTicketName] = useState(false);
+    // const [isEditingTicketName, setEditingTicketName] = useState(false);
     const [errorLength, setErrorLength] = useState(0);
     const handleOpenFileChosen = () => {
         fileRef.current.click();
@@ -44,7 +44,7 @@ const Ticket2 = ({ index, remove }) => {
     return (
         <div className={cx('wrapper')}>
             <div key={index} className={cx('container')}>
-                {isEditingTicketName && (
+                {/* {isEditingTicketName && (
                     <div className={cx('header-edit')}>
                         <input
                             name={$(`ticketTypeName`)}
@@ -58,36 +58,33 @@ const Ticket2 = ({ index, remove }) => {
                             }}
                             focus={() => setEditingTicketName(true)}
                             className={cx('ticket-type-input')}
-                            placeholder="Nhập vào tên loại vé"
+                            placeholder="Input ticket type"
                             autoFocus
                         ></input>
                     </div>
-                )}
-                {!isEditingTicketName && (
-                    <div className={cx('header')}>
-                        <FontAwesomeIcon icon={faTicket} className={cx('ticket-icon')} />
-                        <button
-                            onClick={() => {
-                                setEditingTicketName(true);
-                            }}
-                            type="button"
-                            className={cx('ticket-type-name')}
-                        >
-                            {field.ticketTypeName ? field.ticketTypeName : 'Tên loại vé'}
-                        </button>
-
-                        <div>
-                            <FontAwesomeIcon
-                                onClick={() => {
-                                    console.log('index' + index);
-                                    remove(index);
-                                }}
-                                icon={faTrashCan}
-                                className={cx('action-icon')}
-                            />
-                        </div>
+                )} */}
+                <div className={cx('header')}>
+                    <FontAwesomeIcon icon={faTicket} className={cx('ticket-icon')} />
+                    <div
+                        onClick={() => {
+                            // setEditingTicketName(true);
+                        }}
+                        className={cx('ticket-type-name')}
+                    >
+                        {field.ticketTypeName ? field.ticketTypeName : 'Ticket type name'}
                     </div>
-                )}
+
+                    {/* <div>
+                        <FontAwesomeIcon
+                            onClick={() => {
+                                console.log('index' + index);
+                                remove(index);
+                            }}
+                            icon={faTrashCan}
+                            className={cx('action-icon')}
+                        />
+                    </div> */}
+                </div>
                 <div className={cx('ticket-container')}>
                     <div className={cx('row col-12')}>
                         {form.errors &&
@@ -123,38 +120,38 @@ const Ticket2 = ({ index, remove }) => {
                             <div className="row">
                                 <div className={`${cx('col-wrapper')} col`}>
                                     <div className={cx('input-header')}>
-                                        <div className={cx('input-label')}>Giá vé</div>
+                                        <div className={cx('input-label')}>Ticket price</div>
                                         <div className={cx('free-container')}>
                                             <input
                                                 value={isFree}
                                                 onChange={() => setIsFree(!isFree)}
                                                 type="checkbox"
                                             ></input>
-                                            <div className={cx('free-label')}>Miễn phí</div>
+                                            <div className={cx('free-label')}>Is Free</div>
                                         </div>
                                     </div>
                                     <InputItem
                                         name={$('ticketTypePrice')}
                                         type="number"
-                                        placeholder="Giá vé"
+                                        placeholder="Ticket price"
                                         readOnly={isFree}
                                     />
                                 </div>
                                 <div className={`${cx('col-wrapper')} col`}>
                                     <div className={cx('input-container')}>
-                                        <div className={cx('input-label')}>Tổng lượng vé</div>
+                                        <div className={cx('input-label')}>Total number</div>
                                     </div>
 
-                                    <InputItem name={$('totalTicket')} type="number" placeholder="Tổng lượng vé" />
+                                    <InputItem name={$('totalTicket')} type="number" placeholder="Total number" />
                                 </div>
-                            </div>{' '}
-                        </div>{' '}
+                            </div>
+                        </div>
                         <div className="col-md-3">
                             <div className={cx('ticket-color-wrapper')}>
                                 <div className={cx('color-container')}>
                                     <div>
-                                        <div className={cx('input-label')}>Màu vé</div>
-                                        <div>(để phân biệt các loại vé)</div>
+                                        <div className={cx('input-label')}>Ticket color</div>
+                                        <div>(for every ticket type)</div>
                                     </div>
                                     {/* </div> */}
                                     <input
@@ -168,7 +165,7 @@ const Ticket2 = ({ index, remove }) => {
                                         type="color"
                                     ></input>
                                 </div>
-                                <div className={cx('button-view-ticket')}>Xem vé mẫu</div>
+                                <div className={cx('button-view-ticket')}>Sample ticket</div>
                             </div>
                         </div>
                     </div>
@@ -178,26 +175,26 @@ const Ticket2 = ({ index, remove }) => {
                                 <div className="col-md-4">
                                     <div className={cx('input-container')}>
                                         <div className={cx('input-header')}>
-                                            <div className={cx('input-label')}>Số vé tối thiểu trên đơn hàng</div>
+                                            <div className={cx('input-label')}>Minimum ticket number per order</div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="col-md-8">
-                                    <InputItem name={$('minPerOrder')} type="number" placeholder="Vé tối thiểu" />
+                                    <InputItem name={$('minPerOrder')} type="number" placeholder="Minimum ticket" />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-md-4">
                                     <div className={cx('input-container')}>
                                         <div className={cx('input-header')}>
-                                            <div className={cx('input-label')}>Số vé tối đa trên đơn hàng</div>
+                                            <div className={cx('input-label')}>Maximum ticket number per order</div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="col-md-8">
-                                    <InputItem name={$('maxPerOrder')} type="number" placeholder="Vé tối đa" />
+                                    <InputItem name={$('maxPerOrder')} type="number" placeholder="Maximum ticket" />
                                 </div>
                             </div>
                         </div>
@@ -228,8 +225,8 @@ const Ticket2 = ({ index, remove }) => {
                             {!image && (
                                 <div onClick={() => handleOpenFileChosen()} className={cx('image-container')}>
                                     <FontAwesomeIcon style={{ height: '30px' }} icon={faPlusCircle} />
-                                    <div style={{ fontSize: '10px' }}>Thêm hình vé </div>
-                                    <div style={{ fontWeight: '700' }}>(Tỉ lệ 2:1)</div>
+                                    <div style={{ fontSize: '10px' }}>Ticket image</div>
+                                    <div style={{ fontWeight: '700' }}>(Ratio 2:1)</div>
                                 </div>
                             )}
                         </div>
@@ -237,7 +234,7 @@ const Ticket2 = ({ index, remove }) => {
 
                     <div className={cx('divider')}></div>
                     <div className={cx('row col-12')}>
-                        <TextAreaItem name={$('ticketInfomation')} type="text" placeholder="Thông tin vé" />
+                        <TextAreaItem name={$('ticketInfomation')} type="text" placeholder="Ticket description" />
                     </div>
                     <div className="row col-12">
                         <div
@@ -250,7 +247,7 @@ const Ticket2 = ({ index, remove }) => {
                                 });
                             }}
                         >
-                            Hoàn thành
+                            Complete
                         </div>
                     </div>
                 </div>

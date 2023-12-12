@@ -55,7 +55,7 @@ const Tickets = ({ next }) => {
                     onSubmit={(values) => {
                         console.log('submit');
                         newEventContext.setTickets(values.ticketTypes);
-                        newEventStep.setStep(4);
+                        newEventStep.handleGoStep(4);
                     }}
                 >
                     <Form>
@@ -97,15 +97,15 @@ const Tickets = ({ next }) => {
                             <div className={cx('action')}>
                                 <Button
                                     type="button"
-                                    onClick={() => newEventStep.setStep(2)}
+                                    onClick={() => newEventStep.handleGoStep(2)}
                                     className={cx('next-button')}
                                     size="max"
                                     background="blue"
                                 >
-                                    Trở lại
+                                    Go back
                                 </Button>
                                 <Button type="primary" className={cx('next-button')} size="max" background="blue">
-                                    Tiếp tục
+                                    Continue
                                 </Button>
                             </div>
                         </div>

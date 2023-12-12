@@ -11,6 +11,7 @@ import { showtimesSchema } from '../../../../lib/validation';
 const ShowTimes = ({ next }) => {
     const cx = classNames.bind(style);
     const newEventContext = useNewEventFormContext();
+    const eventStepContext = useNewEventStepContext();
     const navigate = useNavigate();
     useEffect(() => {
         newEventContext.createEvent();
@@ -50,6 +51,16 @@ const ShowTimes = ({ next }) => {
                                         Thêm ngày sự kiện
                                     </button>
                                     <div className={cx('item-container')}>
+                                        <Button
+                                            type="button"
+                                            onClick={() => eventStepContext.handleGoStep(0)}
+                                            className={cx('next-button')}
+                                            size="max"
+                                            background="blue"
+                                        >
+                                            Go back
+                                        </Button>
+
                                         <div className={cx('action')}>
                                             <Button
                                                 type="primary"

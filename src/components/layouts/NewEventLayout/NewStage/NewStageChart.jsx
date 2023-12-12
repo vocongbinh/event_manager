@@ -20,9 +20,10 @@ const NewStageChart = () => {
     const eventStepContext = useNewEventStepContext();
     const { data, refetch } = useValidateChart(eventFormContext.chart);
     useEffect(() => {
+        console.log('submit chart' + data?.errors?.length);
         if (data && data.status == 200 && data.errors?.length == 0) {
             console.log('success');
-            eventStepContext.setStep(3);
+            eventStepContext.handleGoStep(3);
             eventFormContext.setIsChartCreated(true);
         }
     }, [data, onClick]);
@@ -35,7 +36,7 @@ const NewStageChart = () => {
         setOnClick((onClick) => !onClick);
     };
     const handleClickPrev = () => {
-        eventStepContext.setStep(1);
+        eventStepContext.handleGoStep(1);
     };
     return (
         <div id="container" className={cx('container')}>
@@ -77,7 +78,7 @@ const NewStageChart = () => {
                     size="max"
                     background="blue"
                 >
-                    Trở lại
+                    Go back
                 </Button>
                 <Button
                     type="primary"
@@ -88,7 +89,7 @@ const NewStageChart = () => {
                     size="max"
                     background="blue"
                 >
-                    Tiếp tục
+                    Continue
                 </Button>
             </div>
         </div>

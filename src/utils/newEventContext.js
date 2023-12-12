@@ -14,11 +14,14 @@ export const NewEventStepProvider = ({ children }) => {
         3: 'tickets',
         4: 'showtimes',
     };
-    useEffect(() => {
+    const handleGoStep = (step) => {
+        setStep(step);
         navigate(path[step]);
         console.log('current step' + step);
-    }, [step]);
-    return <NewEventStepContext.Provider value={{ step, setStep }}>{children}</NewEventStepContext.Provider>;
+    };
+    return (
+        <NewEventStepContext.Provider value={{ step, setStep, handleGoStep }}>{children}</NewEventStepContext.Provider>
+    );
 };
 export const NewEventFormProvider = ({ children }) => {
     const [eventTypes, setEventTypes] = useState([]);

@@ -59,13 +59,13 @@ const NewEventForm = ({ next }) => {
                     };
                     eventFormContext.setEventInfor({ ...data });
                     eventFormContext.setAddress({ ...address });
-                    eventStepContext.setStep(2);
+                    eventStepContext.handleGoStep(2);
                     // alert(JSON.stringify(values));
                 }}
             >
                 {(formik) => (
                     <form onSubmit={formik.handleSubmit}>
-                        <div>{JSON.stringify(formik.errors)}</div>
+                        {/* <div>{JSON.stringify(formik.errors)}</div> */}
                         <div className={cx('input-container')}>
                             <div className={cx('title-icon')}>
                                 {/* <div>{JSON.stringify(formik.errors)}</div> */}
@@ -75,9 +75,9 @@ const NewEventForm = ({ next }) => {
                                 <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
                             </div>
                             <div className={cx('item-container')}>
-                                <div className={cx('title-text')}>Tên sự kiện</div>
+                                <div className={cx('title-text')}>Event Title</div>
                                 <div className="row col-12">
-                                    <InputItem name="eventName" type="text" placeholder="Tên sự kiện" />
+                                    <InputItem name="eventName" type="text" placeholder="Event Title" />
                                 </div>
                             </div>
                         </div>
@@ -92,17 +92,17 @@ const NewEventForm = ({ next }) => {
                                 <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
                             </div>
                             <div className={` ${cx('item-container')}`}>
-                                <div className={cx('title-text')}>Địa điểm tổ chức</div>
+                                <div className={cx('title-text')}>Event Venue</div>
                                 <div className="row col-12">
                                     <Address />
                                 </div>
-                                {/* <div className={cx('title-text')}>Tên địa điểm tổ chức</div> */}
+                                {/* <div className={cx('title-text')}>Tên Event Venue</div> */}
                                 <div className="row col-12">
                                     <InputItem
-                                        label="Tên địa điểm tổ chức"
+                                        label="Event Venue"
                                         name="displacePlace"
                                         type="text"
-                                        placeholder="Tên địa điểm"
+                                        placeholder="Event Venue"
                                     />
                                 </div>
                             </div>
@@ -116,7 +116,7 @@ const NewEventForm = ({ next }) => {
                                 <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
                             </div>
                             <div className={cx('item-container')}>
-                                <div className={cx('title-text')}>Ảnh bìa sự kiện</div>
+                                <div className={cx('title-text')}>Cover Image</div>
                                 <div className="row col-12">
                                     <ImagePicker name="coverImage" type="file" />
                                 </div>
@@ -130,7 +130,7 @@ const NewEventForm = ({ next }) => {
                                 <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
                             </div>
                             <div className={cx('item-container')}>
-                                <div className={cx('title-text')}>Thông tin sự kiện</div>
+                                <div className={cx('title-text')}>Event Description</div>
                                 <div className="row col-12">
                                     <TextEditor name="description" />
                                 </div>
@@ -140,12 +140,12 @@ const NewEventForm = ({ next }) => {
                             <div className={cx('action')}>
                                 <Button
                                     type="button"
-                                    onClick={() => eventStepContext.setStep(0)}
+                                    onClick={() => eventStepContext.handleGoStep(0)}
                                     className={cx('next-button')}
                                     size="max"
                                     background="blue"
                                 >
-                                    Trở lại
+                                    Go back
                                 </Button>
                                 <Button type="primary" className={cx('next-button')} size="max" background="blue">
                                     Continue

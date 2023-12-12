@@ -36,7 +36,7 @@ const ImagePicker = ({ label, ...props }) => {
                     />
                     {field.value && (
                         <div onClick={() => handleOpenFileChosen()} className={cx('image-container')}>
-                            <img src={field.value} className={cx('image-img')} alt="Hình ảnh" />
+                            <img src={field.value} className={cx('image-img')} alt="Cover Image" />
                         </div>
                     )}
                     {!field.value && (
@@ -46,7 +46,7 @@ const ImagePicker = ({ label, ...props }) => {
                                     style={{ fontSize: '20px', color: '#5e626a', marginBottom: '5px' }}
                                     icon={faImage}
                                 />
-                                <div style={{ fontSize: '13px', fontWeight: '600px' }}>Thêm hình ảnh</div>
+                                <div style={{ fontSize: '13px', fontWeight: '600px' }}>Add new image</div>
                             </div>
                         </div>
                     )}

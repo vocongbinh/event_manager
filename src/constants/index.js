@@ -12,12 +12,12 @@ export const listCategorys = [
     },
     {
         icon: Images.curture,
-        title: 'Theater-Art',
+        title: 'Theater Art',
         categories: [9, 10],
     },
     {
         icon: Images.night,
-        title: 'nightlife',
+        title: 'Night Life',
         categories: [11],
     },
     {
@@ -44,32 +44,32 @@ export const listCategorys = [
 
 export const createEventSteps = [
     {
-        title: 'Loại sự kiện',
-        header: 'Chọn loại sự kiện bạn muốn tổ chức',
+        title: 'Event Type',
+        header: 'Choose event type you want to organize',
         icon: <FontAwesomeIcon icon={faAddressCard} />,
         // component: <EventTypeList />,
     },
     {
-        title: 'Thông tin sự kiện',
-        header: 'Điền thông tin cơ bản của sự kiện',
+        title: 'Event Information',
+        header: 'Complete some event basic information',
         icon: <FontAwesomeIcon icon={faCalendar} />,
         // component: <NewEventForm />,
     },
     {
-        title: 'Tạo sân khấu mới',
-        header: 'Tạo sân khấu mới cho sự kiện',
+        title: 'Add new stage',
+        header: 'Add new stage to your event',
         icon: <FontAwesomeIcon icon={faMoneyBill} />,
     },
 
     {
-        title: 'Danh sách vé',
-        header: 'Điền thông tin danh sách vé',
+        title: 'Tickets',
+        header: 'Create tickets for event',
         icon: <FontAwesomeIcon icon={faTicket} />,
         // component: <NewEventForm />,
     },
     {
         title: 'Thời gian',
-        header: 'Chọn thời gian cho sự kiện',
+        header: 'Add showtime to event',
         icon: <FontAwesomeIcon icon={faMoneyBill} />,
     },
 ];

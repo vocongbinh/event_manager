@@ -18,7 +18,7 @@ const EventTypeList = ({ next }) => {
             const selectedCate = selectedList.map((item) => listCategorys[item].title);
             console.log(selectedCate);
             eventFormContext.setEventTypes(selectedCate);
-            eventStepContext.setStep(1);
+            eventStepContext.handleGoStep(1);
         }
     };
     console.log('render eventlist');

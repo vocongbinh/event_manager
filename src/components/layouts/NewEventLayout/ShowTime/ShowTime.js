@@ -103,13 +103,13 @@ const ShowTime = ({ form, index, remove }) => {
                         <FontAwesomeIcon icon={faEdit} className={cx('main-icon')} />
                     </div>
                     <div className={cx('item-container')}>
-                        <div className={cx('title-text')}>Thời gian sự kiện</div>
+                        <div className={cx('title-text')}>Showtime</div>
                         <div className="row col-12">
                             <div className="col-md-6">
                                 <DatePicker
                                     name={`showtimes.${index}.startAt`}
-                                    placeholder="Ngày bắt đầu"
-                                    label="Ngày bắt đầu"
+                                    placeholder="Showtime start date"
+                                    label="Showtime start date"
                                 />
                             </div>
                             <div className="col-md-6">
@@ -117,8 +117,8 @@ const ShowTime = ({ form, index, remove }) => {
                                     date={showtime.startAt}
                                     isDisabled={showtime.startAt === null}
                                     name={`showtimes.${index}.startAt`}
-                                    placeholder="Giờ bắt đầu"
-                                    label="Giờ bắt đầu"
+                                    placeholder="Start time"
+                                    label="Start time"
                                 />
                             </div>
                         </div>
@@ -126,8 +126,8 @@ const ShowTime = ({ form, index, remove }) => {
                             <div className="col-md-6">
                                 <DatePicker
                                     name={`showtimes.${index}.endAt`}
-                                    placeholder="Ngày kết thúc"
-                                    label="Ngày kết thúc"
+                                    placeholder="Showtime end date"
+                                    label="Showtime end date"
                                 />
                             </div>
                             <div className="col-md-6">
@@ -135,8 +135,8 @@ const ShowTime = ({ form, index, remove }) => {
                                     date={showtime.endAt}
                                     isDisabled={showtime.endAt === null}
                                     name={`showtimes.${index}.endAt`}
-                                    placeholder="Giờ kết thúc"
-                                    label="Giờ kết thúc"
+                                    placeholder="End time"
+                                    label="End time"
                                 />
                             </div>
                         </div>
@@ -156,20 +156,20 @@ const ShowTime = ({ form, index, remove }) => {
                     </div>
 
                     <div className={cx('item-container')}>
-                        <div className={cx('title-text')}>Thời gian bán vé</div>
+                        <div className={cx('title-text')}>Ticket sale time</div>
                         <div className="row col-12">
                             <div className="col-md-6">
                                 <DatePicker
                                     name={`showtimes.${index}.startSaleTicketDate`}
-                                    placeholder="Ngày bắt đầu"
-                                    label="Ngày bắt đầu"
+                                    placeholder="Start sale"
+                                    label="Start sale"
                                 />
                             </div>
                             <div className="col-md-6">
                                 <DatePicker
                                     name={`showtimes.${index}.endSaleTicketDate`}
-                                    placeholder="Ngày kết thúc"
-                                    label="Ngày kết thúc"
+                                    placeholder="End sale"
+                                    label="End sale"
                                 />
                             </div>
                         </div>
