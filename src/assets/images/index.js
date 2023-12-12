@@ -732,6 +732,7 @@ const Images = {
     iconStep: require('./icon-step.svg'),
     zalopayLogo: require('./zalopay_logo.png'),
     typeEventImg: require('./type_event_img.jpg'),
+    home: require('./Home.png'),
 };
 
 export default Images;

@@ -106,10 +106,16 @@
     z-index: 2;
     display: block;
 }
+div:has(> .tippy-wrapper) {
+    width: 100% !important;
+}
 .see-all-btn {
     padding: 6px 16px;
     display: block;
     font-size: 14px;
+    width: 100%;
+    text-align: left;
+    background-color: transparent;
 }
 .test {
     width: 200px;

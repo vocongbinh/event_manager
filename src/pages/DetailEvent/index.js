@@ -2,7 +2,7 @@ import styles from './DetailEvent.module.scss';
 import classNames from 'classnames/bind';
 import Header from './Header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faLocationDot, faTicket } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faEnvelope, faLocationDot, faPhone, faTicket } from '@fortawesome/free-solid-svg-icons';
 import { faClockFour } from '@fortawesome/free-regular-svg-icons';
 import Button from '../../components/layouts/components/Button';
 import About from './indexing/About';
@@ -16,14 +16,18 @@ import Recommended from './indexing/Recommended';
 import { useParams } from 'react-router-dom';
 import Calendar from './indexing/Calendar';
 import showtimeService from '../../apiServices/showtimeService';
+import { Spinner } from 'react-bootstrap';
+import spinnerStyles from '../../styles/spinner.module.scss';
 function DetailEvent({ children }) {
     const cx = classNames.bind(styles);
+    const spinnerCx = classNames.bind(spinnerStyles);
     const [activeIndex, setActiveIndex] = useState(0);
     const aboutRef = useRef(null);
     const informationRef = useRef(null);
     const calendarRef = useRef(null);
     const organizerRef = useRef(null);
     const recommendRef = useRef(null);
+    const [loading, setLoading] = useState(false);
     const scrollHandler = (ref, index) => {
         window.scrollTo({ top: ref.current.offsetTop - 70, behavior: 'smooth' });
     };
@@ -91,6 +95,7 @@ function DetailEvent({ children }) {
         }
         const fetchAPi = async () => {
             try {
+                setLoading(true);
                 const event = await eventService.detailEvent(params.id);
                 console.log(event);
                 setEvent(event);
@@ -99,8 +104,11 @@ function DetailEvent({ children }) {
                 setShowtimes(showtimes);
 
                 const ticketTypes = await ticketService.getTicketOfEvent(params.id);
+                setLoading(false);
                 setTicketTypes(ticketTypes);
             } catch (error) {
+                setLoading(false);
+
                 console.log(error);
             }
         };
@@ -111,20 +119,8 @@ function DetailEvent({ children }) {
     }, []);
     const listPrices = ticketTypes.map((item) => item.price);
     const minPrice = Math.min(...listPrices);
-
-    //date time
-    // let startTime = Date.parse(event.startTime);
-    // let time = new Date(startTime);
-    // const hours = ('0' + time.getHours()).slice(-2);
-    // const minutes = ('0' + time.getMinutes()).slice(-2);
-    // const month = months[time.getMonth()];
-    // const year = time.getFullYear();
-    // const day = days[time.getDay()];
-    // const date = time.getDate();
-    // startTime = `${day}, ${date} ${month} ${year} (${hours}:${minutes})`;
-
     return (
-        <div className={`container-fluid ${cx('wrapper')}`}>
+        <div className={cx('wrapper')}>
             <Header />
             <div className={cx('container')}>
                 {event.coverImage && <img className={cx('background-event')} src={event.coverImage} />}
@@ -143,9 +139,8 @@ function DetailEvent({ children }) {
                             </p>
                             <p className={cx('time-location')}>
                                 <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
-                                {event.stage}
+                                {event.address}
                             </p>
-                            <p className={cx('address')}>{event.address}</p>
                         </div>
                         <div className={cx('interact')}>
                             {showtimes.length > 1 ? (
@@ -229,15 +224,12 @@ function DetailEvent({ children }) {
                                     <div className={cx('detail-item')}>
                                         <Organizer ref={organizerRef} data={event.organizer} />
                                     </div>
-                                    <div className={cx('detail-item')}>
-                                        <Recommended ref={recommendRef} />
-                                    </div>
                                 </div>
                             </div>
                             <div className="col-4">
                                 <div
                                     className={cx('sub-detail', {
-                                        dock: activeIndex >= 2,
+                                        dock: activeIndex >= 2 && activeIndex < 3,
                                     })}
                                 >
                                     <p className={cx('sub-header')}>{event.eventName}</p>
@@ -247,9 +239,8 @@ function DetailEvent({ children }) {
                                     </p>
                                     <p className={cx('sub-time-location')}>
                                         <FontAwesomeIcon className={cx('icon')} icon={faLocationDot} />
-                                        {event.stage}
+                                        {event.address}
                                     </p>
-                                    <p className={cx('sub-address')}>{event.address}</p>
                                     <p
                                         onClick={() => scrollHandler(informationRef, 1)}
                                         className={cx('sub-ticket', 'sub-time-location')}
@@ -273,9 +264,59 @@ function DetailEvent({ children }) {
                                 </div>
                             </div>
                         </div>
+                        <div className={cx('recommended')}>
+                            <Recommended ref={recommendRef} types={event.eventType} />
+                        </div>
                     </div>
                 </div>
             </div>
+            {loading && <Spinner className={spinnerCx('spinner')} animation="grow" variant="success" />}
+            <footer className={cx('footer')}>
+                <div className={cx('footer-content')}>
+                    <div className="row">
+                        <div className="col-6">
+                            <p className={cx('title-footer')}>about</p>
+                            <p>
+                                Website Ticket Box is an online platform that provides online ticketing services for
+                                cultural, entertainment, sports events and many other types of events. With a friendly
+                                interface and diverse features, Ticket Box helps users easily search, buy tickets and
+                                manage information about the events they are interested in.
+                            </p>
+                        </div>
+                        <div className="col-3">
+                            <p className={cx('title-footer')}>for customer</p>
+                            <b style={{ color: '#c9c9c9' }}>Help center</b>
+                            <p className={cx('sub-title-footer')}>Frequently asked questions</p>
+                        </div>
+                        <div className="col-3 d-flex flex-column">
+                            <p className={cx('title-footer')}>Contact</p>
+                            <b style={{ color: '#c9c9c9' }}>Hotline</b>
+                            <p className={cx('sub-title-footer')}>
+                                <span style={{ marginRight: 10 }}>
+                                    <FontAwesomeIcon icon={faPhone} />
+                                </span>
+                                Monday - Friday (8.30 AM - 6:30 PM)
+                            </p>
+                            <b style={{ color: '#2DC275', fontSize: '1.6rem' }}>1900.6408</b>
+
+                            <b style={{ color: '#c9c9c9', marginTop: 12 }}>email</b>
+                            <p className={cx('sub-title-footer')}>
+                                <span style={{ marginRight: 10 }}>
+                                    <FontAwesomeIcon icon={faEnvelope} />
+                                </span>
+                                support@ticketbox.vn
+                            </p>
+                            <b style={{ color: '#c9c9c9', marginTop: 12 }}>Office</b>
+                            <p className={cx('sub-title-footer')}>
+                                <span style={{ marginRight: 10 }}>
+                                    <FontAwesomeIcon icon={faLocationDot} />
+                                </span>
+                                52 Ut Tich, Ward 4, Tan Binh District, HCMC
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }

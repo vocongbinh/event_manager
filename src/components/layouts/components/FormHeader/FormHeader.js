@@ -13,14 +13,6 @@ const FormHeader = ({ header, width = '80%' }) => {
         <>
             <div className={cx('wrapper')}>
                 <div className={cx('container')} style={{ width: width }}>
-                    <div className={cx('actions')}>
-                        <FontAwesomeIcon icon={faClose} className={cx('close-icon')} />
-                        <div className={cx('language-container')}>
-                            <span className={cx('language', { active: true })}>Tiếng Việt</span>
-                            <span className={cx('divider')}>|</span>
-                            <span className={cx('language')}>Tiếng Anh</span>
-                        </div>
-                    </div>
                     <div className={cx('header-container')}>
                         <div className={cx('title-container')}>
                             <div className={cx('box')}></div>

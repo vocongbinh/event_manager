@@ -7,29 +7,36 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { FacebookShareButton } from 'react-share';
 import eventService from '../../../../../apiServices/eventService';
+import { useState } from 'react';
 function Promote() {
     const cx = classNames.bind(styles);
     const params = useParams();
-    const { data } = useQuery({
+    const [event, setEvent] = useState();
+    const {} = useQuery({
         queryKey: ['event'],
         queryFn: async () => {
-            return await eventService.getEventById(params.id);
+            const data = await eventService.getEventById(params.id);
+            setEvent(data);
         },
     });
-    console.log(data);
+
     return (
         <div className={cx('wrapper')}>
-            <p className={cx('border-layout', 'header')}>{data.event}</p>
+            <p className={cx('border-layout', 'header')}>{event && event.eventName}</p>
             <div className={cx('border-layout')}>
                 <p style={{ fontSize: '2rem' }}>
                     Promote link:
                     <span>
                         <a className={cx('link')} href={window.location.href}>
-                            {` http://localhost:3000/events/${params.id}/`}
+                            {`https://dev-seatmap--tiny-kitsune-f8476a.netlify.app/events/${params.id}`}
                         </a>
                     </span>
                 </p>
-                <FacebookShareButton url={` localhost:3000/events/${params.id}/`} quote="share event" hashtag="event">
+                <FacebookShareButton
+                    url={`https://dev-seatmap--tiny-kitsune-f8476a.netlify.app/events/${params.id}`}
+                    quote="share event"
+                    hashtag="event"
+                >
                     <Button className={cx('share-btn')} preIcon={<FontAwesomeIcon size="xl" icon={faSquareFacebook} />}>
                         Share on Facebook
                     </Button>

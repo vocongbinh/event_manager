@@ -148,7 +148,7 @@ const NewEventForm = ({ next }) => {
                                     Trở lại
                                 </Button>
                                 <Button type="primary" className={cx('next-button')} size="max" background="blue">
-                                    Tiếp theo
+                                    Continue
                                 </Button>
                             </div>
                         </div>

@@ -29,7 +29,7 @@ function FilterType({ setEvents, listChecked, setListChecked }) {
         },
         {
             index: 2,
-            title: 'Theater-Alt',
+            title: 'Theater-Art',
         },
         {
             index: 3,
@@ -63,6 +63,7 @@ function FilterType({ setEvents, listChecked, setListChecked }) {
     };
     const handleChangeTypes = async (newList) => {
         let newParams = {};
+
         searchParams.forEach((va, k) => {
             newParams[k] = va;
         });
@@ -86,6 +87,11 @@ function FilterType({ setEvents, listChecked, setListChecked }) {
             newList = newList.filter((item) => item !== 'All Categories');
         }
         console.log(newList);
+        handleChangeTypes(newList);
+        setListChecked(newList);
+    };
+    const handleCheckAll = async () => {
+        let newList = ['All Categories'];
         handleChangeTypes(newList);
         setListChecked(newList);
     };
@@ -154,7 +160,11 @@ function FilterType({ setEvents, listChecked, setListChecked }) {
                 <li className={cx('item')} style={{ borderBottom: '1px solid #ccc', paddingBottom: 10 }}>
                     <div className="d-flex justify-content-between align-items-center">
                         <span>All Categories</span>
-                        <input checked={listChecked.includes('All Categories')} type="checkbox" />
+                        <input
+                            onChange={() => handleCheckAll()}
+                            checked={listChecked.includes('All Categories')}
+                            type="checkbox"
+                        />
                     </div>
                 </li>
                 {listCategories.map((item) => (

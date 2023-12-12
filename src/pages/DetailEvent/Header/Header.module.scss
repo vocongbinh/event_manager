@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 .header {
-    height: 45px;
+    height: 60px;
     display: flex;
     align-items: center;
     padding: 0 var(--padding-default);
@@ -42,15 +42,15 @@
 //search
 .search-layout {
     height: 36px;
-    &:after {
-        content: '';
-        position: absolute;
-        height: 100%;
-        right: -20px;
-        top: 0px;
-        width: 1px;
-        background-color: var(--white);
-    }
+    // &:after {
+    //     content: '';
+    //     position: absolute;
+    //     height: 100%;
+    //     right: -20px;
+    //     top: 0px;
+    //     width: 1px;
+    //     background-color: var(--white);
+    // }
 }
 
 //location
@@ -70,9 +70,13 @@
     padding: 10px 16px !important;
     font-size: 14px;
     position: relative;
-    color: #666;
+    color: #666 !important;
+    cursor: pointer;
     &:hover {
         background-color: var(--sub-color) !important;
+        color: var(--white) !important;
+        transition: 0.3s ease color !important;
+        transition: 0.3s ease background-color !important;
     }
 }
 //category tabs
@@ -120,7 +124,7 @@
     }
 }
 .create-btn {
-    height: 100%;
+    padding: 8px;
     color: var(--white);
     font-size: 14px;
 

@@ -11,7 +11,7 @@ import DropdownButton from '../../../components/layouts/components/DropdownButto
 import { useNavigate } from 'react-router-dom';
 function Header() {
     const cx = classNames.bind(styles);
-    const categories = ['Live music', 'Theater & Plays', 'Nightlife', 'Community', 'Course', 'Attractions', 'Sport'];
+    const categories = ['Live music', 'Theater-Art', 'Nightlife', 'Community', 'Course', 'Attractions', 'Sport'];
     const listLocation = ['Ho Chi Minh', 'Ha Noi', 'Other locations'];
     const navigate = useNavigate();
     return (

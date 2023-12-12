@@ -3,7 +3,7 @@ import styles from './SearchLayout.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import eventService from '../../../../apiServices/eventService';
 import Tippy from '@tippyjs/react/headless';
 import SearchItem from './SearchItem';
@@ -21,13 +21,15 @@ function SearchLayout({ className }) {
         }
         const fetchApi = async () => {
             const data = await eventService.searchEvent(debounceValue);
+            console.log(data);
             setResults(data);
         };
         fetchApi();
     }, [debounceValue]);
     return (
         <Tippy
-            visible
+            visible={valueSearch.length > 0}
+            onClickOutside={(ins) => ins.hide()}
             interactive
             render={(attrs) => (
                 <div className={cx('tippy-wrapper')} tab {...attrs}>
@@ -36,9 +38,9 @@ function SearchLayout({ className }) {
                             {results.map((result) => (
                                 <SearchItem data={result} />
                             ))}
-                            <a className={cx('see-all-btn')} href="/">
+                            <Link className={cx('see-all-btn')} to={`/events/typeEvent?query=${valueSearch}`}>
                                 See all results...
-                            </a>
+                            </Link>
                         </div>
                     )}
                 </div>

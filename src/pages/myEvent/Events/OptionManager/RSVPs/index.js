@@ -8,14 +8,11 @@ import ticketService from '../../../../../apiServices/ticketService';
 import { useParams } from 'react-router-dom';
 import format from 'date-fns/format';
 import { useSearchParams } from 'react-router-dom';
-import * as discountService from '../../../../../apiServices/discountService';
-import { useQuery } from 'react-query';
 import Orders from './tabs/Orders';
 function ComponentRPVPs() {
     const cx = classNames.bind(styles);
     //set state
     const [event, setEvent] = useState(null);
-    const [show, setShow] = useState(false);
     const [ticketTypes, setTicketTypes] = useState([]);
     const [showId, setShowId] = useSearchParams();
     const params = useParams();
@@ -72,7 +69,7 @@ function ComponentRPVPs() {
                             }}
                             className={cx('selection')}
                         >
-                            <option>--please select a date--</option>
+                            <option value="">--please select a date--</option>
                             {listShowtime.map((showtime) => (
                                 <option value={showtime._id}>{showtime.startShowTime}</option>
                             ))}

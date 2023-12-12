@@ -16,7 +16,9 @@ function Home() {
     const cx = classNames.bind(styles);
     const spinnerCx = classNames.bind(spinnerStyles);
     const [events, setEvents] = useState([]);
+    const [headerEvents, setHeaderVents] = useState([]);
     const slickRef = useRef(null);
+    const [loading, setLoading] = useState(false);
     const handleLeftSlick = () => {
         slickRef?.current?.slickPrev();
     };
@@ -26,10 +28,14 @@ function Home() {
     useEffect(() => {
         const getListEvents = async () => {
             try {
+                setLoading(true);
                 const eventsData = await eventServices.allEvents();
+                const headerData = await eventServices.headerEvents();
                 setEvents(eventsData || []);
-                console.log(eventsData);
+                setHeaderVents(headerData);
+                setLoading(false);
             } catch (err) {
+                setLoading(false);
                 console.log('error');
             }
         };
@@ -59,14 +65,14 @@ function Home() {
                         {Images.headingRight}
                     </div>
                 </div>
-                <div className="row mt-5;">
+                <div className="row" style={{ marginTop: 40, paddingBottom: 40 }}>
                     {events.map((eventItem) => (
                         <div className="col-3">
                             <EventItem data={eventItem} />
                         </div>
                     ))}
                 </div>
-                {/* <Spinner className={spinnerCx} animation="grow" variant="light" /> */}
+                {loading && <Spinner className={spinnerCx('spinner')} animation="grow" variant="success" />}
             </div>
         </div>
     );

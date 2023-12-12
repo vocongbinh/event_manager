@@ -45,6 +45,9 @@ function Header() {
                 <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
                 {Object.keys(authContext.userInfo).length > 0 ? (
                     <Tippy
+                        maxWidth="100%"
+                        hideOnClick={false}
+                        onClickOutside={(ins) => ins.hide()}
                         placement="bottom-end"
                         interactive
                         render={(attrs) => (

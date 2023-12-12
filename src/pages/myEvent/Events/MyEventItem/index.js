@@ -26,7 +26,7 @@ function MyEventItem({ data }) {
             path: `./${data._id}/summary?showId=${showtime._id} `,
         },
         { title: 'Manage RSVPs', icon: <FontAwesomeIcon icon={faUserGroup} />, path: `./${data._id}/RSVPs` },
-        { title: 'Promote', icon: <FontAwesomeIcon icon={faBullhorn} /> },
+        { title: 'Promote', icon: <FontAwesomeIcon icon={faBullhorn} />, path: `./${data._id}/promote` },
         {
             title: 'Discount',
             icon: <FontAwesomeIcon icon={faGift} />,

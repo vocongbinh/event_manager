@@ -14,7 +14,10 @@ function EventItem({ data }) {
     const listPrice = data.ticketTypes.map((item) => item.price);
     const minPrice = Math.min(...listPrice);
     const dateTime = new Date(data.showtimes[0].startAt);
-    const time = format(dateTime, 'dd, MMMM.yyyy');
+    let time;
+    if (data.showtimes.length > 1) {
+        time = format(dateTime, 'MMMM.yyyy');
+    } else time = format(dateTime, 'dd, MMMM.yyyy');
 
     return (
         <a target="_blank" href={`/events/${data._id}/`} className={cx('wrapper')}>
@@ -33,8 +36,8 @@ function EventItem({ data }) {
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="d-flex align-items-center">
-                            <FontAwesomeIcon style={{ marginRight: 8 }} icon={faGrip} />
-                            {data.eventType}
+                            <FontAwesomeIcon color="#ccc" style={{ marginRight: 8 }} icon={faGrip} />
+                            <div style={{ color: '#666666', fontSize: 12 }}>{data.eventType.join(' & ')}</div>
                         </div>
                         <div className={cx('location')}>
                             <FontAwesomeIcon color="#ccc" style={{ marginRight: 6 }} icon={faLocationDot} />

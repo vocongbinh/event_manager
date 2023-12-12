@@ -57,7 +57,7 @@ const EventTypeList = ({ next }) => {
 
             <div className={cx('action')}>
                 <Button onClick={handleNext} type="primary" className={cx('next-button')} size="max" background="blue">
-                    Tiếp theo
+                    Continue
                 </Button>
             </div>
         </div>
