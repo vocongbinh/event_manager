@@ -80,12 +80,11 @@ function Moderator() {
             <div className={cx('border-layout')}>
                 <p className={cx('content')}>Event moderators</p>
             </div>
-            <Table className={cx('table')}>
+            <table className={cx('table')}>
                 <thead>
                     <tr>
                         <td className="text-start">Name</td>
                         <td>Position</td>
-                        <td className="text-end">Action</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,9 +94,9 @@ function Moderator() {
                                 <tr style={{ backgroundColor: '#f6f6f6' }}>
                                     <td>
                                         <div className="d-flex align-items-center">
-                                            <img className={cx('avatar-item')} alt="" />
+                                            <img className={cx('avatar-item')} alt="" src={item.user.imageUrl} />
                                             <div className="d-flex flex-column">
-                                                <span className={cx('name-item')}>{item.user.username}</span>
+                                                <span className={cx('name-item')}>{item.user.fullName}</span>
                                                 <span className={cx('email-item')}> {item.user.email}</span>
                                             </div>
                                         </div>
@@ -109,7 +108,7 @@ function Moderator() {
                             );
                         })}
                 </tbody>
-            </Table>
+            </table>
             <Button
                 onClick={handleCreate}
                 className={cx('create-btn')}

@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import * as myService from '../../../apiServices/myService';
 import MyEventItem from './MyEventItem';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../../utils/authContext';
 function Events() {
     const cx = classNames.bind(styles);
 
@@ -25,7 +26,7 @@ function Events() {
     const indexOfFirstRecord = indexOfLastRecord - maxPageDisplay;
     const nPages = Math.ceil(events.length / maxPageDisplay);
     displayPage = events.slice(indexOfFirstRecord, indexOfLastRecord);
-
+    const authContext = useAuthContext();
     const handleSetActive = (count) => {
         setCurrentPage(1);
         setMaxPageDisplay(count);
@@ -41,7 +42,7 @@ function Events() {
     };
     useEffect(() => {
         const fetchApi = async () => {
-            const events = await myService.allEvents('65105f66641996e970f1309c');
+            const events = await myService.allEvents(authContext.getUser()._id);
             console.log(events);
             setEvents(events);
         };
@@ -50,7 +51,7 @@ function Events() {
 
     const handleKeyDown = async (e) => {
         if (e.key === 'Enter') {
-            const result = await myService.searchEvents(searchValue, '65105f66641996e970f1309c');
+            const result = await myService.searchEvents(searchValue, authContext.getUser()._id);
             setEvents(result);
         }
     };
@@ -102,23 +103,9 @@ function Events() {
                             placeholder="Search event name"
                         />
                     </div>
-                    <div
-                        onClick={() => setTypeSearch('past')}
-                        className={cx('number-layout', 'past', {
-                            selected: typeSearch === 'past',
-                        })}
-                    >
+                    <div onClick={() => setTypeSearch('past')} className={cx('number-layout', 'past', 'selected')}>
                         <div className={cx('number-block')}>{events.length}</div>
                         <p>past</p>
-                    </div>
-                    <div
-                        onClick={() => setTypeSearch('draft')}
-                        className={cx('number-layout', 'draft', {
-                            selected: typeSearch === 'draft',
-                        })}
-                    >
-                        <div className={cx('number-block')}>11</div>
-                        <p>draft</p>
                     </div>
                 </div>
             </div>

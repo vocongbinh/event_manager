@@ -33,7 +33,7 @@ function Discount() {
     const params = useParams();
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [stid, setStid] = useState();
+    const [stid, setStid] = useState('');
     const [formValue, setFormValue] = useState({
         code: '',
         amount: '',
@@ -102,7 +102,6 @@ function Discount() {
             };
         });
     }
-    const showtimeId = showId.get('showId');
     const { isLoading, isError, data, refetch } = useQuery({
         queryKey: ['discounts', stid],
         queryFn: async () => {
@@ -117,17 +116,6 @@ function Discount() {
         const fetchApi = async () => {
             const events = await eventService.getEventById(params.id);
             setEvents(events);
-            const typesData = await ticketService.getTicketOfShowtime(showtimeId);
-            setTicketTypes(typesData);
-            setListTypeOfDiscount(
-                typesData.map((item) => {
-                    return {
-                        _id: item._id,
-                        quantity: item.quantity,
-                        ticketName: item.ticketName,
-                    };
-                }),
-            );
         };
         fetchApi();
     }, []);
@@ -248,7 +236,7 @@ function Discount() {
                         </select>
                     </div>
                 </div>
-                {discounts.length > 0 && (
+                {discounts && discounts.length > 0 && (
                     <table className={cx('table')}>
                         <thead>
                             <tr>

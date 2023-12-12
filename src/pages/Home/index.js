@@ -50,7 +50,7 @@ function Home() {
                     </Button>
                     <div className={cx('slick')}>
                         {' '}
-                        <SlickComponent ref={slickRef} data={events} />
+                        <SlickComponent ref={slickRef} data={headerEvents} />
                     </div>
 
                     <Button type="circle" onClick={handleRightSlick} className={cx('chevron-icon')}>

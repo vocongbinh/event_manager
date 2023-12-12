@@ -32,6 +32,8 @@ function Header() {
             icon: <FontAwesomeIcon icon={faRightFromBracket} />,
         },
     ];
+    const user = authContext.getUser();
+    console.log(user);
     return (
         <div className={cx('wrapper')}>
             <img
@@ -69,9 +71,9 @@ function Header() {
                         <Button
                             type="primary"
                             size="min"
-                            preIcon={<Image src={Images.avatar} className={cx('avatar')} />}
+                            preIcon={<Image src={user.imageUrl} className={cx('avatar')} />}
                         >
-                            bình nè
+                            {user.fullName}
                         </Button>
                     </Tippy>
                 ) : (

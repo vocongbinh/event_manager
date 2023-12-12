@@ -52,11 +52,7 @@ function MyEventLayout({ children, ...props }) {
                     <button>
                         {authContext.getUser().fullName || ''}
                         <span className={cx('name')}>
-                            <img
-                                alt=""
-                                src={'https://cdn.sforum.vn/sforum/wp-content/uploads/2023/07/pokemon-sleep-1.jpg'}
-                                className={cx('avatar')}
-                            />
+                            <img alt="" src={authContext.getUser().imageUrl} className={cx('avatar')} />
                         </span>
                     </button>
                 </div>

@@ -6,8 +6,7 @@
     flex-direction: column;
 }
 .border-layout {
-    padding: 20px 0px;
-    border-bottom: 1px solid #ccc;
+    padding-top: 20px;
 }
 .header {
     font-weight: 400;
@@ -35,14 +34,19 @@
     font-size: 2.4rem;
 }
 .table {
+    // border-collapse: separate;
+    margin-bottom: 40px;
     thead {
         td {
             text-transform: uppercase;
             font-size: 1.4rem;
+            border-bottom: 1px solid #ccc;
+            padding: 20px !important;
         }
     }
     td {
         font-size: 1.6rem;
+        padding: 10px 20px;
     }
 }
 .avatar-item {
@@ -61,8 +65,8 @@
     font-weight: 400;
     font-size: 24px;
     transition: 0.3s all ease-in-out;
-    border-radius: 4%;
-    padding: 10px;
+    border-radius: 10px;
+    padding: 16px 0px;
     &:hover {
         background-color: #b6e685;
         color: #27313d;

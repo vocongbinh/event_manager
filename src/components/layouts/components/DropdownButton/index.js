@@ -47,12 +47,7 @@ function DropdownButton({ data, preIcon, sufIcon, text, className }) {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 className={` dropdown-toggle ${cx('location-btn', 'avatar-btn')}`}
-                preIcon={
-                    <Image
-                        src={'https://bloganchoi.com/wp-content/uploads/2022/12/stt-hoang-hon-hay-tam-trang-2.jpg'}
-                        className={cx('avatar')}
-                    />
-                }
+                preIcon={<Image src={authContext.getUser().imageUrl} className={cx('avatar')} />}
                 sufIcon={<FontAwesomeIcon icon={faCaretDown} />}
             >
                 {authContext.getUser().fullName || ''}

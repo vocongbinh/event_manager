@@ -15,27 +15,46 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import showtimeService from '../../../../apiServices/showtimeService';
+import { useAuthContext } from '../../../../utils/authContext';
 function MyEventItem({ data }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
     const [showtime, setShowtime] = useState({});
+    const authContext = useAuthContext();
+    const userData = authContext.getUser();
+    const moderators = data.moderators;
+    const user = moderators.find((moderator) => moderator.user === userData._id);
+
     const listOptions = [
         {
             title: 'Summary',
             icon: <FontAwesomeIcon icon={faChartLine} />,
             path: `./${data._id}/summary?showId=${showtime._id} `,
+            role: ['Owner', 'Admin', 'Moderator'],
         },
-        { title: 'Manage RSVPs', icon: <FontAwesomeIcon icon={faUserGroup} />, path: `./${data._id}/RSVPs` },
-        { title: 'Promote', icon: <FontAwesomeIcon icon={faBullhorn} />, path: `./${data._id}/promote` },
+        {
+            title: 'Manage RSVPs',
+            icon: <FontAwesomeIcon icon={faUserGroup} />,
+            path: `./${data._id}/RSVPs`,
+            role: ['Owner', 'Admin'],
+        },
+        {
+            title: 'Promote',
+            icon: <FontAwesomeIcon icon={faBullhorn} />,
+            path: `./${data._id}/promote`,
+            role: ['Owner', 'Admin', 'Moderator', 'Check-in'],
+        },
         {
             title: 'Discount',
             icon: <FontAwesomeIcon icon={faGift} />,
             path: `./${data._id}/discount`,
+            role: ['Owner', 'Admin'],
         },
-        { title: 'Edit', icon: <FontAwesomeIcon icon={faPenToSquare} /> },
-        { title: 'Replicate', icon: <FontAwesomeIcon icon={faCopy} /> },
     ];
-
+    let countItems = 0;
+    listOptions.forEach((option) => {
+        if (option.role.includes(user.role)) countItems++;
+    });
     const datetime = Date.parse(data.showtimes[0].startAt);
     let time = new Date(datetime);
     const hours = ('0' + time.getHours()).slice(-2);
@@ -65,20 +84,25 @@ function MyEventItem({ data }) {
                         </p>
                     </div>
                 </div>
-                <Link to={`./${data._id}/moderator`} target="_blank" className={cx('moderator-btn')}>
-                    <FontAwesomeIcon size="xl" icon={faUsersRays} />
-                </Link>
+                {(user.role === 'Admin' || user.role === 'Owner') && (
+                    <Link to={`./${data._id}/moderator`} target="_blank" className={cx('moderator-btn')}>
+                        <FontAwesomeIcon size="xl" icon={faUsersRays} />
+                    </Link>
+                )}
             </div>
 
             <div className={cx('footer')}>
                 <div className="d-flex">
-                    {listOptions.map((option) => (
-                        <div className={cx('option-item')}>
-                            <Link to={option.path} target="_blank" className={cx('option')}>
-                                {option.icon} {option.title}
-                            </Link>
-                        </div>
-                    ))}
+                    {listOptions.map((option) => {
+                        if (option.role.includes(user.role))
+                            return (
+                                <div style={{ width: `calc(100% / ${countItems} )` }} className={cx('option-item')}>
+                                    <Link to={option.path} target="_blank" className={cx('option')}>
+                                        {option.icon} {option.title}
+                                    </Link>
+                                </div>
+                            );
+                    })}
                 </div>
             </div>
         </div>
