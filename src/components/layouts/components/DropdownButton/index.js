@@ -10,8 +10,12 @@ import styles from './DropdownButton.module.scss';
 import classNames from 'classnames/bind';
 import Button from '../Button';
 import Image from '../Image';
+import { useAuthContext } from '../../../../utils/authContext';
+import { useNavigate } from 'react-router-dom';
 function DropdownButton({ data, preIcon, sufIcon, text, className }) {
     const cx = classNames.bind(styles);
+    const authContext = useAuthContext();
+    const navigate = useNavigate();
     const listItems = [
         {
             title: 'My Tickets',
@@ -26,12 +30,14 @@ function DropdownButton({ data, preIcon, sufIcon, text, className }) {
         {
             title: 'My Profile',
             icon: <FontAwesomeIcon icon={faAddressCard} />,
-            href: '/',
+            href: '/auth/profile',
         },
         {
             title: 'Log out',
             icon: <FontAwesomeIcon icon={faRightFromBracket} />,
-            href: '/',
+            onClick: () => {
+                authContext.logOut();
+            },
         },
     ];
     return (
@@ -49,15 +55,20 @@ function DropdownButton({ data, preIcon, sufIcon, text, className }) {
                 }
                 sufIcon={<FontAwesomeIcon icon={faCaretDown} />}
             >
-                võ công bình
+                {authContext.getUser().fullName || ''}
             </Button>
             <ul className={`dropdown-menu ${cx('location-list')}`} aria-labelledby="dropdownMenuButton1">
                 {listItems.map((item) => (
                     <li>
-                        <a className={`${cx('item')} dropdown-item`} href="#">
+                        <Button
+                            onClick={item.onClick}
+                            className={`${cx('item')} dropdown-item`}
+                            target="_blank"
+                            to={item.href}
+                        >
                             <span style={{ marginRight: 15 }}>{item.icon}</span>
                             {item.title}
-                        </a>
+                        </Button>
                     </li>
                 ))}
             </ul>

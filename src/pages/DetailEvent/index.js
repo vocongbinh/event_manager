@@ -18,6 +18,7 @@ import Calendar from './indexing/Calendar';
 import showtimeService from '../../apiServices/showtimeService';
 import { Spinner } from 'react-bootstrap';
 import spinnerStyles from '../../styles/spinner.module.scss';
+import { useAuthContext } from '../../utils/authContext';
 function DetailEvent({ children }) {
     const cx = classNames.bind(styles);
     const spinnerCx = classNames.bind(spinnerStyles);
@@ -36,6 +37,7 @@ function DetailEvent({ children }) {
     const [ticketTypes, setTicketTypes] = useState([]);
     const [showtimes, setShowtimes] = useState([]);
     const [options, setOptions] = useState([]);
+    const authContext = useAuthContext();
     let listOption = [
         {
             title: 'About',
@@ -123,7 +125,7 @@ function DetailEvent({ children }) {
         <div className={cx('wrapper')}>
             <Header />
             <div className={cx('container')}>
-                {event.coverImage && <img className={cx('background-event')} src={event.coverImage} />}
+                {event.coverImage && <img alt="" className={cx('background-event')} src={event.coverImage} />}
                 <div className="container">
                     <div className={cx('infor-event')}>
                         <div className={cx('calendar')}>
@@ -253,14 +255,31 @@ function DetailEvent({ children }) {
                                             icon={faChevronRight}
                                         />
                                     </p>
-                                    <Button
-                                        onClick={() => scrollHandler(calendarRef, 2)}
-                                        className={cx('sub-book-btn')}
-                                        type="highlight"
-                                        size="max"
-                                    >
-                                        {showtimes.length > 1 ? 'Select showtime' : 'Book'}
-                                    </Button>
+                                    {showtimes.length > 1 ? (
+                                        <Button
+                                            onClick={() => scrollHandler(calendarRef, 2)}
+                                            className={cx('sub-book-btn')}
+                                            type="highlight"
+                                            size="max"
+                                        >
+                                            Select showtime
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            href={
+                                                authContext.getUser()
+                                                    ? `book/${
+                                                          Object.keys(event).length > 0 ? event.showtimes[0]._id : ''
+                                                      }/step1`
+                                                    : '/auth/login'
+                                            }
+                                            className={cx('sub-book-btn')}
+                                            type="highlight"
+                                            size="max"
+                                        >
+                                            Book
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -59,8 +59,10 @@ const LoginForm = () => {
                 console.log(values);
                 setErrors('');
                 authContext.logIn(values);
+
                 const redirectPath = location.state?.path || '/';
-                navigate(redirectPath, { replace: true, state: { phoneNumber } });
+                navigate(-1);
+                // navigate(redirectPath, { replace: true, state: { phoneNumber } });
             })
             .catch((error) => {
                 setErrors(error);
@@ -179,6 +181,7 @@ const LoginForm = () => {
                                         </Button>
                                         <div>
                                             <Button
+                                                onClick={handleSignIn}
                                                 type="round"
                                                 className={cx('login-button')}
                                                 size="max"
