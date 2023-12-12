@@ -17,8 +17,7 @@ import AvatarPicker from '../../components/AvatarPicker/AvatarPicker';
 const Profile = () => {
     const cx = classNames.bind(styles);
     const authContext = useAuthContext();
-    const { phoneNumber, fullName, identifyCardNumber, email, dateOfBirth, imageUrl } = authContext.userInfo;
-    console.log(authContext.userInfo);
+    const { phoneNumber, fullName, identifyCardNumber, email, dateOfBirth, imageUrl } = authContext.getUser();
     const readOnlyCard = identifyCardNumber != null;
     const [error, setError] = useState('');
     const [success, showSucces] = useState(false);
@@ -52,7 +51,7 @@ const Profile = () => {
                     setIsSubmiting(true);
                     console.log(values);
                     const newUserData = {
-                        ...authContext.userInfo,
+                        ...authContext.getUser(),
                         ...values,
                     };
                     await authService

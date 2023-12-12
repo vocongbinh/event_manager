@@ -9,11 +9,13 @@ import Image from '../../../components/layouts/components/Image';
 import SearchLayout from '../../../components/layouts/components/SearchLayout';
 import DropdownButton from '../../../components/layouts/components/DropdownButton';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../../utils/authContext';
 function Header() {
     const cx = classNames.bind(styles);
     const categories = ['Live music', 'Theater-Art', 'Nightlife', 'Community', 'Course', 'Attractions', 'Sport'];
     const listLocation = ['Ho Chi Minh', 'Ha Noi', 'Other locations'];
     const navigate = useNavigate();
+    const authContext = useAuthContext();
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
@@ -49,7 +51,13 @@ function Header() {
                     </ul>
                 </div>
                 <div className={cx('action')}>
-                    <DropdownButton />
+                    {authContext.getUser() ? (
+                        <DropdownButton />
+                    ) : (
+                        <Button to="/auth/login" className={cx('login-btn')}>
+                            log in | sign up
+                        </Button>
+                    )}
                     <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
                     <Button
                         className={cx('create-btn')}

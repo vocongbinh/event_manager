@@ -28,6 +28,7 @@ function Header() {
         },
         {
             title: 'Exit',
+            onClick: () => authContext.logOut(),
             icon: <FontAwesomeIcon icon={faRightFromBracket} />,
         },
     ];
@@ -43,7 +44,7 @@ function Header() {
                     Create event
                 </Button>
                 <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
-                {Object.keys(authContext.userInfo).length > 0 ? (
+                {authContext.getUser() ? (
                     <Tippy
                         maxWidth="100%"
                         hideOnClick={false}
@@ -53,7 +54,14 @@ function Header() {
                         render={(attrs) => (
                             <div className={cx('tippy-wrapper')} tab {...attrs}>
                                 {userOptions.map((option) => (
-                                    <InforItem data={option} />
+                                    <InforItem
+                                        onClick={() => {
+                                            if (option.title === 'Exit') {
+                                                authContext.logOut();
+                                            }
+                                        }}
+                                        data={option}
+                                    />
                                 ))}
                             </div>
                         )}
