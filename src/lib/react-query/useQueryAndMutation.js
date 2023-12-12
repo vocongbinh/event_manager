@@ -10,13 +10,12 @@ import { createHoldTickets, createHoldToken, createNewBooking } from '../../apiS
 import eventService from '../../apiServices/eventService';
 import { getDistricts, getProvinces, getWards } from '../../apiServices/addressService';
 import showtimeService from '../../apiServices/showtimeService';
-export const useValidateChart = (chartKey) => {
-    return useQuery({
-        queryKey: [GET_CHART_VALIDATE_STATUS],
-        queryFn: () => getChartValidateStatus(chartKey),
-        enabled: chartKey != '',
-    });
-};
+// export const useValidateChart = (chartKey) => {
+//     return useQuery({
+//         queryKey: [GET_CHART_VALIDATE_STATUS],
+//         queryFn: () => getChartValidateStatus(chartKey),
+//     });
+// };
 export const useCreateNewDraft = () => {
     const queryClient = useQueryClient();
     return useMutation({

@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SeatsioDesigner } from '@seatsio/seatsio-react';
-import { useCreateNewDraft, useValidateChart } from '../../../../lib/react-query/useQueryAndMutation';
-import toast from 'react-hot-toast';
-import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import style from './NewStageChart.module.scss';
 import classNames from 'classnames/bind';
@@ -11,32 +8,29 @@ import {
     useNewEventFormContext,
     useNewEventStepContext,
 } from '../../../../utils/newEventContext';
+import { createNewDraftChart, getChartValidateStatus } from '../../../../apiServices/chartService';
+import { Spinner } from 'react-bootstrap';
 const NewStageChart = () => {
     const cx = classNames.bind(style);
-    const { mutateAsync: createNewDraftChart } = useCreateNewDraft();
     const eventFormContext = useNewEventFormContext();
-    const [onClick, setOnClick] = useState(false);
-    console.log(eventFormContext.chart);
     const eventStepContext = useNewEventStepContext();
-    const { data, refetch } = useValidateChart(eventFormContext.chart);
-    useEffect(() => {
-        console.log('submit chart' + data?.errors?.length);
-        if (data && data.status == 200 && data.errors?.length == 0) {
-            console.log('success');
-            eventStepContext.handleGoStep(3);
-            eventFormContext.setIsChartCreated(true);
-        }
-    }, [data, onClick]);
-    const handleClickNext = () => {
+    const [isValidating, setIsValidating] = useState(false);
+    const handleClickNext = async () => {
         if (!eventFormContext.chart) return;
+        setIsValidating(true);
+        console.log(eventFormContext.chart);
         if (eventFormContext.isChartCreated == false) {
-            createNewDraftChart(eventFormContext.chart);
+            await createNewDraftChart(eventFormContext.chart);
         }
-        refetch();
-        setOnClick((onClick) => !onClick);
+        const validateChart = await getChartValidateStatus(eventFormContext.chart);
+        if (validateChart && validateChart?.errors?.length == 0) {
+            eventFormContext.setIsChartCreated(true);
+            eventStepContext.handleGoStep(3);
+        }
+        setIsValidating(false);
     };
     const handleClickPrev = () => {
-        eventStepContext.handleGoStep(1);
+        eventStepContext.handleGoBack(1);
     };
     return (
         <div id="container" className={cx('container')}>
@@ -80,17 +74,21 @@ const NewStageChart = () => {
                 >
                     Go back
                 </Button>
-                <Button
-                    type="primary"
-                    onClick={() => {
-                        handleClickNext();
-                    }}
-                    className={cx('button')}
-                    size="max"
-                    background="blue"
-                >
-                    Continue
-                </Button>
+                {!isValidating ? (
+                    <Button
+                        type="primary"
+                        onClick={handleClickNext}
+                        className={cx('button')}
+                        size="max"
+                        background="blue"
+                    >
+                        Continue
+                    </Button>
+                ) : (
+                    <Button type="primary" className={cx('button')} size="max" background="blue">
+                        <Spinner />
+                    </Button>
+                )}{' '}
             </div>
         </div>
     );

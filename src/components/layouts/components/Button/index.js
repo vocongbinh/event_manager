@@ -29,6 +29,7 @@ const Button = forwardRef(({ type, size, href, to, className, preIcon, sufIcon, 
                 min: size === 'min',
                 medium: size === 'medium',
                 max: size === 'max',
+                type: prop.buttonType ?? 'submit',
             })}
             {...props}
         >

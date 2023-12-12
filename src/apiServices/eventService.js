@@ -84,7 +84,8 @@ const eventService = {
             const res = await request.post('api/event/', {
                 ...data,
             });
-            return { status: res.status, ...res.data };
+            console.log(res.data);
+            return res.data;
         } catch (e) {
             console.log(e);
         }

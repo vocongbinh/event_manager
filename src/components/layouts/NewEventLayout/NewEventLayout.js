@@ -46,7 +46,7 @@ const NewEventLayout = () => {
             </div> */}
             <FormHeader header={createEventSteps[newEventStep.step].header ?? ''} />
 
-            <div className={cx('container')}>
+            <div className={cx('container1')}>
                 <Outlet />
             </div>
         </div>

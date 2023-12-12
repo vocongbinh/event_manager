@@ -66,14 +66,6 @@ function App() {
                                 <Route path="tickets" element={<Tickets />} />
                                 <Route path="showtimes" element={<ShowTimes />} />
                                 <Route path="stage" element={<NewStageChart />} />
-                                {/* <Route
-                                path="/new-stage-model"
-                                element={
-                                    <NewEventFormProvider>
-                                        <NewStageChart></NewStageChart>
-                                    </NewEventFormProvider>
-                                }
-                            /> */}
                             </Route>
                         </Routes>
                     </div>

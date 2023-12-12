@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, FieldArray } from 'formik';
 import classNames from 'classnames/bind';
@@ -7,15 +7,16 @@ import Button from '../../components/Button';
 import ShowTime from '../ShowTime/ShowTime';
 import { useNewEventFormContext, useNewEventStepContext } from '../../../../utils/newEventContext';
 import { showtimesSchema } from '../../../../lib/validation';
+import { Spinner } from 'react-bootstrap';
+import toast from 'react-hot-toast';
 
 const ShowTimes = ({ next }) => {
     const cx = classNames.bind(style);
     const newEventContext = useNewEventFormContext();
     const eventStepContext = useNewEventStepContext();
+    const [isPending, setIsPending] = useState(false);
     const navigate = useNavigate();
-    useEffect(() => {
-        newEventContext.createEvent();
-    }, [newEventContext.showtimes]);
+    useEffect(() => {}, [newEventContext.showtimes]);
     return (
         <div>
             <Formik
@@ -23,8 +24,12 @@ const ShowTimes = ({ next }) => {
                     showtimes: newEventContext.showtimes,
                 }}
                 validationSchema={showtimesSchema}
-                onSubmit={(values) => {
+                onSubmit={async (values) => {
                     newEventContext.setShowTimes((prev) => values.showtimes);
+                    const newEvent = await newEventContext.createEvent();
+                    if (!newEvent) {
+                        toast('Create event failed');
+                    } else return navigate('/');
                 }}
             >
                 <Form>
@@ -51,24 +56,25 @@ const ShowTimes = ({ next }) => {
                                         Thêm ngày sự kiện
                                     </button>
                                     <div className={cx('item-container')}>
-                                        <Button
-                                            type="button"
-                                            onClick={() => eventStepContext.handleGoStep(0)}
-                                            className={cx('next-button')}
-                                            size="max"
-                                            background="blue"
-                                        >
-                                            Go back
-                                        </Button>
-
                                         <div className={cx('action')}>
                                             <Button
-                                                type="primary"
+                                                buttonType="button"
+                                                onClick={() => eventStepContext.handleGoBack(0)}
                                                 className={cx('next-button')}
                                                 size="max"
                                                 background="blue"
                                             >
-                                                Continue
+                                                Go back
+                                            </Button>
+                                            <Button
+                                                buttonTyoe="submit"
+                                                type="primary"
+                                                className={cx('next-button')}
+                                                size="max"
+                                                background="blue"
+                                                disabled={isPending}
+                                            >
+                                                {!isPending ? 'Continue' : <Spinner />}
                                             </Button>
                                         </div>
                                     </div>
