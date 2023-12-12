@@ -13,6 +13,7 @@ import Tickets from './components/layouts/NewEventLayout/Tickets/Tickets';
 import ShowTimes from './components/layouts/NewEventLayout/ShowTimes/ShowTimes';
 import NewEventForm from './components/layouts/NewEventLayout/NewEventForm/NewEventForm';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import OrganizerProfile from './components/layouts/NewEventLayout/OrganizerProfile/OrganizerProfile';
 
 const client = new QueryClient();
 function App() {
@@ -48,15 +49,8 @@ function App() {
                                     />
                                 );
                             })}
+                            <Route path="/organizer/profile" element={<OrganizerProfile />} />
 
-                            <Route
-                                path="/newEvent/new-stage-model"
-                                element={
-                                    <NewEventFormProvider>
-                                        <NewStageChart></NewStageChart>
-                                    </NewEventFormProvider>
-                                }
-                            />
                             <Route
                                 path="/newEvent"
                                 element={

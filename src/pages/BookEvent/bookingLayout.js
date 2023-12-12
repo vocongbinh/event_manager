@@ -155,7 +155,7 @@ function BookEvent({ children, ...props }) {
             holdTickets({ bookings, eventKey, holdToken });
             setActiveStep((prev) => prev + 1);
         } else {
-            console.log('do step 2');
+            console.log('do step 2' + showtime);
             // navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
 
             const receiverInformation = {
@@ -163,13 +163,14 @@ function BookEvent({ children, ...props }) {
                 receiverEmail: email,
                 receiverPhoneNumber: phoneNumber,
             };
+            console.log(receiverInformation);
             const data = await createNewBooking({
                 tickets: bookings,
                 discounts: [],
                 eventKey,
                 holdToken,
                 ...receiverInformation,
-                showtime,
+                showtime: showtime,
             });
             console.log(data);
         }

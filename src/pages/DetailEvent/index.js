@@ -155,7 +155,11 @@ function DetailEvent({ children }) {
                             ) : (
                                 <Button
                                     href={
-                                        localStorage.getItem('user') != null ? `book/${event._id}/step1` : '/auth/login'
+                                        localStorage.getItem('user') != null
+                                            ? `book/${
+                                                  Object.keys(event).length > 0 ? event.showtimes[0]._id : ''
+                                              }/step1`
+                                            : '/auth/login'
                                     }
                                     type="highlight"
                                     size="max"

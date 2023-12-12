@@ -86,7 +86,7 @@ const Address = ({ ...props }) => {
                                     type="text"
                                     name="province"
                                     className={cx('input-item')}
-                                    placeholder="Chọn tỉnh, thành phố"
+                                    placeholder="Select province"
                                     onFocus={() => setIsShowProvince(true)}
                                     readOnly
                                 ></input>
@@ -142,7 +142,7 @@ const Address = ({ ...props }) => {
                                     type="text"
                                     name="district"
                                     className={cx('input-item')}
-                                    placeholder="Chọn quận, huyện"
+                                    placeholder="Select district"
                                     onFocus={() => setIsShowDistrict(true)}
                                     readOnly
                                 ></input>
@@ -199,7 +199,7 @@ const Address = ({ ...props }) => {
                                     type="text"
                                     name="ward"
                                     className={cx('input-item')}
-                                    placeholder="Chọn phường, xã"
+                                    placeholder="Select ward"
                                     onFocus={() => setIsShowWard(true)}
                                     readOnly
                                 ></input>

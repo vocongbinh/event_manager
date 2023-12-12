@@ -15,7 +15,16 @@ export async function createHoldTickets({ tickets, eventKey, holdToken }) {
         console.log(JSON.stringify(error));
     }
 }
-export async function createNewBooking({ tickets, discounts, eventKey, holdToken, receiverInformation }) {
+export async function createNewBooking({
+    tickets,
+    discounts,
+    eventKey,
+    holdToken,
+    showtime,
+    receiverName,
+    receiverEmail,
+    receiverPhoneNumber,
+}) {
     try {
         if (tickets.length == 0 || !eventKey) throw Error('bookings is empty or eventkey is not exist');
         const payTickets = await request.post(`api/booking/createNewBooking`, {
@@ -23,8 +32,10 @@ export async function createNewBooking({ tickets, discounts, eventKey, holdToken
             eventKey,
             holdToken,
             discounts,
-
-            receiverInformation,
+            receiverEmail,
+            receiverName,
+            receiverPhoneNumber,
+            showtime,
         });
         console.log(JSON.stringify(payTickets));
         return { payTickets };

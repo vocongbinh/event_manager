@@ -17,11 +17,13 @@ function SelectTicket() {
     //get book context
     const bookContext = useContext(BookContext);
     bookContext.setShowtime(params.showtime_id);
+
     useEffect(() => {
         const fetchAPI = async () => {
             try {
                 const data = await ticketService.getTicketOfShowtime(params.showtime_id);
                 setTickets(data);
+                console.log(data);
                 const initBookings = data.map((item) => {
                     return {
                         name: item.ticketTypeName,
@@ -39,6 +41,7 @@ function SelectTicket() {
         fetchAPI();
     }, []);
     const { data: showtimeInfo, isPending: isFetchingShowtime } = useGetShowtime(params.showtime_id);
+    console.log(showtimeInfo);
     useEffect(() => {
         console.log(bookContext.bookings);
     }, [bookContext.bookings]);
@@ -95,6 +98,7 @@ function SelectTicket() {
                 {!bookContext.isCreatingHoldToken &&
                     !isFetchingShowtime &&
                     bookContext.holdToken &&
+                    showtimeInfo &&
                     showtimeInfo.showTimeStage && (
                         <SeatsioSeatingChart
                             holdToken={bookContext.holdToken.holdToken}
