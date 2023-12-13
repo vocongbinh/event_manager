@@ -119,7 +119,7 @@ function DetailEvent({ children }) {
             window.removeEventListener('scroll', () => scrollEvent());
         };
     }, []);
-    const listPrices = ticketTypes.map((item) => item.price);
+    const listPrices = ticketTypes.map((item) => item.ticketTypePrice);
     const minPrice = Math.min(...listPrices);
     return (
         <div className={cx('wrapper')}>

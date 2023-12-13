@@ -9,7 +9,7 @@ const TicketInformation = forwardRef(({ data }, ref) => {
         <div ref={ref} className={cx('wrapper')}>
             <h1> ticket information</h1>
             {data.map((item) => (
-                <TicketItem data={{ name: item.ticketName, price: item.price }} />
+                <TicketItem data={{ name: item.ticketTypeName, price: item.ticketTypePrice }} />
             ))}
         </div>
     );

@@ -72,6 +72,11 @@ function Home() {
                         </div>
                     ))}
                 </div>
+                <div className={cx('see-more-layout')}>
+                    <Button to="/events/typeEvent" className={cx('see-more-btn')}>
+                        See More
+                    </Button>
+                </div>
                 {loading && <Spinner className={spinnerCx('spinner')} animation="grow" variant="success" />}
             </div>
         </div>
