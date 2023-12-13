@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 function EventItem({ data }) {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
-    const listPrice = data.ticketTypes.map((item) => item.price);
+    const listPrice = data.ticketTypes.map((item) => item.ticketTypePrice);
     const minPrice = Math.min(...listPrice);
     const dateTime = new Date(data.showtimes[0].startAt);
     let time;
