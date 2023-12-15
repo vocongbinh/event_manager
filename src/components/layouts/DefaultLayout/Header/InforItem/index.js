@@ -18,6 +18,7 @@ function InforItem({ data, onClick, className }) {
                 [className]: className,
             })}
             {...props}
+            target={data.title === 'Manage Events' && '_blank'}
         >
             {data.icon}
             <span className={cx('title')}>{data.title}</span>

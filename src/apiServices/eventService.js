@@ -106,5 +106,29 @@ const eventService = {
             console.log(e);
         }
     },
+    pendingEvent: async () => {
+        try {
+            const res = await request.get('api/event/pending');
+            return res.data;
+        } catch (e) {
+            console.log(e);
+        }
+    },
+    approveEvent: async (id) => {
+        try {
+            const res = await request.patch(`api/event/${id}/approve`);
+            return res.data;
+        } catch (e) {
+            console.log(e);
+        }
+    },
+    rejectEvent: async (id) => {
+        try {
+            const res = await request.patch(`api/event/${id}/reject`);
+            return res.data;
+        } catch (e) {
+            console.log(e);
+        }
+    },
 };
 export default eventService;

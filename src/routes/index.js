@@ -28,6 +28,9 @@ import TypeEvent from '../pages/TypeEvent';
 import MyTickets from '../pages/MyTickets';
 import ComponentRPVPs from '../pages/myEvent/Events/OptionManager/RSVPs';
 import NewStageChart from '../components/layouts/NewEventLayout/NewStage/NewStageChart';
+import Address from '../components/layouts/NewEventLayout/Address/Address';
+import AdminLayout from '../components/layouts/AdminLayout';
+import DetailPendingEvent from '../pages/DetailPendingEvent';
 //private router
 const privateRouter = [{}];
 //public router
@@ -153,6 +156,14 @@ const publicRouter = [
         path: '/auth/registersuccess',
         layout: AuthenticationLayout,
         component: RegisterSuccess,
+    },
+    {
+        path: '/admin',
+        component: AdminLayout,
+    },
+    {
+        path: '/admin/:id',
+        component: DetailPendingEvent,
     },
 ];
 export { privateRouter, publicRouter };

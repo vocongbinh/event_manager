@@ -3,29 +3,24 @@ import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo, faGear, faRightFromBracket, faSailboat, faUser } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../components/Button';
-import Images from '../../../../assets/images';
+
 import Image from '../../components/Image';
 import SearchLayout from '../../components/SearchLayout';
 import Tippy from '@tippyjs/react/headless';
-import CategoryItem from '../Sidebar/CategoryItem';
-import InforItem from './InforItem';
-import { useContext } from 'react';
+import InforItem from '../../DefaultLayout/Header/InforItem';
+
 import { useAuthContext } from '../../../../utils/authContext';
 import { Link } from 'react-router-dom';
 function Header() {
     const cx = classNames.bind(styles);
     const authContext = useAuthContext();
-    let userOptions = [
+    const userOptions = [
         {
             title: 'Edit Profile',
             icon: <FontAwesomeIcon icon={faGear} />,
             path: '/auth/profile',
         },
-        {
-            title: 'My organization Profile',
-            icon: <FontAwesomeIcon icon={faUser} />,
-            path: '/my_event/events/',
-        },
+
         {
             title: 'Exit',
             onClick: () => authContext.logOut(),
@@ -33,28 +28,7 @@ function Header() {
         },
     ];
     const user = authContext.getUser();
-    if (user) {
-        if (user.role === 'admin')
-            userOptions = [
-                {
-                    title: 'Edit Profile',
-                    icon: <FontAwesomeIcon icon={faGear} />,
-                    path: '/auth/profile',
-                },
-                {
-                    title: 'Manage Events',
-                    icon: <FontAwesomeIcon icon={faUser} />,
-                    path: '/admin',
-                },
-
-                {
-                    title: 'Exit',
-                    onClick: () => authContext.logOut(),
-                    icon: <FontAwesomeIcon icon={faRightFromBracket} />,
-                },
-            ];
-    }
-
+    console.log(user);
     return (
         <div className={cx('wrapper')}>
             <img
@@ -63,10 +37,6 @@ function Header() {
             />
             <SearchLayout className={cx('search-layout')} />
             <div className={cx('action')}>
-                <Button className={cx('create-btn')} to="/newevent" target="_blank" type="round" size="min">
-                    Create event
-                </Button>
-                <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
                 {authContext.getUser() ? (
                     <Tippy
                         maxWidth="100%"

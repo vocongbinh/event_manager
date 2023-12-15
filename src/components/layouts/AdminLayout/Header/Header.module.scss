@@ -1,0 +1,78 @@
+.wrapper {
+    height: var(--default-height);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--padding-default);
+    border-bottom: 2px solid rgb(230, 235, 245);
+}
+
+.logo {
+    height: 44px;
+    width: 44px;
+    border-radius: 10px;
+    margin-right: 60px;
+}
+
+//action
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    width: 360px;
+    margin-left: auto;
+}
+.infor-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--primary);
+}
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.search-layout {
+    position: relative;
+    height: 44px;
+}
+
+//tipy
+.options-tippy {
+    position: relative;
+}
+.tippy-wrapper {
+    box-shadow: rgba(42, 45, 52, 0.16) 0px 4px 20px;
+    border-radius: 8px;
+    z-index: 1;
+    background: var(--white);
+    width: 324px;
+    cursor: auto;
+}
+
+.infor-item + .infor-item {
+    margin-top: 10px;
+}
+.create-btn {
+    background: transparent;
+    color: rgb(45, 194, 117) !important;
+    border: 1px solid rgb(45, 194, 117);
+    &:hover {
+        border-color: rgb(35, 168, 100);
+        color: rgb(35, 168, 100) !important;
+    }
+}
+.signUp-btn {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 10px 8px;
+    border-radius: 8px;
+    color: rgb(42, 45, 52);
+    cursor: pointer;
+    &:hover {
+        background-color: #ccc;
+        transition: 0.3s ease background-color;
+    }
+}

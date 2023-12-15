@@ -13,13 +13,13 @@ export const myRequest = axios.create({
     baseURL: 'https://26ba083f-3e7e-4f12-ae0e-9e2662c66bc8.mock.pstmn.io/',
 });
 const request = axios.create({
-    baseURL: 'https://657b10cbc6a15d1fb9879f62--cute-pithivier-8b373e.netlify.app',
+    baseURL: 'http://localhost:8000/',
 });
 request.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('userToken');
         if (token) {
-            config.headers['token'] = `Bearer ${token}`;
+            config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
     },
