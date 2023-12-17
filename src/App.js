@@ -26,28 +26,39 @@ function App() {
                     <div className="App">
                         <Routes>
                             {publicRouter.map((route, index) => {
-                                let Page = route.component;
-                                let props = {};
-                                let Layout;
-                                if (route.layout) {
-                                    Layout = route.layout;
-                                } else Layout = Fragment;
-                                if (route.sidebarItems) {
-                                    props.sidebarItems = route.sidebarItems;
-                                }
-                                if (route.hasOwnProperty('index')) {
-                                    props.index = route.index;
-                                }
-                                return (
-                                    <Route
-                                        path={route.path}
-                                        element={
-                                            <Layout {...props}>
-                                                <Page />
-                                            </Layout>
+                                if (route.path === '/' || !route.path.includes('admin')) {
+                                    let Page = route.component;
+                                    let props = {};
+                                    let Layout;
+                                    if (route.layout) {
+                                        Layout = route.layout;
+                                    } else Layout = Fragment;
+                                    if (route.sidebarItems) {
+                                        props.sidebarItems = route.sidebarItems;
+                                    }
+                                    if (route.hasOwnProperty('index')) {
+                                        props.index = route.index;
+                                    }
+
+                                    return (
+                                        <Route
+                                            path={route.path}
+                                            element={
+                                                <Layout {...props}>
+                                                    <Page />
+                                                </Layout>
+                                            }
+                                        />
+                                    );
+                                } else {
+                                    if (localStorage.getItem('user')) {
+                                        const user = JSON.parse(localStorage.getItem('user'));
+                                        if (user.role === 'admin') {
+                                            const Page = route.component;
+                                            return <Route path={route.path} element={<Page />} />;
                                         }
-                                    />
-                                );
+                                    }
+                                }
                             })}
                             <Route path="/organizer/profile" element={<OrganizerProfile />} />
 

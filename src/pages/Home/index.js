@@ -50,7 +50,7 @@ function Home() {
                     </Button>
                     <div className={cx('slick')}>
                         {' '}
-                        <SlickComponent ref={slickRef} data={events} />
+                        <SlickComponent ref={slickRef} data={headerEvents} />
                     </div>
 
                     <Button type="circle" onClick={handleRightSlick} className={cx('chevron-icon')}>
@@ -71,6 +71,11 @@ function Home() {
                             <EventItem data={eventItem} />
                         </div>
                     ))}
+                </div>
+                <div className={cx('see-more-layout')}>
+                    <Button to="/events/typeEvent" className={cx('see-more-btn')}>
+                        See More
+                    </Button>
                 </div>
                 {loading && <Spinner className={spinnerCx('spinner')} animation="grow" variant="success" />}
             </div>

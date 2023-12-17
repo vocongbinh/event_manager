@@ -22,7 +22,7 @@ const LoginForm = () => {
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [errors, setErrors] = useState('');
     const authContext = useAuthContext();
-    // const { status, data, error } = useQuery(phoneNumber && 'register', async () => {
+    // const { status, data, error } = useQuery(plhoneNumber && 'register', async () => {
     //     const status = await authService.register(phoneNumber);
     //     return status;
     // });

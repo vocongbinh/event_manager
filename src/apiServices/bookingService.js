@@ -47,6 +47,15 @@ export async function createNewBooking({
 export async function createHoldToken() {
     try {
         console.log('get token');
+        // console.log(localStorage.getItem('userToken'));
+        // let config = {
+        //     method: 'get',
+        //     maxBodyLength: Infinity,
+        //     url: '/api/booking/holdToken',
+        //     headers: {
+        //         Authorization: 'Bearer ' + localStorage.getItem('userToken'),
+        //     },
+        // };
         const res = await request.get('/api/booking/holdToken');
         return res.data;
     } catch (err) {

@@ -11,6 +11,8 @@
     --text-color: #333;
     --default-line-height: 22px;
     --white: #ffffff;
+    --yellow: #ffc566;
+    --green: #2a9928;
     --black: #111111;
     --red: #eb1212;
     --gray: #666666;
@@ -113,4 +115,7 @@ select {
 .btn.show {
     background-color: var(--white) !important;
     border-color: #eee !important;
+}
+.button-bar {
+    justify-content: center;
 }

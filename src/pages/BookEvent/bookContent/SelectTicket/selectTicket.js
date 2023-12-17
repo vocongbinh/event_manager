@@ -22,7 +22,7 @@ function SelectTicket() {
     useEffect(() => {
         const fetchAPI = async () => {
             try {
-                const data = await ticketService.getTicketOfShowtime(params.showtime_id);
+                const data = await ticketService.getTicketOfEvent(params.id);
                 console.log(data);
                 setTickets(data);
                 console.log(data);
@@ -57,7 +57,8 @@ function SelectTicket() {
             return prev.map((item) => {
                 let count = item.count;
                 let seats = item.seats;
-                if (item.ticketTypeName === obj.category.label || true) {
+
+                if (item.name === obj.category.label) {
                     count++;
                     seats = [...seats, obj.label];
                 }
@@ -75,7 +76,8 @@ function SelectTicket() {
             return prev.map((item) => {
                 let count = item.count;
                 let seats = item.seats;
-                if (item.ticketTypeName === obj.category.label) {
+                console.log(item.name, obj.category.label);
+                if (item.name === obj.category.label) {
                     count--;
                     seats = seats.filter((seat) => seat !== obj.label);
                 }
