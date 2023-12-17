@@ -120,7 +120,7 @@ const LoginForm = () => {
                                 >
                                     <FontAwesomeIcon className={cx('chevron-icon')} icon={faChevronLeft} />
                                 </button>
-                                <div className={cx('title')}>{isShowPasswordBox ? 'Đăng nhập' : 'Số điện thoại'}</div>
+                                <div className={cx('title')}>{isShowPasswordBox ? 'Login' : 'Phone number'}</div>
                             </div>
                             <Form>
                                 <div>
@@ -145,8 +145,8 @@ const LoginForm = () => {
                                 <InputItem
                                     name="phoneNumber"
                                     type="text"
-                                    placeholder="Số điện thoại"
-                                    label="Số điện thoại"
+                                    placeholder="Phone number"
+                                    label="Phone number"
                                     readOnly={isShowPasswordBox}
                                 />
                                 {!isShowPasswordBox && (
@@ -157,7 +157,7 @@ const LoginForm = () => {
                                             size="max"
                                             background="blue"
                                         >
-                                            Tiếp tục
+                                            Continue
                                         </Button>
                                     </div>
                                 )}
@@ -166,8 +166,8 @@ const LoginForm = () => {
                                         <InputItem
                                             type="password"
                                             name="password"
-                                            placeholder="Mật khẩu"
-                                            label="Mật khẩu"
+                                            placeholder="Password"
+                                            label="Password"
                                         />
 
                                         <Button
@@ -177,7 +177,7 @@ const LoginForm = () => {
                                             size="max"
                                             background="blue"
                                         >
-                                            Quên mật khẩu
+                                            Forgot password
                                         </Button>
                                         <div>
                                             <Button
@@ -187,7 +187,7 @@ const LoginForm = () => {
                                                 size="max"
                                                 background="blue"
                                             >
-                                                Đăng nhập
+                                                Log in
                                             </Button>
                                         </div>
                                     </div>

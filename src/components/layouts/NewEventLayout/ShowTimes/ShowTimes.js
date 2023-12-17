@@ -15,8 +15,16 @@ const ShowTimes = ({ next }) => {
     const newEventContext = useNewEventFormContext();
     const eventStepContext = useNewEventStepContext();
     const [isPending, setIsPending] = useState(false);
-    const navigate = useNavigate();
-    useEffect(() => {}, [newEventContext.showtimes]);
+    useEffect(() => {
+        const postEvent = async () => {
+            if (newEventContext.showtimes && newEventContext.showtimes?.length > 0) {
+                setIsPending(true);
+                await newEventContext.createEvent();
+                setIsPending(false);
+            }
+        };
+        postEvent();
+    }, [newEventContext.showtimes]);
     return (
         <div>
             <Formik
@@ -26,10 +34,6 @@ const ShowTimes = ({ next }) => {
                 validationSchema={showtimesSchema}
                 onSubmit={async (values) => {
                     newEventContext.setShowTimes((prev) => values.showtimes);
-                    const newEvent = await newEventContext.createEvent();
-                    if (!newEvent) {
-                        toast('Create event failed');
-                    } else return navigate('/');
                 }}
             >
                 <Form>

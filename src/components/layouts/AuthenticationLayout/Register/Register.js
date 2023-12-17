@@ -20,9 +20,9 @@ const RegisterForm = () => {
     const cx = classNames.bind(styles);
     const [errors, setErrors] = useState('');
     const authContext = useAuthContext();
-    const handleRegister = async (phoneNumber, password) => {
+    const handleRegister = async (phoneNumber, password, userName) => {
         await authService
-            .register(phoneNumber, password)
+            .register(phoneNumber, password, userName)
             .then((values) => {
                 console.log(values);
                 setErrors('');
@@ -47,6 +47,7 @@ const RegisterForm = () => {
                 const password = this.parent.password;
                 return value == password;
             }),
+        userName: yup.string().required('Username is required'),
     });
 
     return (
@@ -56,6 +57,7 @@ const RegisterForm = () => {
                     phoneNumber: location.state?.phoneNumber ?? '',
                     password: '',
                     retypePassword: '',
+                    userName: '',
                 }}
                 validationSchema={formikSchema}
                 onSubmit={async (values) => {
@@ -76,22 +78,29 @@ const RegisterForm = () => {
                                 >
                                     <FontAwesomeIcon className={cx('chevron-icon')} icon={faChevronLeft} />
                                 </button>
-                                <div className={cx('title')}>Đăng ký tài khoản</div>
+                                <div className={cx('title')}>Register</div>
                             </div>
                             <Form>
                                 <InputItem
                                     name="phoneNumber"
                                     type="text"
-                                    placeholder="Số điện thoại"
-                                    label="Số điện thoại"
+                                    placeholder="Phone number"
+                                    label="Phone number"
                                     readOnly="true"
                                 />
-                                <InputItem type="password" name="password" placeholder="Mật khẩu" label="Mật khẩu" />
+                                <InputItem
+                                    name="userName"
+                                    type="text"
+                                    placeholder="Username"
+                                    label="Username"
+                                    readOnly="true"
+                                />
+                                <InputItem type="password" name="password" placeholder="Password" label="Password" />
                                 <InputItem
                                     type="password"
                                     name="retypePassword"
-                                    placeholder="Nhập lại mật khẩu"
-                                    label="Nhập lại mật khẩu"
+                                    placeholder="Retype password"
+                                    label="Retype password"
                                 />
                                 <div>
                                     {formik.errors ? (

@@ -31,6 +31,7 @@ export const NewEventStepProvider = ({ children }) => {
     );
 };
 export const NewEventFormProvider = ({ children }) => {
+    const navigate = useNavigate();
     const [eventTypes, setEventTypes] = useState([]);
     const [eventInfor, setEventInfor] = useState({});
     const [address, setAddress] = useState({});
@@ -40,7 +41,8 @@ export const NewEventFormProvider = ({ children }) => {
     const [isChartCreated, setIsChartCreated] = useState(false);
     const { mutateAsync: createNewEvent } = useCreateEvent();
     const createEvent = async () => {
-        const newEvent = await createNewEvent({
+        if (!showtimes) return console.log('hfhfh');
+        const createEvent = await createNewEvent({
             ...eventInfor,
             address,
             chartId: chart,
@@ -48,7 +50,8 @@ export const NewEventFormProvider = ({ children }) => {
             showtimes,
             eventTypes,
         });
-        return newEvent;
+        if (!createEvent) return;
+        else navigate('/');
     };
 
     return (
