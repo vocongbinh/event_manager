@@ -202,14 +202,16 @@ function DetailPendingEvent({ children }) {
                                 </div>
                             </div>
                         </div>
-                        <div className={cx('actionBtn-layout')}>
-                            <button onClick={() => cancelHandler(params.id)} className={cx('cancel-btn')}>
-                                Reject
-                            </button>
-                            <button onClick={() => approveHandler(params.id)} className={cx('approve-btn')}>
-                                Approve
-                            </button>
-                        </div>
+                        {event.status === 'Pending' && (
+                            <div className={cx('actionBtn-layout')}>
+                                <button onClick={() => cancelHandler(params.id)} className={cx('cancel-btn')}>
+                                    Reject
+                                </button>
+                                <button onClick={() => approveHandler(params.id)} className={cx('approve-btn')}>
+                                    Approve
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

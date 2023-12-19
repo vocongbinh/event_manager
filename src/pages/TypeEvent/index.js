@@ -196,7 +196,7 @@ function TypeEvent() {
                         <div className="row">
                             {events.map((event) => {
                                 return (
-                                    <div className="col-4">
+                                    <div style={{ margin: '5px 0px' }} className="col-4">
                                         <EventItem data={event} />
                                     </div>
                                 );

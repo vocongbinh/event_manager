@@ -1,5 +1,13 @@
 import { request } from '../utils/request';
 const userService = {
+    getAllUsers: async () => {
+        try {
+            const res = await request.get(`api/user`);
+            return res.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     getUserByEmail: async (email) => {
         try {
             const res = await request.get(`api/user/getBy`, {

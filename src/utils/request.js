@@ -19,7 +19,7 @@ request.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('userToken');
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+            config.headers.token = `Bearer ${token}`;
         }
         return config;
     },

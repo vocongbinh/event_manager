@@ -22,7 +22,7 @@ function Orders({ showtimeId }) {
                 const typesData = await ticketService.getTicketOfShowtime(showtimeId);
                 console.log(typesData);
                 let types = ['All'];
-                typesData.map((type) => types.push(type.ticketName));
+                typesData.map((type) => types.push(type.ticketTypeName));
                 setTicketTypes(types);
             } else {
                 setTicketTypes(['All']);
@@ -151,7 +151,7 @@ function Orders({ showtimeId }) {
                 <thead>
                     <tr>
                         <th>User</th>
-                        <th style={{ textAlign: 'center' }}>Count</th>
+                        <th style={{ textAlign: 'center' }}>Amount</th>
                         <th style={{ textAlign: 'right' }}>Total Price</th>
                     </tr>
                 </thead>

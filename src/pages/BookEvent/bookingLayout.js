@@ -29,6 +29,7 @@ import { useQueries, useQuery } from '@tanstack/react-query';
 import eventService from '../../apiServices/eventService';
 import { useCreateNewBooking, useHoldTickets, useHoldToken } from '../../lib/react-query/useQueryAndMutation';
 import { createNewBooking } from '../../apiServices/bookingService';
+import Home from '../Home';
 export const BookContext = createContext();
 function BookEvent({ children, ...props }) {
     const cx = classNames.bind(styles);
@@ -142,15 +143,16 @@ function BookEvent({ children, ...props }) {
         },
         {
             title: 'finish',
-            component: <SelectTicket />,
+            component: <Home />,
             to: './step3',
         },
     ];
     const listLayout = [<SelectTicket />, <PaymentInfo />];
     const nextHandler = async () => {
-        if (activeStep <= 1) {
-            console.log('do step 1');
-            const value = activeStep + 1;
+        console.log(activeStep);
+        if (activeStep < 1) {
+            const value = activeStep + 2;
+
             navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
             holdTickets({ bookings, eventKey, holdToken });
             setActiveStep((prev) => prev + 1);
