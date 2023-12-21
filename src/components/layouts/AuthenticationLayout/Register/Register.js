@@ -88,13 +88,7 @@ const RegisterForm = () => {
                                     label="Phone number"
                                     readOnly="true"
                                 />
-                                <InputItem
-                                    name="userName"
-                                    type="text"
-                                    placeholder="Username"
-                                    label="Username"
-                                    readOnly="true"
-                                />
+                                <InputItem name="userName" type="text" placeholder="Username" label="Username" />
                                 <InputItem type="password" name="password" placeholder="Password" label="Password" />
                                 <InputItem
                                     type="password"
