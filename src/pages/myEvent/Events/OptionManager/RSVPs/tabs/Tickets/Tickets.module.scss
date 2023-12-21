@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    overflow-x: auto;
+}
+.table {
+    margin-top: 40px;
+    width: 100%;
+    font-size: 1.6rem;
+    td,
+    th {
+        padding: 10px 20px;
+        white-space: nowrap;
+    }
+}
+.table tr:first-child {
+    th {
+        background-color: #f9f9f9;
+    }
+}

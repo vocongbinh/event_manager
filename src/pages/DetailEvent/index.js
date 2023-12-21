@@ -13,7 +13,7 @@ import $ from 'jquery';
 import eventService from '../../../src/apiServices/eventService';
 import ticketService from '../../apiServices/ticketService';
 import Recommended from './indexing/Recommended';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Calendar from './indexing/Calendar';
 import showtimeService from '../../apiServices/showtimeService';
 import { Spinner } from 'react-bootstrap';
@@ -21,6 +21,7 @@ import spinnerStyles from '../../styles/spinner.module.scss';
 import { useAuthContext } from '../../utils/authContext';
 function DetailEvent({ children }) {
     const cx = classNames.bind(styles);
+    const navigate = useNavigate();
     const spinnerCx = classNames.bind(spinnerStyles);
     const [activeIndex, setActiveIndex] = useState(0);
     const aboutRef = useRef(null);
@@ -35,6 +36,10 @@ function DetailEvent({ children }) {
     const params = useParams();
     const [event, setEvent] = useState({});
     const [ticketTypes, setTicketTypes] = useState([]);
+    const [statusBookBtn, setStatusBookBtn] = useState({
+        content: '',
+        onClick: () => {},
+    });
     const [showtimes, setShowtimes] = useState([]);
     const [options, setOptions] = useState([]);
     const authContext = useAuthContext();
@@ -99,11 +104,37 @@ function DetailEvent({ children }) {
             try {
                 setLoading(true);
                 const event = await eventService.detailEvent(params.id);
-                console.log(event);
                 setEvent(event);
                 const showtimes = await showtimeService.getShowtimeOfEvent(params.id);
-                console.log(showtimes);
                 setShowtimes(showtimes);
+                let status;
+                console.log(showtimes);
+                let expireShowtimes = showtimes.filter((showtime) => new Date(showtime.startAt) < new Date());
+                if (expireShowtimes.length === showtimes.length) {
+                    status = {
+                        content: 'This event is over',
+                        onClick: () => {},
+                    };
+                } else {
+                    if (showtimes.length > 1) {
+                        status = {
+                            content: 'Select showtime',
+                            onClick: () => scrollHandler(calendarRef, 2),
+                        };
+                    } else {
+                        status = {
+                            content: 'Book',
+                            onClick: () => {
+                                let path = authContext.getUser()
+                                    ? `book/${Object.keys(event).length > 0 ? event.showtimes[0]._id : ''}/step1`
+                                    : '/auth/login';
+                                navigate(path);
+                            },
+                        };
+                    }
+                }
+
+                setStatusBookBtn(status);
 
                 const ticketTypes = await ticketService.getTicketOfEvent(params.id);
                 setLoading(false);
@@ -145,26 +176,16 @@ function DetailEvent({ children }) {
                             </p>
                         </div>
                         <div className={cx('interact')}>
-                            {showtimes.length > 1 ? (
-                                <Button onClick={() => scrollHandler(calendarRef, 2)} type="highlight" size="max">
-                                    Select showtime
-                                </Button>
-                            ) : (
-                                <Button
-                                    href={
-                                        localStorage.getItem('user') != null
-                                            ? `book/${
-                                                  Object.keys(event).length > 0 ? event.showtimes[0]._id : ''
-                                              }/step1`
-                                            : '/auth/login'
-                                    }
-                                    type="highlight"
-                                    size="max"
-                                    className={cx('book-btn')}
-                                >
-                                    Book now
-                                </Button>
-                            )}
+                            <Button
+                                className={cx({
+                                    expired: statusBookBtn.content === 'This event is over',
+                                })}
+                                type="highlight"
+                                size="max"
+                                onClick={statusBookBtn.onClick}
+                            >
+                                {statusBookBtn.content}
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -255,31 +276,16 @@ function DetailEvent({ children }) {
                                             icon={faChevronRight}
                                         />
                                     </p>
-                                    {showtimes.length > 1 ? (
-                                        <Button
-                                            onClick={() => scrollHandler(calendarRef, 2)}
-                                            className={cx('sub-book-btn')}
-                                            type="highlight"
-                                            size="max"
-                                        >
-                                            Select showtime
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            href={
-                                                authContext.getUser()
-                                                    ? `book/${
-                                                          Object.keys(event).length > 0 ? event.showtimes[0]._id : ''
-                                                      }/step1`
-                                                    : '/auth/login'
-                                            }
-                                            className={cx('sub-book-btn')}
-                                            type="highlight"
-                                            size="max"
-                                        >
-                                            Book
-                                        </Button>
-                                    )}
+                                    <Button
+                                        onClick={statusBookBtn.onClick}
+                                        className={cx('sub-book-btn', {
+                                            expired: statusBookBtn.content === 'This event is over',
+                                        })}
+                                        type="highlight"
+                                        size="max"
+                                    >
+                                        {statusBookBtn.content}
+                                    </Button>
                                 </div>
                             </div>
                         </div>

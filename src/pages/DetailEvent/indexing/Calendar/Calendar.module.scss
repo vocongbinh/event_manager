@@ -25,3 +25,10 @@
     padding: 8px !important;
     color: var(--white) !important;
 }
+.expired {
+    background-color: #ddd;
+    border: solid 1px #ccc;
+    color: #fff;
+    cursor: default;
+    pointer-events: none;
+}

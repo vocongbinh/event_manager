@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import format from 'date-fns/format';
 import { useSearchParams } from 'react-router-dom';
 import Orders from './tabs/Orders';
+import Tickets from './tabs/Tickets';
 function ComponentRPVPs() {
     const cx = classNames.bind(styles);
     //set state
@@ -27,7 +28,7 @@ function ComponentRPVPs() {
         {
             index: 1,
             title: 'Tickets',
-            component: Orders,
+            component: <Tickets showtimeId={stid} />,
         },
     ];
     let listShowtime = [];

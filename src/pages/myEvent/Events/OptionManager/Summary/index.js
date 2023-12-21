@@ -29,6 +29,7 @@ function Summary() {
     const [showId, setShowId] = useSearchParams();
     const [ticketTypes, setTicketTypes] = useState([]);
     const [error, setError] = useState(false);
+    const [total, setTotal] = useState(0);
     let totalCount = 0;
     let totalPrice = 0;
     let startTime;
@@ -51,23 +52,24 @@ function Summary() {
     const handleApply = () => {
         if (startDate >= endDate) setError(true);
         else {
+            setError(false);
             const range = moment.range(startDate, endDate);
             const labelsConfig = Array.from(range.by('day')).map((x) => x.format('DD/MM'));
             labels = Array.from(range.by('day')).map((x) => x.format('DD-MM-yyyy'));
             let datasets = [];
             ticketTypes.forEach((type) => {
                 let data = {};
-                data.label = type.ticketName;
+                data.label = type._id.ticketTypeName;
                 let dataOfset = [];
                 labels.forEach((label) => {
                     let count = 0;
-                    type.ticketsales.forEach((ticket) => {
-                        console.log(format(new Date(Date.parse(ticket.createdAt)), 'dd-MM-yyyy'), label);
-                        if (format(new Date(Date.parse(ticket.createdAt)), 'dd-MM-yyyy') === label) {
+                    type.dates.forEach((date, index) => {
+                        console.log(format(new Date(Date.parse(date)), 'dd-MM-yyyy'), label);
+                        if (format(new Date(Date.parse(date)), 'dd-MM-yyyy') === label) {
                             count++;
                         }
                     });
-                    dataOfset.push(count * type.price);
+                    dataOfset.push(count);
                 });
                 data.data = dataOfset;
                 datasets.push(data);
@@ -104,8 +106,12 @@ function Summary() {
         const fetchApi = async () => {
             const event = await eventService.getEventById(params.id);
             setEvents(event);
+
             const typesData = await ticketService.getTypeSummary(showtimeId);
             setTicketTypes(typesData);
+            let total = 0;
+            typesData.forEach((item) => (total += item.totalPrice));
+            setTotal(total);
         };
 
         fetchApi();
@@ -130,7 +136,11 @@ function Summary() {
                 </div>
                 <div className={cx('showIn')}>
                     <p>Show in</p>
-                    <select onChange={(e) => navigate(`?showId=${e.target.value}`)} className={cx('selection')}>
+                    <select
+                        value={showtimeId}
+                        onChange={(e) => navigate(`?showId=${e.target.value}`)}
+                        className={cx('selection')}
+                    >
                         <option>--please select a date--</option>
                         {listShowtime.map((showtime) => (
                             <option value={showtime._id}>{showtime.startShowTime}</option>
@@ -144,7 +154,7 @@ function Summary() {
                         <p>Total income</p>
                     </div>
                     <div className=" w-50">
-                        <p className={cx('total-value')}>0 VND</p>
+                        <p className={cx('total-value')}>{Math.round(total * (1 - 0.088))} VND</p>
                     </div>
                 </div>
                 <div className={cx('price-detail')}>
@@ -153,7 +163,7 @@ function Summary() {
                             <p>Paid Tickets:</p>
                         </div>
                         <div className=" w-50">
-                            <p>0 VND</p>
+                            <p>{total} VND</p>
                         </div>
                     </div>
                     <div className="d-flex p-2">
@@ -161,15 +171,7 @@ function Summary() {
                             <p>Ticketbox's rate:</p>
                         </div>
                         <div className=" w-50">
-                            <p>0 VND</p>
-                        </div>
-                    </div>
-                    <div className="d-flex p-2">
-                        <div className=" w-50">
-                            <p>Service fee:</p>
-                        </div>
-                        <div className=" w-50">
-                            <p>0 VND</p>
+                            <p>8.8 %</p>
                         </div>
                     </div>
                 </div>
@@ -183,7 +185,7 @@ function Summary() {
                     Apply
                 </Button>
             </div>
-            <span className={cx('error')}>End date must be after start date</span>
+            {error && <span className={cx('error')}>End date must be after start date</span>}
             <div className={cx('status-layout')}>
                 <div className={cx('status-item', 'paid')}>
                     <FontAwesomeIcon className={cx('status-icon')} icon={faCheck} />
@@ -227,31 +229,32 @@ function Summary() {
                             </th>
 
                             <th>
-                                <p style={{ textAlign: 'center' }}>Total Tickets</p>
+                                <p style={{ textAlign: 'center' }}>Total Price</p>
+                                <p style={{ textAlign: 'center' }}>VND</p>
                             </th>
                         </tr>
                     </thead>
 
-                    {ticketTypes.map((type) => {
+                    {ticketTypes.map((type, index) => {
                         totalCount += type.countTicket;
                         totalPrice += type.totalPrice;
                         return (
                             <tr>
                                 <td></td>
-                                <td style={{ color: '#39B54A' }}>{type.ticketName}</td>
-                                <td style={{ textAlign: 'right' }}>{type.price}</td>
-                                <td style={{ textAlign: 'right' }}>{type.countTicket}</td>
+                                <td style={{ color: '#39B54A' }}>{type._id.ticketTypeName}</td>
+                                <td style={{ textAlign: 'right', paddingRight: 20 }}>{type._id.ticketTypePrice}</td>
+                                <td style={{ textAlign: 'center' }}>{type.countTicket}</td>
 
-                                <td style={{ textAlign: 'right' }}>{type.totalPrice}</td>
+                                <td style={{ textAlign: 'right', paddingRight: 20 }}>{type.totalPrice}</td>
                             </tr>
                         );
                     })}
                     <tr>
                         <td colSpan={3}>
-                            <p style={{ color: '#474747', fontWeight: 700 }}>Total</p>
+                            <p style={{ color: '#474747', fontWeight: 700, paddingLeft: 20 }}>Total</p>
                         </td>
-                        <td style={{ textAlign: 'right' }}>{totalCount}</td>
-                        <td style={{ textAlign: 'right' }}>{totalPrice}</td>
+                        <td style={{ textAlign: 'center' }}>{totalCount}</td>
+                        <td style={{ textAlign: 'right', paddingRight: 20 }}>{totalPrice}</td>
                     </tr>
                 </table>
             </div>

@@ -66,7 +66,7 @@ function Header() {
                 <Button className={cx('create-btn')} to="/newevent" target="_blank" type="round" size="min">
                     Create event
                 </Button>
-                <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
+
                 {authContext.getUser() ? (
                     <Tippy
                         maxWidth="100%"

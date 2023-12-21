@@ -217,3 +217,11 @@ $maxWidth: 1140px;
 .sub-title-footer {
     margin-top: 8px;
 }
+
+.expired {
+    background-color: #ddd;
+    border: solid 1px #ccc;
+    color: #fff;
+    cursor: default;
+    pointer-events: none;
+}

@@ -131,5 +131,13 @@ const eventService = {
             console.log(e);
         }
     },
+    hotEvents: async () => {
+        try {
+            const res = await request.get(`api/event/hotEvents`);
+            return res.data;
+        } catch (e) {
+            console.log(e);
+        }
+    },
 };
 export default eventService;
