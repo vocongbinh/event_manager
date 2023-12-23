@@ -57,10 +57,7 @@ function Header() {
 
     return (
         <div className={cx('wrapper')}>
-            <img
-                src="https://trinhvantuyen.com/wp-content/uploads/2022/03/hinh-anh-pikachu-1.jpg"
-                className={cx('logo')}
-            />
+            <img src={Images.logo} className={cx('logo')} />
             <SearchLayout className={cx('search-layout')} />
             <div className={cx('action')}>
                 <Button className={cx('create-btn')} to="/newevent" target="_blank" type="round" size="min">
