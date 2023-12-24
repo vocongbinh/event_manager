@@ -19,12 +19,7 @@ function Header() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
-                <img
-                    onClick={() => navigate('/')}
-                    alt=""
-                    src="https://trinhvantuyen.com/wp-content/uploads/2022/03/hinh-anh-pikachu-1.jpg"
-                    className={cx('logo')}
-                />
+                <img onClick={() => navigate('/')} alt="" src={Images.logo} className={cx('logo')} />
 
                 <SearchLayout className={cx('search-layout')} />
 
