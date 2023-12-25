@@ -1,5 +1,6 @@
 import { set } from 'date-fns';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { getOrganizerProfile } from '../apiServices/organizerService';
 
 const AuthContext = createContext({});
 

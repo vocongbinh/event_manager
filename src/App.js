@@ -20,12 +20,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import OrganizerProfile from './components/layouts/NewEventLayout/OrganizerProfile/OrganizerProfile';
 import BookingResult from './pages/BookEvent/bookContent/BookingResult/bookingResult';
 import EditEventLayout from './components/layouts/EditEventLayout/EditEventLayout';
+import OrganizerWrapper from './components/layouts/NewEventLayout/OrganizerProfile/OrganizerWrapper';
 
 const client = new QueryClient();
 function App() {
     return (
         <QueryClientProvider client={client}>
-            <ReactQueryDevtools initialIsOpen={true} />
+            {/* <ReactQueryDevtools initialIsOpen={true} /> */}
 
             <BrowserRouter>
                 <AuthProvider>
@@ -66,7 +67,7 @@ function App() {
                                     }
                                 }
                             })}
-                            <Route path="/organizer/profile" element={<OrganizerProfile />} />
+                            <Route path="/organizer/profile" element={<OrganizerWrapper />} />
                             <Route path="/bookingResult/:paymentId" element={<BookingResult />} />
                             <Route
                                 path="/newEvent"

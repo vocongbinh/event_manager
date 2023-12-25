@@ -16,13 +16,16 @@ import SearchLayout from '../../components/SearchLayout';
 import Tippy from '@tippyjs/react/headless';
 import CategoryItem from '../Sidebar/CategoryItem';
 import InforItem from './InforItem';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useAuthContext } from '../../../../utils/authContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { getOrganizerProfile } from '../../../../apiServices/organizerService';
 function Header() {
     const cx = classNames.bind(styles);
     const authContext = useAuthContext();
     const navigate = useNavigate();
+    const [organizer, setOrganizer] = useState(null);
+
     let userOptions = [
         {
             title: 'Edit Profile',
@@ -40,6 +43,19 @@ function Header() {
             icon: <FontAwesomeIcon icon={faRightFromBracket} />,
         },
     ];
+    useEffect(() => {
+        const fetchOrganizerProfile = async () => {
+            getOrganizerProfile()
+                .then((data) => {
+                    setOrganizer(data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        };
+        fetchOrganizerProfile();
+    }, []);
+
     const user = authContext.getUser();
     if (user) {
         if (user.role === 'admin')
@@ -68,7 +84,13 @@ function Header() {
             <img src={Images.logo} className={cx('logo')} />
             <SearchLayout className={cx('search-layout')} />
             <div className={cx('action')}>
-                <Button className={cx('create-btn')} to="/newevent" target="_blank" type="round" size="min">
+                <Button
+                    className={cx('create-btn')}
+                    to={organizer ? '/newEvent' : '/organizer/profile'}
+                    target="_blank"
+                    type="round"
+                    size="min"
+                >
                     Create event
                 </Button>
                 <div
