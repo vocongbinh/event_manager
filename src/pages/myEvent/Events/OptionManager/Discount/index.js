@@ -100,6 +100,7 @@ function Discount() {
             display: `${hour}:${minute} ${aa}`,
         });
     }
+    const showtimeId = showId.get('showId');
 
     let listShowtime = [];
     if (event != null) {
@@ -112,6 +113,12 @@ function Discount() {
             };
         });
     }
+    const handleCheckAll = (e) => {
+        setCheckedAll(!checkedAll);
+        if (!checkedAll) {
+            setListCheck(ticketTypes.map((item) => item._id));
+        } else setListCheck([]);
+    };
     const { isLoading, isError, data, refetch } = useQuery({
         queryKey: ['discounts', stid],
         queryFn: async () => {
@@ -128,6 +135,7 @@ function Discount() {
             setEvents(events);
             const allDiscountData = await discountService.findAll();
             setAllDiscounts(allDiscountData);
+            console.log(stid);
         };
         fetchApi();
     }, [discounts]);
@@ -241,7 +249,19 @@ function Discount() {
                     <div className={cx('time-select')}>
                         <span>Shows In</span>
                         <select
-                            onChange={(e) => {
+                            onChange={async (e) => {
+                                const typesData = await ticketService.getTicketOfShowtime(e.target.value);
+                                setTicketTypes(typesData);
+                                console.log(typesData);
+                                setListTypeOfDiscount(
+                                    typesData.map((item) => {
+                                        return {
+                                            _id: item._id,
+                                            quantity: 0,
+                                            ticketName: item.ticketTypeName,
+                                        };
+                                    }),
+                                );
                                 setStid(e.target.value);
                             }}
                             className={cx('selection')}
@@ -405,6 +425,64 @@ function Discount() {
                                 </div>
                             </div>
                             {errors.quantity && <div className={cx('error')}>{errors.quantity}</div>}
+                        </div>
+                        <div className={cx('body-layout')}>
+                            <div className="row">
+                                <div className="col-4">
+                                    <span>Ticket types</span>
+                                </div>
+                                <div className="col-8">
+                                    <div className="container p-0">
+                                        <div className="d-flex align-items-center">
+                                            <input checked={checkedAll} onChange={handleCheckAll} type="checkbox" />
+                                            <label style={{ marginLeft: 4 }}>All ticket types</label>
+                                        </div>
+                                        {checkedAll && (
+                                            <div>
+                                                <span style={{ marginRight: 8 }}>Quantity</span>
+                                                <input
+                                                    value={quantityAll}
+                                                    onChange={(e) => setQuantityAll(e.target.value)}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                    {ticketTypes.map((type, index) => {
+                                        // const [quantity, setQuantity] = useState(data.quantity);
+                                        return (
+                                            <div className="container p-0">
+                                                <div className="d-flex align-items-center">
+                                                    <input
+                                                        id={type._id}
+                                                        checked={listCheck.includes(type._id)}
+                                                        onChange={handleCheck}
+                                                        className="box-type"
+                                                        type="checkbox"
+                                                    />
+                                                    <label style={{ marginLeft: 4 }}>{type.ticketTypeName}</label>
+                                                </div>
+                                                {listCheck.includes(type._id) && !checkedAll && (
+                                                    <div>
+                                                        <span style={{ marginRight: 8 }}>Quantity</span>
+                                                        <input
+                                                            value={listTypeOfDiscount[index].quantity}
+                                                            onChange={(e) =>
+                                                                setListTypeOfDiscount(
+                                                                    listTypeOfDiscount.map((item, id) => {
+                                                                        if (id === index)
+                                                                            item.quantity = e.target.value;
+                                                                        return item;
+                                                                    }),
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
                         </div>
                     </Modal.Body>
                     <Modal.Footer className={cx('footer')}>

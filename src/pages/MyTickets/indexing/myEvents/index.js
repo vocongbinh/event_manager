@@ -3,7 +3,9 @@ import { useState } from 'react';
 import * as myService from '../../../../apiServices/myService';
 import Button from '../../../../components/layouts/components/Button';
 import styles from '../../MyTickets.module.scss';
+import TicketItem from './ticketItem';
 import classNames from 'classnames/bind';
+import { format } from 'date-fns';
 function MyEvents() {
     const [tickets, setTickets] = useState([]);
     const cx = classNames.bind(styles);
@@ -18,7 +20,25 @@ function MyEvents() {
     return (
         <div>
             {tickets.length > 0 ? (
-                tickets.map((ticket, index) => <div>{ticket.ticketTypeId.ticketTypeName}</div>)
+                tickets.map((ticket, index) => {
+                    const time = format(new Date(ticket.showTimeId.startAt), 'MMMM, dd yyyy');
+                    const addressData = ticket.showTimeId.eventId.stageId.addressId;
+                    const address = `${addressData.ward}, ${addressData.district}, ${addressData.province}`;
+                    return (
+                        <TicketItem
+                            id={ticket._id}
+                            image={ticket?.ticketTypeId?.ticketImage}
+                            type={ticket?.ticketTypeId?.ticketTypeName}
+                            customer=""
+                            seat={ticket.seats}
+                            price={ticket.ticketTypeId.ticketTypePrice}
+                            date={time}
+                            discount=""
+                            event={ticket.showTimeId.eventId.eventName}
+                            address={address}
+                        />
+                    );
+                })
             ) : (
                 <div className={cx('content')}>
                     <svg width="260" height="260" fill="none">

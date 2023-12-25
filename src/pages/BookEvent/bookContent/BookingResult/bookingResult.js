@@ -20,6 +20,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { createContext, useEffect, useState } from 'react';
 import { getBookingResult } from '../../../../apiServices/bookingService';
 import TicketItem from '../TicketItem/TicketItem';
+import { format } from 'date-fns';
 export const BookContext = createContext();
 function BookingResult({ children, ...props }) {
     const cx = classNames.bind(styles);
@@ -155,6 +156,9 @@ function BookingResult({ children, ...props }) {
                             <div className="row">
                                 <div className="col-8">
                                     {tickets.map((ticket) => {
+                                        const date = format(new Date(ticket.showTimeId.startAt), 'MMMM, dd yyyy');
+                                        const addressData = ticket.showTimeId.eventId.stageId.addressId;
+                                        const address = `${addressData.ward}, ${addressData.district}, ${addressData.province}`;
                                         return (
                                             <TicketItem
                                                 image={ticket?.ticketTypeId?.ticketImage}
@@ -162,9 +166,10 @@ function BookingResult({ children, ...props }) {
                                                 customer={booking.receiverName}
                                                 seat={ticket.seats}
                                                 price={ticket.ticketTypeId.ticketTypePrice}
-                                                date={'18/01/2024'}
+                                                date={date}
                                                 discount={booking.discount}
                                                 event={booking.showTime.eventId.eventName}
+                                                address={address}
                                             />
                                         );
                                     })}
@@ -282,8 +287,8 @@ function BookingResult({ children, ...props }) {
                                         </div>
                                     </div>
                                     <div className="col-12">
-                                        <Button className={cx('next-btn')} size="max">
-                                            Trở lại
+                                        <Button to="/" className={cx('next-btn')} size="max">
+                                            Back
                                         </Button>
                                     </div>
                                 </div>
