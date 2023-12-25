@@ -116,6 +116,7 @@ function Discount() {
         setCheckedAll(!checkedAll);
         if (!checkedAll) {
             setListCheck(ticketTypes.map((item) => item._id));
+            // setListTypeOfDiscount(ticketTypes.map((item) => item._id));
         } else setListCheck([]);
     };
     const { isLoading, isError, data, refetch } = useQuery({
@@ -163,9 +164,30 @@ function Discount() {
     const handleClose = () => {
         setShow(false);
         setErrors({});
+        setCheckedAll(false);
+        setListCheck([]);
+        setListTypeOfDiscount(
+            ticketTypes.map((item) => {
+                return {
+                    _id: item._id,
+                    quantity: 0,
+                    ticketName: item.ticketTypeName,
+                };
+            }),
+        );
     };
     const handleSave = async () => {
         const errs = validation();
+        let listChecked;
+        if (checkedAll) {
+            listChecked = [
+                {
+                    ticketName: 'all',
+                    quantity: quantityAll,
+                },
+            ];
+        } else listChecked = listTypeOfDiscount;
+        console.log(listChecked);
         setErrors(errs);
         if (Object.keys(errs).length === 0) {
             console.log(formValue.timeStart);
