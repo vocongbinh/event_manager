@@ -25,7 +25,7 @@ function MyTickets() {
 
     return (
         <div className={cx('wrapper')}>
-            <h3 className={cx('title')}>Vé của bạn</h3>
+            <h3 className={cx('title')}>Your Tickets</h3>
             <div className={cx('header')}>
                 {listTabs.map((item, index) => (
                     <div

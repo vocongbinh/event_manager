@@ -53,7 +53,6 @@ function Header() {
                             log in | sign up
                         </Button>
                     )}
-                    <FontAwesomeIcon icon={faCircleInfo} className={cx('infor-icon')} />
                     <Button
                         className={cx('create-btn')}
                         size="min"

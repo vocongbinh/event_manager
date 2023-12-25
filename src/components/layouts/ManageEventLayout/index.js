@@ -6,6 +6,7 @@ import {
     faBullhorn,
     faChartLine,
     faCircleArrowLeft,
+    faEdit,
     faGift,
     faUserGroup,
     faUsersRays,
@@ -20,6 +21,7 @@ import Summary from '../../../pages/myEvent/Events/OptionManager/Summary';
 // import { createBrowserHistory } from 'history';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../../utils/authContext';
+import Images from '../../../assets/images';
 function ManageEventLayout({ children, ...props }) {
     const location = useLocation();
     const current = location.pathname;
@@ -63,6 +65,12 @@ function ManageEventLayout({ children, ...props }) {
             path: current.split('/').slice(0, -1).join('/') + '/moderator',
             index: 5,
         },
+        {
+            title: 'Edit',
+            icon: <FontAwesomeIcon icon={faEdit} />,
+            path: current.split('/').slice(0, -1).join('/') + '/edit',
+            index: 6,
+        },
     ];
     return (
         <div className={cx('wrapper')}>
@@ -72,9 +80,9 @@ function ManageEventLayout({ children, ...props }) {
                         onClick={() => navigate('/')}
                         style={{ cursor: 'pointer' }}
                         alt=""
-                        width="48px"
-                        height="48px"
-                        src="https://cdn.pixabay.com/photo/2020/07/21/16/10/pokemon-5426712_960_720.png"
+                        width="36px"
+                        height="36px"
+                        src={Images.logo}
                     />
 
                     <Button className={cx('avt-btn')}>
