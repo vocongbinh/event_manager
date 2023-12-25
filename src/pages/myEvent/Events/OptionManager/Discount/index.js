@@ -25,6 +25,7 @@ function Discount() {
     const [show, setShow] = useState(false);
     const [ticketTypes, setTicketTypes] = useState([]);
     const [discounts, setDiscounts] = useState([]);
+    const [allDiscounts, setAllDiscounts] = useState([]);
     const [discount, setDiscount] = useState({});
     const [showId, setShowId] = useSearchParams();
     const [checkedAll, setCheckedAll] = useState(false);
@@ -40,24 +41,32 @@ function Discount() {
         code: '',
         amount: '',
         quantity: '',
-        timeStart: '12:00 AM',
-        timeEnd: '12:00 AM',
+        timeStart: '00:00 AM',
+        timeEnd: '00:00 AM',
         discountType: '',
         itemId: '',
     });
     let dateStart, dateEnd;
     const [errors, setErrors] = useState({});
     const [type, setType] = useState('create');
+    console.log(new Date());
     //form
     const validation = () => {
         let error = {};
         if (formValue.code.length < 5) {
             error.code = 'Discount code must have at least 5 characters';
+        } else {
+            const check = allDiscounts.filter((item) => item.code === formValue.code);
+            if (check.length > 0) {
+                error.code = 'Discount existed';
+            }
         }
         if (formValue.amount === '') {
             error.amount = 'Please set the discount amount';
         }
-        if (dateStart >= dateEnd) {
+        if (startDate === null || endDate === null) {
+            error.date = 'Please set date';
+        } else if (dateStart >= dateEnd) {
             error.date = 'End date must be after start date ';
         }
         if (formValue.quantity === '') {
@@ -66,7 +75,7 @@ function Discount() {
         return error;
     };
     //set time picker
-    let countHour = 12;
+    let countHour = 0;
     let countMinute = -15;
     let aa = 'AM';
     let listTimePicker = [];
@@ -118,9 +127,11 @@ function Discount() {
         const fetchApi = async () => {
             const events = await eventService.getEventById(params.id);
             setEvents(events);
+            const allDiscountData = await discountService.findAll();
+            setAllDiscounts(allDiscountData);
         };
         fetchApi();
-    }, []);
+    }, [discounts]);
     const handleEdit = async (id) => {
         setShow(true);
         const data = await discountService.getById(id);
@@ -131,53 +142,57 @@ function Discount() {
             code: data.code,
             amount: data.amount,
             quantity: data.quantity,
-            timeStart: format(new Date(data.startAt), 'HH:mm aa'),
-            timeEnd: format(new Date(data.endAt), 'HH:mm aa'),
+            timeStart: format(new Date(data.startAt), 'hh:mm aa'),
+            timeEnd: format(new Date(data.endAt), 'hh:mm aa'),
         });
         setType('update');
     };
     const handleCreate = () => {
         setType('create');
         setShow(true);
-        setFormValue({ code: '', amount: '', quantity: '', timeStart: '12:00 AM', timeEnd: '12:00 AM' });
+        setFormValue({ code: '', amount: '', quantity: '', timeStart: '00:00 AM', timeEnd: '00:00 AM' });
         setStartDate(null);
         setEndDate(null);
     };
     const handleClose = () => {
         setShow(false);
+        setErrors({});
     };
     const handleSave = async () => {
-        const start = listTimePicker.find((item) => item.display === formValue.timeStart);
-        const end = listTimePicker.find((item) => item.display === formValue.timeEnd);
-        let hourStart;
-        let hourEnd;
-        if (start.aa === 'AM' && start.hour < 12) {
-            hourStart = start.hour;
-        } else hourStart = start.hour + 12;
-        if (end.aa === 'AM' && end.hour < 12) {
-            hourEnd = end.hour;
-        } else hourEnd = end.hour + 12;
-        dateStart = new Date(
-            startDate.getFullYear(),
-            startDate.getMonth(),
-            startDate.getDate(),
-            hourStart,
-            start.minute,
-            0,
-        );
-        dateEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), hourEnd, end.minute, 0);
-
-        const data = {
-            code: formValue.code,
-            amount: Number.parseInt(formValue.amount),
-            quantity: Number.parseInt(formValue.quantity),
-            startAt: dateStart,
-            endAt: dateEnd,
-            showtimeId: stid,
-        };
         const errs = validation();
         setErrors(errs);
         if (Object.keys(errs).length === 0) {
+            console.log(formValue.timeStart);
+            const start = listTimePicker.find((item) => item.display === formValue.timeStart);
+            const end = listTimePicker.find((item) => item.display === formValue.timeEnd);
+            let hourStart;
+            let hourEnd;
+            console.log(start);
+            if (start.aa === 'AM' && start.hour < 12) {
+                hourStart = start.hour;
+            } else hourStart = start.hour + 12;
+            if (end.aa === 'AM' && end.hour <= 12) {
+                hourEnd = end.hour;
+            } else hourEnd = end.hour + 12;
+            dateStart = new Date(
+                startDate.getFullYear(),
+                startDate.getMonth(),
+                startDate.getDate(),
+                hourStart,
+                start.minute,
+                0,
+            );
+            dateEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), hourEnd, end.minute, 0);
+
+            const data = {
+                code: formValue.code,
+                amount: Number.parseInt(formValue.amount),
+                quantity: Number.parseInt(formValue.quantity),
+                startAt: dateStart,
+                endAt: dateEnd,
+                showtimeId: stid,
+            };
+
             console.log(type);
             if (type === 'create') {
                 console.log('create');
@@ -210,6 +225,7 @@ function Discount() {
 
     //form
     const handleChange = (e) => {
+        console.log(e.target.value);
         setFormValue({ ...formValue, [e.target.name]: e.target.value });
     };
     return (

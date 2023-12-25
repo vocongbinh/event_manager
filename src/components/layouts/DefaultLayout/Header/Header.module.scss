@@ -76,3 +76,13 @@
         transition: 0.3s ease background-color;
     }
 }
+.tickets {
+    padding: 10px;
+    border-radius: 50%;
+    background-color: var(--white);
+    cursor: pointer;
+    &:hover {
+        background-color: #ccc;
+        transition: 0.5s ease background-color;
+    }
+}

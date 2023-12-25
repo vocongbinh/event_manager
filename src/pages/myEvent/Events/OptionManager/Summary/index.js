@@ -14,6 +14,7 @@ import eventService from '../../../../../apiServices/eventService';
 import ticketService from '../../../../../apiServices/ticketService';
 import Chart, { Colors } from 'chart.js/auto';
 import { format } from 'date-fns';
+import parameterService from '../../../../../apiServices/parameterService';
 
 function Summary() {
     const moment = extendMoment(Moment);
@@ -30,6 +31,7 @@ function Summary() {
     const [ticketTypes, setTicketTypes] = useState([]);
     const [error, setError] = useState(false);
     const [total, setTotal] = useState(0);
+    const [commission, setCommission] = useState(0);
     let totalCount = 0;
     let totalPrice = 0;
     let startTime;
@@ -106,7 +108,8 @@ function Summary() {
         const fetchApi = async () => {
             const event = await eventService.getEventById(params.id);
             setEvents(event);
-
+            const parameter = await parameterService.getCommission();
+            setCommission(parameter);
             const typesData = await ticketService.getTypeSummary(showtimeId);
             setTicketTypes(typesData);
             let total = 0;
@@ -171,7 +174,7 @@ function Summary() {
                             <p>Ticketbox's rate:</p>
                         </div>
                         <div className=" w-50">
-                            <p>8.8 %</p>
+                            <p>{commission} %</p>
                         </div>
                     </div>
                 </div>

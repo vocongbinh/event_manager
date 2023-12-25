@@ -21,3 +21,20 @@ export const searchEvents = async (value, id) => {
         console.log(error);
     }
 };
+export const myTickets = async () => {
+    try {
+        const res = await request.get(`api/my/tickets`);
+
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+export const myDiscounts = async () => {
+    try {
+        const res = await request.get(`api/my/discounts`);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

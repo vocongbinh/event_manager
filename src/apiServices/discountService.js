@@ -42,3 +42,11 @@ export const updateDiscount = async (id, data) => {
         console.log(error);
     }
 };
+export const findAll = async () => {
+    try {
+        const res = await request.get(`api/discount`);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

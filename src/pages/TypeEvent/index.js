@@ -14,6 +14,7 @@ import { useDebounce } from '../../hooks';
 import SearchItem from '../../components/layouts/components/SearchLayout/SearchItem';
 import { Link, createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { keyboard } from '@testing-library/user-event/dist/keyboard';
+import Images from '../../assets/images';
 function TypeEvent() {
     const cx = classNames.bind(styles);
     const listLocation = ['All locations', 'Ho Chi Minh', 'Ha Noi', 'Other locations'];
@@ -110,11 +111,7 @@ function TypeEvent() {
             <div className={cx('header-layout')}>
                 <div className={cx('header')}>
                     <Link to="/">
-                        <img
-                            alt=""
-                            className={cx('logo')}
-                            src={'https://bloganchoi.com/wp-content/uploads/2022/12/stt-hoang-hon-hay-tam-trang-2.jpg'}
-                        />
+                        <img alt="" className={cx('logo')} src={Images.logo} />
                     </Link>
                     <DropdownButton />
                 </div>

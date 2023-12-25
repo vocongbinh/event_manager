@@ -4,6 +4,7 @@
     background: var(--white);
     height: 100%;
     padding: 0px 40px;
+    height: 100vh;
 }
 .title {
     text-align: left;
@@ -37,9 +38,11 @@
     color: #000;
     border-color: var(--primary);
 }
+.container {
+    padding-top: 60px;
+}
 .content {
     display: flex;
-    padding-top: 60px;
     align-items: center;
     flex-direction: column;
     span {

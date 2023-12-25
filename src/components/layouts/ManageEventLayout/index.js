@@ -6,6 +6,7 @@ import {
     faBullhorn,
     faChartLine,
     faCircleArrowLeft,
+    faEdit,
     faGift,
     faUserGroup,
     faUsersRays,
@@ -18,12 +19,15 @@ import Events from '../../../pages/myEvent/Events';
 import OrganizerProfile from '../../../pages/myEvent/OrganizerProfile';
 import Summary from '../../../pages/myEvent/Events/OptionManager/Summary';
 // import { createBrowserHistory } from 'history';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../../utils/authContext';
+import Images from '../../../assets/images';
 function ManageEventLayout({ children, ...props }) {
     const location = useLocation();
     const current = location.pathname;
-
+    const authContext = useAuthContext();
     const cx = classNames.bind(styles);
+    const navigate = useNavigate();
     const listOptions = [
         {
             title: 'Back to my event',
@@ -61,28 +65,30 @@ function ManageEventLayout({ children, ...props }) {
             path: current.split('/').slice(0, -1).join('/') + '/moderator',
             index: 5,
         },
+        {
+            title: 'Edit',
+            icon: <FontAwesomeIcon icon={faEdit} />,
+            path: current.split('/').slice(0, -1).join('/') + '/edit',
+            index: 6,
+        },
     ];
     return (
         <div className={cx('wrapper')}>
             <div className={cx('sidebar')}>
                 <div className={cx('header')}>
-                    <a href="/">
-                        <img
-                            alt=""
-                            width="48px"
-                            height="48px"
-                            src="https://cdn.pixabay.com/photo/2020/07/21/16/10/pokemon-5426712_960_720.png"
-                        />
-                    </a>
+                    <img
+                        onClick={() => navigate('/')}
+                        style={{ cursor: 'pointer' }}
+                        alt=""
+                        width="36px"
+                        height="36px"
+                        src={Images.logo}
+                    />
 
                     <Button className={cx('avt-btn')}>
-                        bình nè
+                        {authContext.getUser().fullName || ''}
                         <span className={cx('name')}>
-                            <img
-                                alt=""
-                                src={'https://cdn.sforum.vn/sforum/wp-content/uploads/2023/07/pokemon-sleep-1.jpg'}
-                                className={cx('avatar')}
-                            />
+                            <img alt="" src={authContext.getUser().imageUrl} className={cx('avatar')} />
                         </span>
                     </Button>
                 </div>

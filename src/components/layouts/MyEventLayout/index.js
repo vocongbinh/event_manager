@@ -10,9 +10,12 @@ import { useState } from 'react';
 import Events from '../../../pages/myEvent/Events';
 import OrganizerProfile from '../../../pages/myEvent/OrganizerProfile';
 import { useAuthContext } from '../../../utils/authContext';
+import Images from '../../../assets/images';
+import { useNavigate } from 'react-router-dom';
 function MyEventLayout({ children, ...props }) {
     const authContext = useAuthContext();
     const cx = classNames.bind(styles);
+    const navigate = useNavigate();
     const listOptions = [
         {
             title: 'Organizer Profile',
@@ -44,10 +47,12 @@ function MyEventLayout({ children, ...props }) {
             <div className={cx('sidebar')}>
                 <div className={cx('header')}>
                     <img
+                        onClick={() => navigate('/')}
+                        style={{ cursor: 'pointer' }}
                         alt=""
-                        width="48px"
-                        height="48px"
-                        src="https://cdn.pixabay.com/photo/2020/07/21/16/10/pokemon-5426712_960_720.png"
+                        width="36px"
+                        height="36px"
+                        src={Images.logo}
                     />
                     <button>
                         {authContext.getUser().fullName || ''}
