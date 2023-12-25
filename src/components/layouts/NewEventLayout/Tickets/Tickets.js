@@ -6,113 +6,99 @@ import { useNewEventFormContext, useNewEventStepContext } from '../../../../util
 import Ticket from '../Ticket';
 import { memo, useEffect, useState } from 'react';
 import { ticketsSchema } from '../../../../lib/validation';
-import { useGetCategories } from '../../../../lib/react-query/useQueryAndMutation';
-const Tickets = ({ next }) => {
+import { getCategories } from '../../../../apiServices/chartService';
+import { Spinner } from 'react-bootstrap';
+const Tickets = () => {
     const cx = classNames.bind(style);
     const newEventContext = useNewEventFormContext();
     const newEventStep = useNewEventStepContext();
-    const { data: categories, isPending } = useGetCategories(newEventContext.chart);
+    const [isPending, setIsPending] = useState(true);
     const [tickets, setTickets] = useState([]);
-    console.log(categories);
-    // useEffect(() => {
-    let updatedTickets = [...newEventContext.tickets]; // Create a copy of oldTickets
+    let updatedTickets = [...newEventContext.tickets];
     useEffect(() => {
-        if (categories != undefined) {
-            categories.forEach((category) => {
-                let existingTicket = updatedTickets.find((ticket) => ticket.key === category.key);
-
-                if (existingTicket) {
-                    existingTicket.ticketTypeName = category.label;
-                    existingTicket.ticketColor = category.color;
-                } else {
-                    updatedTickets.push({
-                        isFree: false,
-                        ticketTypeName: category.label,
-                        ticketTypePrice: '',
-                        ticketTypeDescription: '',
-                        ticketImage: null,
-                        ticketColor: category.color,
-                        minPerOrder: '',
-                        maxPerOrder: '',
-                    });
-                }
-            });
-            updatedTickets = updatedTickets.filter((ticket) =>
-                categories.some((category) => category.key === ticket.key),
-            );
-            console.log(updatedTickets);
-            setTickets(updatedTickets);
-        }
-    }, [categories]);
-    return (
-        !isPending && (
-            <div>
-                <Formik
-                    initialValues={{
-                        ticketTypes: updatedTickets,
-                    }}
-                    validationSchema={ticketsSchema}
-                    onSubmit={(values) => {
-                        console.log('submit');
-                        newEventContext.setTickets(values.ticketTypes);
-                        newEventStep.handleGoStep(4);
-                    }}
-                >
-                    <Form>
-                        <div className={cx('wrapper')}>
-                            <FieldArray name={`ticketTypes`}>
-                                {({ push, remove, form }) => {
-                                    return (
-                                        <div>
-                                            {form.values.ticketTypes.length > 0 &&
-                                                form.values.ticketTypes.map((ticket, ind) => {
-                                                    return <Ticket form={form} remove={remove} index={ind} />;
-                                                })}
-                                            {/* <button
-                                            type="button"
-                                            className={cx('add-ticket-button')}
-                                            onClick={() => {
-                                                push({
-                                                    isFree: false,
-                                                    ticketTypeName: '',
-                                                    ticketTypePrice: '',
-                                                    ticketTypeDescription: '',
-                                                    ticketImage: null,
-                                                    ticketColor: '',
-                                                    minPerOrder: '',
-                                                    maxPerOrder: '',
-                                                    ticketInfomation: '',
-                                                });
-                                                console.log(form.values);
-                                            }}
-                                        >
-                                            Thêm loại vé
-                                        </button> */}
-                                        </div>
-                                    );
-                                }}
-                            </FieldArray>
+        const fetchData = async () => {
+            const categories = await getCategories(newEventContext.chart);
+            if (categories != undefined) {
+                categories.forEach((category) => {
+                    let existingTicket = updatedTickets.find((ticket) => ticket.key === category.key);
+                    if (existingTicket) {
+                        existingTicket.ticketTypeName = category.label;
+                        existingTicket.ticketColor = category.color;
+                    } else {
+                        updatedTickets.push({
+                            isFree: false,
+                            ticketTypeName: category.label,
+                            ticketTypePrice: '',
+                            ticketTypeDescription: '',
+                            ticketImage: null,
+                            ticketColor: category.color,
+                            minPerOrder: '',
+                            maxPerOrder: '',
+                        });
+                    }
+                });
+                updatedTickets = updatedTickets.filter((ticket) =>
+                    categories.some((category) => category.key === ticket.key),
+                );
+                console.log(updatedTickets);
+                setTickets(updatedTickets);
+                console.log('its false' + JSON.stringify(updatedTickets));
+                setIsPending(false);
+            }
+        };
+        fetchData();
+    }, []);
+    return !isPending ? (
+        <div>
+            <Formik
+                initialValues={{
+                    ticketTypes: tickets,
+                }}
+                validationSchema={ticketsSchema}
+                onSubmit={(values) => {
+                    console.log('submit');
+                    newEventContext.setTickets(values.ticketTypes);
+                    newEventStep.handleGoStep(4);
+                }}
+            >
+                <Form>
+                    <div className={cx('wrapper')}>
+                        <FieldArray name={`ticketTypes`}>
+                            {({ push, remove, form }) => {
+                                return (
+                                    <div>
+                                        {form.values.ticketTypes.length > 0 &&
+                                            form.values.ticketTypes.map((ticket, ind) => {
+                                                return <Ticket form={form} remove={remove} index={ind} />;
+                                            })}
+                                    </div>
+                                );
+                            }}
+                        </FieldArray>
+                    </div>
+                    <div className={cx('item-container')}>
+                        <div className={cx('action')}>
+                            <Button
+                                type="button"
+                                onClick={() => newEventStep.handleGoStep(2)}
+                                className={cx('next-button')}
+                                size="max"
+                                background="blue"
+                            >
+                                Go back
+                            </Button>
+                            <Button type="primary" className={cx('next-button')} size="max" background="blue">
+                                Continue
+                            </Button>
                         </div>
-                        <div className={cx('item-container')}>
-                            <div className={cx('action')}>
-                                <Button
-                                    type="button"
-                                    onClick={() => newEventStep.handleGoStep(2)}
-                                    className={cx('next-button')}
-                                    size="max"
-                                    background="blue"
-                                >
-                                    Go back
-                                </Button>
-                                <Button type="primary" className={cx('next-button')} size="max" background="blue">
-                                    Continue
-                                </Button>
-                            </div>
-                        </div>
-                    </Form>
-                </Formik>
-            </div>
-        )
+                    </div>
+                </Form>
+            </Formik>
+        </div>
+    ) : (
+        <div className={cx('spinner')}>
+            <Spinner />
+        </div>
     );
 };
 

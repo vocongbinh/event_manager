@@ -1,0 +1,242 @@
+.wrapper {
+}
+//header
+.header {
+    border: 0;
+    border-color: transparent;
+    border-radius: 0;
+    min-height: 43px;
+    width: 100%;
+
+    background-image: linear-gradient(to right, #382626, #806351);
+}
+.nav {
+    padding: 10px;
+    border: 0;
+    border-color: transparent;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 0;
+    min-height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    width: 32px;
+    height: 32px;
+
+    border-radius: 8px;
+}
+.avatar {
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+}
+
+.avatar-btn {
+    text-transform: uppercase;
+    font-size: 12px;
+}
+.infor-event {
+    height: fit-content;
+    padding: 20px;
+    color: var(--white);
+}
+.name {
+    font-size: 21px;
+    font-weight: 700;
+    padding-bottom: 20px;
+}
+.address-time {
+    font-size: 14px;
+}
+//content
+.content {
+    width: 100%;
+    background-color: #f1f1f1;
+    height: 100vh;
+}
+.steps {
+    background-color: var(--white);
+    text-align: center;
+    height: 42px;
+    .step-icon {
+        color: var(--sub-color);
+        display: none;
+    }
+    h5 {
+        margin-left: 5px;
+        font-size: 16px;
+        color: #666;
+        font-weight: 700;
+    }
+    img {
+        width: 15px;
+        vertical-align: middle;
+    }
+    table {
+        height: 100%;
+    }
+}
+.ticket-info {
+    width: 100%;
+    background-color: #f1f1f1;
+}
+.type-header {
+    border-bottom: 2px solid #ccc;
+    padding: 15px;
+    h5 {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 16px;
+        line-height: 30px;
+        color: #666;
+    }
+}
+.ticket-wrapper {
+    padding-top: 40px;
+}
+.type-item {
+    border-bottom: 1px dashed #bbb;
+    padding: 20px 0px;
+    h5 {
+        color: #666;
+        font-size: 15px;
+        font-weight: 400;
+        vertical-align: middle;
+        padding: 10px 0px;
+    }
+    &:last-child {
+        border: none;
+    }
+}
+
+.quantity-layout {
+    height: 100%;
+    float: right;
+}
+//booking-info
+.booking-info {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--white);
+    .book-item {
+        border-bottom: 1px dashed #bbb;
+        padding: 6px 0px;
+        &:last-child {
+            border: none !important;
+        }
+        h5 {
+            color: #666;
+            font-size: 14px;
+            font-weight: 400;
+            vertical-align: middle;
+        }
+        p {
+            color: #666;
+            font-size: 12px;
+            font-weight: 400;
+            vertical-align: middle;
+        }
+    }
+}
+.booking-header {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    line-height: 30px;
+    padding: 8px 0px;
+    color: #333;
+    border-bottom: 2px solid #ccc;
+}
+
+.header-row {
+    padding: 12px 0px;
+    border-bottom: 1px dashed #bbb;
+    h5 {
+        font-size: 15px !important;
+        font-weight: 700;
+        color: #666;
+        padding: 0px;
+    }
+}
+
+.total {
+    width: 100%;
+    background-color: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 15px;
+    h5 {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--white);
+    }
+}
+.discount {
+    margin-top: 20px;
+    padding: 15px;
+    text-align: center;
+    border: 2px dashed #c7c7c7;
+    h5 {
+        color: #666;
+        font-size: 14px;
+        font-weight: 400;
+        text-decoration: underline;
+    }
+}
+.next-btn {
+    font-size: 16px;
+    color: var(--white);
+    margin-top: 40px;
+    background-color: var(--sub-color);
+    border-radius: 2px;
+    padding: 14px 20px;
+    &:hover {
+        background-color: #7ca629;
+        border-color: #678b22;
+    }
+}
+.active {
+    color: var(--sub-color) !important;
+    font-weight: 800 !important;
+}
+.checked {
+    display: block !important;
+}
+.infor-layout {
+    display: flex;
+    align-items: center;
+
+    h5 {
+        font-size: 15px !important;
+        font-weight: 700;
+        padding-left: 10px;
+    }
+}
+.row-infor {
+    color: #666;
+    padding: 12px 0px;
+    border-bottom: 1px dashed #bbb;
+    &:last-child {
+        border: none;
+    }
+    p {
+        font-size: 14px;
+    }
+}
+
+.seat-item {
+    background-color: #ffeca8;
+    padding: 2px 8px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 1.2rem;
+}
+
+//ticket

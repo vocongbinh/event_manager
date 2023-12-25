@@ -19,11 +19,19 @@ export const NewEventStepProvider = ({ children }) => {
         navigate(path[step]);
         console.log('current step' + step);
     };
+    const handleGoBack = (step) => {
+        console.log('go back' + step);
+        setStep(step);
+        navigate(-1);
+    };
     return (
-        <NewEventStepContext.Provider value={{ step, setStep, handleGoStep }}>{children}</NewEventStepContext.Provider>
+        <NewEventStepContext.Provider value={{ step, setStep, handleGoStep, handleGoBack }}>
+            {children}
+        </NewEventStepContext.Provider>
     );
 };
 export const NewEventFormProvider = ({ children }) => {
+    const navigate = useNavigate();
     const [eventTypes, setEventTypes] = useState([]);
     const [eventInfor, setEventInfor] = useState({});
     const [address, setAddress] = useState({});
@@ -32,8 +40,9 @@ export const NewEventFormProvider = ({ children }) => {
     const [chart, setChart] = useState('');
     const [isChartCreated, setIsChartCreated] = useState(false);
     const { mutateAsync: createNewEvent } = useCreateEvent();
-    const createEvent = () => {
-        createNewEvent({
+    const createEvent = async () => {
+        if (!showtimes) return console.log('hfhfh');
+        const createEvent = await createNewEvent({
             ...eventInfor,
             address,
             chartId: chart,
@@ -41,6 +50,8 @@ export const NewEventFormProvider = ({ children }) => {
             showtimes,
             eventTypes,
         });
+        if (!createEvent) return;
+        else navigate('/');
     };
 
     return (

@@ -14,6 +14,7 @@ import ShowTimes from './components/layouts/NewEventLayout/ShowTimes/ShowTimes';
 import NewEventForm from './components/layouts/NewEventLayout/NewEventForm/NewEventForm';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import OrganizerProfile from './components/layouts/NewEventLayout/OrganizerProfile/OrganizerProfile';
+import BookingResult from './pages/BookEvent/bookContent/BookingResult/bookingResult';
 
 const client = new QueryClient();
 function App() {
@@ -61,7 +62,7 @@ function App() {
                                 }
                             })}
                             <Route path="/organizer/profile" element={<OrganizerProfile />} />
-
+                            <Route path="/bookingResult/:paymentId" element={<BookingResult />} />
                             <Route
                                 path="/newEvent"
                                 element={
@@ -77,14 +78,6 @@ function App() {
                                 <Route path="tickets" element={<Tickets />} />
                                 <Route path="showtimes" element={<ShowTimes />} />
                                 <Route path="stage" element={<NewStageChart />} />
-                                {/* <Route
-                                path="/new-stage-model"
-                                element={
-                                    <NewEventFormProvider>
-                                        <NewStageChart></NewStageChart>
-                                    </NewEventFormProvider>
-                                }
-                            /> */}
                             </Route>
                         </Routes>
                     </div>

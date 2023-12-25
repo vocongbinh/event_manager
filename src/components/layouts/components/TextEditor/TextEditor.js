@@ -20,7 +20,11 @@ const TextEditor = ({ label, ...props }) => {
             <div className={cx('title-container')}>{label && <div className={cx('title-text')}>{label}</div>}</div>
             <CKEditor
                 styles={{ width: '100%', height: '100px' }}
-                data="<p>Nhập thông tin chi tiết sự kiện&nbsp;!</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>"
+                data={
+                    field.value
+                        ? field.value
+                        : '<p>Nhập thông tin chi tiết sự kiện&nbsp;!</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>'
+                }
                 editor={ClassicEditor}
                 config={{
                     extraPlugins: [MyCustomUploadAdapterPlugin],

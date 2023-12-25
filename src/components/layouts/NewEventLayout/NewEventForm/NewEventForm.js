@@ -39,7 +39,7 @@ const NewEventForm = ({ next }) => {
     return (
         <div className={cx('wrapper')}>
             <Formik
-                initialValues={(eventFormContext.eventInfor, eventFormContext.address)}
+                initialValues={{ ...eventFormContext.eventInfor, ...eventFormContext.address }}
                 validationSchema={formSchema}
                 onSubmit={(values, { setSubmitting }) => {
                     console.log(values);
@@ -139,8 +139,8 @@ const NewEventForm = ({ next }) => {
                         <div className={cx('item-container')}>
                             <div className={cx('action')}>
                                 <Button
-                                    type="button"
-                                    onClick={() => eventStepContext.handleGoStep(0)}
+                                    buttonType="button"
+                                    onClick={() => eventStepContext.handleGoBack(0)}
                                     className={cx('next-button')}
                                     size="max"
                                     background="blue"

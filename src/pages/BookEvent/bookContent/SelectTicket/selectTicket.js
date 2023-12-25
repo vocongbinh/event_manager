@@ -22,12 +22,14 @@ function SelectTicket() {
     useEffect(() => {
         const fetchAPI = async () => {
             try {
+                console.log(params.id);
                 const data = await ticketService.getTicketOfEvent(params.id);
                 console.log(data);
                 setTickets(data);
                 console.log(data);
                 const initBookings = data.map((item) => {
                     return {
+                        ticketTypeId: item._id,
                         name: item.ticketTypeName,
                         price: item.ticketTypePrice,
                         count: 0,

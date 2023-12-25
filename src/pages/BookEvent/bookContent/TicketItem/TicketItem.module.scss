@@ -1,0 +1,116 @@
+.wticket {
+    display: flex;
+    width: 100%;
+    min-height: 200px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    // border-radius: 10px 0px 0px 10px;
+}
+.wcontent {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.wcontent1 {
+    margin-left: 60px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: 1;
+    justify-content: space-between;
+}
+.header-ticket {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.header-ticket-name {
+    flex: 1;
+}
+.header-time {
+    max-width: 100px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    font-weight: 15px;
+}
+.header-time-year {
+    background-color: rgb(45, 194, 117);
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+}
+.header-time-date {
+    color: rgb(45, 194, 117);
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+}
+.ticket-image {
+    height: 130px;
+    width: 130px;
+    // padding: 10px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+.wimage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // border-right: 2px dashed #f1f1f1;
+}
+.circle-top {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: -25px;
+    border-radius: 100%;
+    background-color: #f1f1f1;
+}
+.circle-bottom {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    bottom: -25px;
+    border-radius: 100%;
+    background-color: #f1f1f1;
+}
+.ticket-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: rgb(5, 180, 90);
+    text-transform: uppercase;
+}
+.header-time-year {
+}
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.item-title {
+    color: rgb(34, 139, 85);
+    font-size: 8px;
+    // margin-bottom: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.item-content {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+.event-place {
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+.dcontent {
+    display: grid;
+    grid-auto-flow: column;
+}

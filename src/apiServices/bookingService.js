@@ -47,18 +47,22 @@ export async function createNewBooking({
 export async function createHoldToken() {
     try {
         console.log('get token');
-        // console.log(localStorage.getItem('userToken'));
-        // let config = {
-        //     method: 'get',
-        //     maxBodyLength: Infinity,
-        //     url: '/api/booking/holdToken',
-        //     headers: {
-        //         Authorization: 'Bearer ' + localStorage.getItem('userToken'),
-        //     },
-        // };
         const res = await request.get('/api/booking/holdToken');
         return res.data;
     } catch (err) {
         console.log(err);
+    }
+}
+
+export async function getBookingResult(paymentId) {
+    try {
+        if (!paymentId) throw Error('tickets is empty');
+        const bookingResult = await request.post(`api/payment/verifyPayment`, {
+            paymentId,
+        });
+        console.log(JSON.stringify(bookingResult));
+        return bookingResult.data;
+    } catch (error) {
+        console.log(JSON.stringify(error));
     }
 }
