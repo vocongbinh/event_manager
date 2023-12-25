@@ -32,6 +32,7 @@ const ShowTime = ({ form, index, remove }) => {
     const touched = form.touched;
     const values = form.values.showtimes;
     const showtime = values[index];
+    console.log(showtime);
     const cx = classNames.bind(style);
     const [fieldTicketSales, meta, helperTicketSales] = useField($(`ticketSales`));
     return (

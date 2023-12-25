@@ -30,7 +30,7 @@ const RegisterForm = () => {
                 navigate('/auth/otp');
             })
             .catch((error) => {
-                setErrors(error);
+                setErrors(error?.response);
                 console.log(error);
             });
     };
@@ -42,8 +42,8 @@ const RegisterForm = () => {
         password: yup.string().matches(PWD_REGEX, 'Password is not valid').required('Password is required'),
         retypePassword: yup
             .string()
-            .required('Password is required')
-            .test('min-max-validation', 'Password is not equal', function (value) {
+            .required('Retype password is required')
+            .test('min-max-validation', 'Retype password is not accurate', function (value) {
                 const password = this.parent.password;
                 return value == password;
             }),
@@ -71,11 +71,7 @@ const RegisterForm = () => {
                     return (
                         <div className={cx('wrapper')}>
                             <div className={cx('header')}>
-                                <button
-                                    style={{ background: 'transparent' }}
-                                    type="reset"
-                                    onClick={() => formik.handleReset()}
-                                >
+                                <button style={{ background: 'transparent' }} type="reset" onClick={() => navigate(-1)}>
                                     <FontAwesomeIcon className={cx('chevron-icon')} icon={faChevronLeft} />
                                 </button>
                                 <div className={cx('title')}>Register</div>
@@ -99,13 +95,13 @@ const RegisterForm = () => {
                                 <div>
                                     {formik.errors ? (
                                         <div className={cx('error-errors')}>
-                                            {Object.values(formik.errors).map((item, index) => {
-                                                if (item instanceof Object) return;
-                                                return (
-                                                    <div className={cx('error-label')} key={index}>
-                                                        {item}
-                                                    </div>
-                                                );
+                                            {Object.entries(formik.errors).map(([key, value]) => {
+                                                if (formik.touched[key] && formik.touched[key] === true)
+                                                    return (
+                                                        <div className={cx('error-label')} key={key}>
+                                                            {value}
+                                                        </div>
+                                                    );
                                             })}
                                         </div>
                                     ) : null}

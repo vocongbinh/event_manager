@@ -5,7 +5,6 @@ import DetailEvent from '../pages/DetailEvent';
 import Home from '../pages/Home';
 import { faAddressCard, faCalendar, faMoneyBill, faPiggyBank } from '@fortawesome/free-solid-svg-icons';
 import Events from '../pages/myEvent/Events';
-import OrganizerProfile from '../pages/myEvent/OrganizerProfile';
 import EventTypeList from '../components/layouts/NewEventLayout/EventTypeList';
 import NewEventLayout from '../components/layouts/NewEventLayout/NewEventLayout';
 import BankAccount from '../pages/myEvent/BankAccount';
@@ -31,6 +30,7 @@ import NewStageChart from '../components/layouts/NewEventLayout/NewStage/NewStag
 import Address from '../components/layouts/NewEventLayout/Address/Address';
 import AdminLayout from '../components/layouts/AdminLayout';
 import DetailPendingEvent from '../pages/DetailPendingEvent';
+import OrganizerProfile from '../components/layouts/NewEventLayout/OrganizerProfile/OrganizerProfile';
 //private router
 const privateRouter = [{}];
 //public router

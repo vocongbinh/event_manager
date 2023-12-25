@@ -1,0 +1,35 @@
+.wrapper {
+    width: 80%;
+    margin: auto;
+}
+
+.add-ticket-button {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    line-height: 40px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    color: #758cb7;
+    background: transparent;
+    border: 1.5px solid rgb(231, 237, 249);
+}
+.action {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.next-button {
+    width: 200px;
+}
+.spinner {
+    height: 500px;
+    width: max-content;
+    display: flex;
+    margin: auto;
+    justify-items: center;
+    align-items: center;
+}

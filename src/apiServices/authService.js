@@ -3,12 +3,12 @@ const authService = {
     checkPhoneNumber: async (phoneNumber) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const { status, data } = await request.post(`api/checkPhoneNumber`, {
+                const { data, status } = await request.post(`api/checkPhoneNumber`, {
                     phoneNumber: phoneNumber,
                 });
-                resolve({ status, data });
+                resolve({ data, status });
             } catch (error) {
-                reject(error);
+                reject(error?.response);
             }
         });
     },
@@ -49,7 +49,7 @@ const authService = {
                 });
                 resolve(res.data);
             } catch (error) {
-                reject(error);
+                reject(error?.response);
             }
         });
     },

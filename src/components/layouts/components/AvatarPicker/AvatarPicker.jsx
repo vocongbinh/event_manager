@@ -43,7 +43,7 @@ const AvatarPicker = ({ label, ...props }) => {
                         accept="image/png, image/jpeg"
                     />
                     {field.value && (
-                        <div onClick={() => handleOpenFileChosen()} className={cx('image-container')}>
+                        <div onClick={() => handleOpenFileChosen()} className={`${cx('image-container')}`}>
                             <img src={field.value} className={cx('image-img')} alt="Hình ảnh" />
                         </div>
                     )}

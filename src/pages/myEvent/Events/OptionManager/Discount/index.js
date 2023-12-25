@@ -16,6 +16,8 @@ import CheckboxItem from './CheckboxItem';
 import ReactDatePicker from 'react-datepicker';
 import * as discountService from '../../../../../apiServices/discountService';
 import { useQuery } from '@tanstack/react-query';
+import Ticket from '../../../../../components/layouts/NewEventLayout/Ticket';
+import DiscountModel from '../../../../../components/layouts/components/Discount/DiscountModel';
 function Discount() {
     const cx = classNames.bind(styles);
     //set state
@@ -299,6 +301,7 @@ function Discount() {
                         <Modal.Title className={cx('title')}>Create New Discount Code</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className={cx('body')}>
+                        {/* <DiscountModel /> */}
                         <div className={cx('code-layout')}>
                             <input
                                 name="code"

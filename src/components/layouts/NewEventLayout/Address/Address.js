@@ -1,12 +1,12 @@
 import styles from './Address.module.scss';
 import classNames from 'classnames/bind';
-import { forwardRef, useEffect, useState, useMemo, memo } from 'react';
+import { forwardRef, useEffect, useState, memo } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { useField } from 'formik';
 import { useGetDistrict, useGetProvince, useGetWard } from '../../../../lib/react-query/useQueryAndMutation';
-const Address = ({ ...props }) => {
+const Address = () => {
     const [isShowProvince, setIsShowProvince] = useState(false);
     const [isShowDistrict, setIsShowDistrict] = useState(false);
     const [isShowWard, setIsShowWard] = useState(false);
@@ -44,11 +44,11 @@ const Address = ({ ...props }) => {
         whelper.setValue(name);
         whelperCode.setValue(code);
     };
-    useEffect(() => {
-        props.province && phelper.setValue(props.province);
-        // props.district && phelper.setValue(props.district);
-        // props.ward && phelper.setValue(props.ward);
-    }, []);
+    // useEffect(() => {
+    //     props.province && phelper.setValue(props.province);
+    //     // props.district && phelper.setValue(props.district);
+    //     // props.ward && phelper.setValue(props.ward);
+    // }, []);
     return (
         <div>
             {!isFetching && (
@@ -224,4 +224,4 @@ const Address = ({ ...props }) => {
     );
 };
 
-export default Address;
+export default memo(Address);

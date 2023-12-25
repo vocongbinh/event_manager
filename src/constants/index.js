@@ -73,3 +73,23 @@ export const createEventSteps = [
         icon: <FontAwesomeIcon icon={faMoneyBill} />,
     },
 ];
+
+export const editEventSteps = [
+    {
+        title: 'Event Information',
+        header: 'Edit event basic information',
+        icon: <FontAwesomeIcon icon={faCalendar} />,
+        // component: <NewEventForm />,
+    },
+    {
+        title: 'Tickets',
+        header: 'Edit tickets for event',
+        icon: <FontAwesomeIcon icon={faTicket} />,
+        // component: <NewEventForm />,
+    },
+    {
+        title: 'Showtimes',
+        header: 'Edit showtime to event',
+        icon: <FontAwesomeIcon icon={faMoneyBill} />,
+    },
+];

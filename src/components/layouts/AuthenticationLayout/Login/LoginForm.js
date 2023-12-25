@@ -22,21 +22,6 @@ const LoginForm = () => {
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [errors, setErrors] = useState('');
     const authContext = useAuthContext();
-    // const { status, data, error } = useQuery(plhoneNumber && 'register', async () => {
-    //     const status = await authService.register(phoneNumber);
-    //     return status;
-    // });
-    // useEffect(() => {
-    //     if (data === 201) {
-    //         setShowPasswordBox(true);
-    //     } else if (data === 200) {
-    //         throw redirect('auth/register');
-    //     }
-
-    //     const handleClickNext = () => {
-    //         // setPhoneNumber(field.value);
-    //     };
-    // }, [data]);
     const handleClickNext = async (phoneNumber) => {
         await authService
             .checkPhoneNumber(phoneNumber)
@@ -53,9 +38,10 @@ const LoginForm = () => {
             });
     };
     const handleSignIn = async (phoneNumber, password) => {
-        await authService
+        authService
             .login(phoneNumber, password)
             .then((values) => {
+                console.log(errors);
                 console.log(values);
                 setErrors('');
                 authContext.logIn(values);
@@ -126,13 +112,13 @@ const LoginForm = () => {
                                 <div>
                                     {formik.errors ? (
                                         <div className={cx('error-errors')}>
-                                            {Object.values(formik.errors).map((item, index) => {
-                                                if (item instanceof Object) return;
-                                                return (
-                                                    <div className={cx('error-label')} key={index}>
-                                                        {item}
-                                                    </div>
-                                                );
+                                            {Object.entries(formik.errors).map(([key, value]) => {
+                                                if (formik.touched[key] && formik.touched[key] === true)
+                                                    return (
+                                                        <div className={cx('error-label')} key={key}>
+                                                            {value}
+                                                        </div>
+                                                    );
                                             })}
                                         </div>
                                     ) : null}

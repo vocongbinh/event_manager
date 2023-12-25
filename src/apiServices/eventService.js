@@ -90,6 +90,18 @@ const eventService = {
             console.log(e);
         }
     },
+    editEvent: async (data) => {
+        try {
+            const res = await request.post(`api/event/edit/`, {
+                ...data,
+            });
+            console.log(res.data);
+            return res.data;
+        } catch (e) {
+            console.log(e);
+        }
+    },
+
     suggestEvent: async (types) => {
         try {
             console.log(types);

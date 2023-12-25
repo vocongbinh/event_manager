@@ -10,6 +10,7 @@ import { createHoldTickets, createHoldToken, createNewBooking } from '../../apiS
 import eventService from '../../apiServices/eventService';
 import { getDistricts, getProvinces, getWards } from '../../apiServices/addressService';
 import showtimeService from '../../apiServices/showtimeService';
+import { getOrganizerProfile, updateOrganizer } from '../../apiServices/organizerService';
 // export const useValidateChart = (chartKey) => {
 //     return useQuery({
 //         queryKey: [GET_CHART_VALIDATE_STATUS],
@@ -89,6 +90,12 @@ export const useCreateEvent = () => {
     });
 };
 
+export const useEditEvent = () => {
+    return useMutation({
+        mutationFn: (data) => eventService.editEvent(data),
+    });
+};
+
 export const useGetShowtime = (showtimeId) => {
     return useQuery({
         queryKey: ['showtime', showtimeId],
@@ -100,5 +107,24 @@ export const useCreateNewBooking = () => {
     return useMutation({
         mutationFn: ({ tickets, discounts, eventKey, holdToken, receiverInformation }) =>
             createNewBooking({ tickets, discounts, eventKey, holdToken, receiverInformation }),
+    });
+};
+
+export const useCreateOrganizer = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (values) => updateOrganizer(values),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({
+                queryKey: ['organizer'],
+            });
+        },
+    });
+};
+
+export const useGetOrganizer = () => {
+    return useQuery({
+        queryKey: ['organizer'],
+        queryFn: getOrganizerProfile(),
     });
 };

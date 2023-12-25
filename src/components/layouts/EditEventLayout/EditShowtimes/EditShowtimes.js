@@ -2,41 +2,31 @@ import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, FieldArray } from 'formik';
 import classNames from 'classnames/bind';
-import style from './ShowTimes.module.scss';
+import style from './EditShowtimes.module.scss';
 import Button from '../../components/Button';
-import ShowTime from '../ShowTime/ShowTime';
-import { useNewEventFormContext, useNewEventStepContext } from '../../../../utils/newEventContext';
-import { showtimesSchema } from '../../../../lib/validation';
+import ShowTime from '../../NewEventLayout/ShowTime';
+import { editShowtimesSchema, showtimesSchema } from '../../../../lib/validation';
 import { Spinner } from 'react-bootstrap';
-import toast from 'react-hot-toast';
+import { useEditEventFormContext, useEditEventStepContext } from '../../../../utils/editEventContext';
 
-const ShowTimes = ({ next }) => {
+const EditShowTimes = ({ next }) => {
     const cx = classNames.bind(style);
-    const newEventContext = useNewEventFormContext();
-    const eventStepContext = useNewEventStepContext();
+    const editEventContext = useEditEventFormContext();
+    const eventStepContext = useEditEventStepContext();
+    console.log(editEventContext.showtimes);
     const [isPending, setIsPending] = useState(false);
-    useEffect(() => {
-        const postEvent = async () => {
-            if (newEventContext.showtimes && newEventContext.showtimes?.length > 0) {
-                setIsPending(true);
-                await newEventContext.createEvent();
-                setIsPending(false);
-            }
-        };
-        postEvent();
-    }, [newEventContext.showtimes]);
-    useEffect(() => {
-        console.log(newEventContext.showtimes);
-    }, []);
     return (
         <div>
             <Formik
                 initialValues={{
-                    showtimes: newEventContext.showtimes,
+                    showtimes: editEventContext.showtimes,
                 }}
-                validationSchema={showtimesSchema}
+                validationSchema={editShowtimesSchema}
                 onSubmit={async (values) => {
-                    newEventContext.setShowTimes((prev) => values.showtimes);
+                    console.log('submit');
+                    setIsPending(true);
+                    await editEventContext.editEvent(values.showtimes);
+                    setIsPending(false);
                 }}
             >
                 <Form>
@@ -44,6 +34,8 @@ const ShowTimes = ({ next }) => {
                         {({ push, remove, form }) => {
                             return (
                                 <div className={cx('wrapper')}>
+                                    <div>{JSON.stringify(form.errors)}</div>
+
                                     {form.values.showtimes.length > 0 &&
                                         form.values.showtimes.map((_, index) => {
                                             return <ShowTime form={form} index={index} remove={remove} />;
@@ -95,4 +87,4 @@ const ShowTimes = ({ next }) => {
     );
 };
 
-export default memo(ShowTimes);
+export default memo(EditShowTimes);

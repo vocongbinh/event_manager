@@ -25,8 +25,8 @@ const Ticket2 = ({ index, remove }) => {
     const cx = classNames.bind(style);
     const fileRef = useRef();
     const [isFree, setIsFree] = useState(helpersFreeBool.value);
-    const [color, setColor] = useState('');
-    const [image, setImage] = useState('');
+    const [color, setColor] = useState(fieldColor.value ?? '');
+    const [image, setImage] = useState(fieldImage.value ?? '');
     // const [isEditingTicketName, setEditingTicketName] = useState(false);
     const [errorLength, setErrorLength] = useState(0);
     const handleOpenFileChosen = () => {
