@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './TicketItem.module.scss';
-const TicketItem = ({ image, seat, customer, type, discount, price, event }) => {
+const TicketItem = ({ image, seat, customer, type, discount, price, event, date, address }) => {
     const cx = classNames.bind(styles);
     const seats = seat.length > 1 ? seat.join(', ') : seat[0];
     return (
@@ -15,7 +15,7 @@ const TicketItem = ({ image, seat, customer, type, discount, price, event }) => 
                     <div className={cx('header-ticket')}>
                         <div className={cx('header-ticket-name')}>
                             <p className={cx('ticket-name')}>{event}</p>
-                            <p className={cx('event-place')}>20 Ho Chi Minh City Viet Nam</p>
+                            <p className={cx('event-place')}>{address}</p>
                         </div>
                     </div>
                     <div className={cx('dcontent')}>
@@ -33,7 +33,7 @@ const TicketItem = ({ image, seat, customer, type, discount, price, event }) => 
                             <div className={cx('item-title')}>Discount</div>
                             <div className={cx('item-content')}>{discount}%</div>
                             <div className={cx('item-title')}>Date</div>
-                            <div className={cx('item-content')}>18/01/2024</div>
+                            <div className={cx('item-content')}>{date}</div>
                         </div>
                     </div>
                 </div>

@@ -38,7 +38,7 @@ const ticketService = {
         try {
             const res = await request.get(`api/ticket/summary`, {
                 params: {
-                    showtime_id: showtimeId,
+                    showtime_id: '65785a08d075be6a13e55e22',
                 },
             });
             return res.data;
