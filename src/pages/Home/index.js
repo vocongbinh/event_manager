@@ -11,6 +11,7 @@ import Images from '../../assets/images';
 import SlickComponent from '../../components/SlickComponent';
 import Spinner from 'react-bootstrap/Spinner';
 import spinnerStyles from '../../styles/spinner.module.scss';
+import LazyLoad from 'react-lazy-load';
 
 function Home() {
     const cx = classNames.bind(styles);
@@ -66,9 +67,11 @@ function Home() {
                     </div>
                 </div>
                 <div className="row" style={{ marginTop: 40, paddingBottom: 40 }}>
-                    {events.map((eventItem) => (
+                    {events.map((eventItem, index) => (
                         <div className="col-3">
-                            <EventItem data={eventItem} />
+                            <LazyLoad key={index}>
+                                <EventItem data={eventItem} />
+                            </LazyLoad>
                         </div>
                     ))}
                 </div>

@@ -2,7 +2,17 @@ import styles from './DetailEvent.module.scss';
 import classNames from 'classnames/bind';
 import Header from './Header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faEnvelope, faLocationDot, faPhone, faTicket } from '@fortawesome/free-solid-svg-icons';
+import {
+    faBars,
+    faCheck,
+    faChevronRight,
+    faEnvelope,
+    faFile,
+    faLocationDot,
+    faPhone,
+    faTicket,
+    faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { faClockFour } from '@fortawesome/free-regular-svg-icons';
 import Button from '../../components/layouts/components/Button';
 import About from './indexing/About';
@@ -16,12 +26,15 @@ import Recommended from './indexing/Recommended';
 import { useNavigate, useParams } from 'react-router-dom';
 import Calendar from './indexing/Calendar';
 import showtimeService from '../../apiServices/showtimeService';
-import { Spinner } from 'react-bootstrap';
+import { Modal, Spinner } from 'react-bootstrap';
 import spinnerStyles from '../../styles/spinner.module.scss';
+import modalStyles from '../../styles/modal.module.scss';
 import { useAuthContext } from '../../utils/authContext';
 function DetailEvent({ children }) {
     const cx = classNames.bind(styles);
+    const modalCx = classNames.bind(modalStyles);
     const navigate = useNavigate();
+    const [showModalContact, setShowModalContact] = useState(false);
     const spinnerCx = classNames.bind(spinnerStyles);
     const [activeIndex, setActiveIndex] = useState(0);
     const aboutRef = useRef(null);
@@ -30,6 +43,11 @@ function DetailEvent({ children }) {
     const organizerRef = useRef(null);
     const recommendRef = useRef(null);
     const [loading, setLoading] = useState(false);
+    const [formValue, setFormvalue] = useState({
+        content: '',
+        email: '',
+        message: '',
+    });
     const scrollHandler = (ref, index) => {
         window.scrollTo({ top: ref.current.offsetTop - 70, behavior: 'smooth' });
     };
@@ -43,6 +61,14 @@ function DetailEvent({ children }) {
     const [showtimes, setShowtimes] = useState([]);
     const [options, setOptions] = useState([]);
     const authContext = useAuthContext();
+    const contentOptions = [
+        'Event Content',
+        'Ticket',
+        'Business Opportunity',
+        'Promotion Plan',
+        'Check-in',
+        'General questions',
+    ];
     let listOption = [
         {
             title: 'About',
@@ -80,6 +106,17 @@ function DetailEvent({ children }) {
             },
         },
     ];
+    const changeHandler = (e) => {
+        setFormvalue({
+            ...formValue,
+            [e.target.name]: e.target.value,
+        });
+    };
+    const sendHandler = () => {
+        if (formValue.content !== '' && formValue.email !== '' && formValue.message !== '') {
+            const email = event.organizer.email;
+        } else alert('Please select question type, enter your message and check your email address.');
+    };
     const scrollEvent = () => {
         const offset = window.scrollY + 60;
 
@@ -245,7 +282,12 @@ function DetailEvent({ children }) {
                                     )}
 
                                     <div className={cx('detail-item')}>
-                                        <Organizer ref={organizerRef} data={event.organizer} />
+                                        <Organizer
+                                            ref={organizerRef}
+                                            data={event.organizer}
+                                            show={showModalContact}
+                                            setShow={setShowModalContact}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -342,6 +384,51 @@ function DetailEvent({ children }) {
                     </div>
                 </div>
             </footer>
+            <Modal
+                dialogClassName={cx('modal')}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                show={showModalContact}
+                onHide={() => setShowModalContact(false)}
+            >
+                <Modal.Header style={{ backgroundColor: '#eee' }} className={modalCx('modal-header')} closeButton>
+                    <Modal.Title
+                        style={{ textAlign: 'center', flex: 1, color: '#666', fontWeight: '700' }}
+                        className={modalCx('title')}
+                    >
+                        Contact the organizer
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className={cx('body')}>
+                    <div className={cx('body-layout')}>
+                        <div style={{ display: 'flex', alignItems: 'center', padding: '0px 10px' }}>
+                            <FontAwesomeIcon color="#ccc" icon={faBars} />
+                            <select name="content" onChange={changeHandler}>
+                                <option value="">Select Topic</option>
+                                {contentOptions.map((content, index) => (
+                                    <option value={content} key={index}>
+                                        {content}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className={cx('modal-input')}>
+                            <FontAwesomeIcon color="#ccc" icon={faEnvelope} />
+                            <input name="email" placeholder="Your email address" onChange={changeHandler} />
+                        </div>
+                        <div className={cx('modal-textarea')}>
+                            <FontAwesomeIcon color="#ccc" icon={faFile} />
+                            <textarea name="message" placeholder="Your message" onChange={changeHandler} />
+                        </div>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer className={modalCx('footer')}>
+                    <Button className={cx('save-btn')} onClick={sendHandler}>
+                        Send messages
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }

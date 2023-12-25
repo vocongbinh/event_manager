@@ -225,3 +225,58 @@ $maxWidth: 1140px;
     cursor: default;
     pointer-events: none;
 }
+//modal
+.modal {
+    min-width: 20%;
+}
+.body-layout {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.6rem;
+    border: 3px solid #eee;
+    select {
+        border: none;
+        outline: none;
+        padding: 10px;
+        color: #555;
+        width: 100%;
+        border-bottom: 1px solid #eee !important;
+    }
+}
+.modal-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 10px;
+    border-bottom: 1px solid #eee;
+    input {
+        padding: 10px;
+        border: none;
+        outline: none;
+        width: 100%;
+    }
+}
+
+.modal-textarea {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    textarea {
+        padding: 0px 10px;
+        border: none;
+        outline: none;
+        width: 100%;
+    }
+}
+
+.save-btn {
+    color: #fff;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.28);
+    background-color: #90ba3e;
+    width: 100%;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px;
+}

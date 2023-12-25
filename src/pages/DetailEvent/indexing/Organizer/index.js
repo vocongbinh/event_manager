@@ -4,7 +4,7 @@ import styles from './Organizer.module.scss';
 import classNames from 'classnames/bind';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { forwardRef, memo } from 'react';
-const Organizer = forwardRef(({ data }, ref) => {
+const Organizer = forwardRef(({ data, show, setShow }, ref) => {
     const cx = classNames.bind(styles);
 
     return (

@@ -1,7 +1,14 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleInfo, faGear, faRightFromBracket, faSailboat, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleInfo,
+    faGear,
+    faRightFromBracket,
+    faSailboat,
+    faTicket,
+    faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import Button from '../../components/Button';
 import Images from '../../../../assets/images';
 import Image from '../../components/Image';
@@ -11,10 +18,11 @@ import CategoryItem from '../Sidebar/CategoryItem';
 import InforItem from './InforItem';
 import { useContext } from 'react';
 import { useAuthContext } from '../../../../utils/authContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 function Header() {
     const cx = classNames.bind(styles);
     const authContext = useAuthContext();
+    const navigate = useNavigate();
     let userOptions = [
         {
             title: 'Edit Profile',
@@ -63,6 +71,14 @@ function Header() {
                 <Button className={cx('create-btn')} to="/newevent" target="_blank" type="round" size="min">
                     Create event
                 </Button>
+                <div
+                    onClick={() => {
+                        navigate('/my_tickets');
+                    }}
+                    className={cx('tickets')}
+                >
+                    <FontAwesomeIcon size="2x" color="#828BA0" icon={faTicket} />
+                </div>
 
                 {authContext.getUser() ? (
                     <Tippy

@@ -37,9 +37,11 @@
     color: #000;
     border-color: var(--primary);
 }
+.container {
+    padding-top: 60px;
+}
 .content {
     display: flex;
-    padding-top: 60px;
     align-items: center;
     flex-direction: column;
     span {

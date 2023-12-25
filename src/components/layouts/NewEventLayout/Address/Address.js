@@ -56,6 +56,7 @@ const Address = ({ ...props }) => {
                     <div className={cx('title-container')}>
                         <HeadlessTippy
                             interactive
+                            placement="bottom"
                             visible={isShowProvince}
                             render={(attrs) => (
                                 <div className={cx('menu-selector')} tabIndex="-1" {...attrs}>
@@ -64,7 +65,10 @@ const Address = ({ ...props }) => {
                                             {provinces.map((item, index) => (
                                                 <div
                                                     key={index}
-                                                    onClick={() => handleSelectProvince(item.code, item.name)}
+                                                    onClick={() => {
+                                                        setIsShowProvince(false);
+                                                        handleSelectProvince(item.code, item.name);
+                                                    }}
                                                     className={cx('item')}
                                                 >
                                                     {item.name}
@@ -112,6 +116,7 @@ const Address = ({ ...props }) => {
                     <div className={cx('title-container')}>
                         <HeadlessTippy
                             interactive
+                            placement="bottom"
                             visible={isShowDistrict}
                             render={(attrs) => (
                                 <div className={cx('menu-selector')} tabIndex="-1" {...attrs}>
@@ -122,7 +127,10 @@ const Address = ({ ...props }) => {
                                                 districts.map((item, index) => (
                                                     <div
                                                         key={index}
-                                                        onClick={() => handleSelectDistrict(item.code, item.name)}
+                                                        onClick={() => {
+                                                            setIsShowDistrict(false);
+                                                            handleSelectDistrict(item.code, item.name);
+                                                        }}
                                                         className={cx('item')}
                                                     >
                                                         {item.name}
@@ -169,6 +177,7 @@ const Address = ({ ...props }) => {
                         <HeadlessTippy
                             interactive
                             visible={isShowWard}
+                            placement="bottom"
                             render={(attrs) => (
                                 <div className={cx('menu-selector')} tabIndex="-1" {...attrs}>
                                     <div className={cx('container')}>
@@ -178,7 +187,10 @@ const Address = ({ ...props }) => {
                                                 wards.map((item, index) => (
                                                     <div
                                                         key={index}
-                                                        onClick={() => handleSelectWard(item.code, item.name)}
+                                                        onClick={() => {
+                                                            setIsShowWard(false);
+                                                            handleSelectWard(item.code, item.name);
+                                                        }}
                                                         className={cx('item')}
                                                     >
                                                         {item.name}
