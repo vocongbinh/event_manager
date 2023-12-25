@@ -46,6 +46,7 @@ function Discount() {
     let dateStart, dateEnd;
     const [errors, setErrors] = useState({});
     const [type, setType] = useState('create');
+    console.log(new Date());
     //form
     const validation = () => {
         let error = {};
@@ -55,7 +56,9 @@ function Discount() {
         if (formValue.amount === '') {
             error.amount = 'Please set the discount amount';
         }
-        if (dateStart >= dateEnd) {
+        if (startDate === null || endDate === null) {
+            error.date = 'Please set date';
+        } else if (dateStart >= dateEnd) {
             error.date = 'End date must be after start date ';
         }
         if (formValue.quantity === '') {
@@ -143,39 +146,42 @@ function Discount() {
     };
     const handleClose = () => {
         setShow(false);
+        setErrors({});
     };
     const handleSave = async () => {
-        const start = listTimePicker.find((item) => item.display === formValue.timeStart);
-        const end = listTimePicker.find((item) => item.display === formValue.timeEnd);
-        let hourStart;
-        let hourEnd;
-        if (start.aa === 'AM' && start.hour < 12) {
-            hourStart = start.hour;
-        } else hourStart = start.hour + 12;
-        if (end.aa === 'AM' && end.hour < 12) {
-            hourEnd = end.hour;
-        } else hourEnd = end.hour + 12;
-        dateStart = new Date(
-            startDate.getFullYear(),
-            startDate.getMonth(),
-            startDate.getDate(),
-            hourStart,
-            start.minute,
-            0,
-        );
-        dateEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), hourEnd, end.minute, 0);
-
-        const data = {
-            code: formValue.code,
-            amount: Number.parseInt(formValue.amount),
-            quantity: Number.parseInt(formValue.quantity),
-            startAt: dateStart,
-            endAt: dateEnd,
-            showtimeId: stid,
-        };
         const errs = validation();
         setErrors(errs);
         if (Object.keys(errs).length === 0) {
+            console.log(formValue.timeStart);
+            const start = listTimePicker.find((item) => item.display === formValue.timeStart);
+            const end = listTimePicker.find((item) => item.display === formValue.timeEnd);
+            let hourStart;
+            let hourEnd;
+            if (start.aa === 'AM' && start.hour < 12) {
+                hourStart = start.hour;
+            } else hourStart = start.hour + 12;
+            if (end.aa === 'AM' && end.hour < 12) {
+                hourEnd = end.hour;
+            } else hourEnd = end.hour + 12;
+            dateStart = new Date(
+                startDate.getFullYear(),
+                startDate.getMonth(),
+                startDate.getDate(),
+                hourStart,
+                start.minute,
+                0,
+            );
+            dateEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), hourEnd, end.minute, 0);
+
+            const data = {
+                code: formValue.code,
+                amount: Number.parseInt(formValue.amount),
+                quantity: Number.parseInt(formValue.quantity),
+                startAt: dateStart,
+                endAt: dateEnd,
+                showtimeId: stid,
+            };
+
             console.log(type);
             if (type === 'create') {
                 console.log('create');

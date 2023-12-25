@@ -6,6 +6,7 @@ import {
     faChartLine,
     faClockFour,
     faCopy,
+    faEdit,
     faGift,
     faLocationDot,
     faPenToSquare,
@@ -48,6 +49,12 @@ function MyEventItem({ data }) {
             title: 'Discount',
             icon: <FontAwesomeIcon icon={faGift} />,
             path: `./${data._id}/discount`,
+            role: ['Owner', 'Admin'],
+        },
+        {
+            title: 'Edit',
+            icon: <FontAwesomeIcon icon={faEdit} />,
+            path: `./${data._id}/edit`,
             role: ['Owner', 'Admin'],
         },
     ];

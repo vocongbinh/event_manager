@@ -119,6 +119,12 @@ const publicRouter = [
         index: 5,
     },
     {
+        path: '/my_event/events/:id/edit',
+        component: Moderator,
+        layout: ManageEventLayout,
+        index: 6,
+    },
+    {
         path: '/events/typeEvent',
         component: TypeEvent,
     },
