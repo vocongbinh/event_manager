@@ -33,7 +33,7 @@ function FilterType({ setEvents, listChecked, setListChecked }) {
         },
         {
             index: 3,
-            title: 'Night life',
+            title: 'Night Life',
         },
         {
             index: 4,

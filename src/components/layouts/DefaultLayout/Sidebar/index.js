@@ -23,7 +23,7 @@ function Sidebar() {
         },
         {
             icon: Images.night,
-            title: 'Night life',
+            title: 'Night Life',
             categories: [11],
         },
         {
