@@ -110,6 +110,10 @@ function SelectTicket() {
                             onHoldTokenExpired={() => {
                                 bookContext.refetchToken();
                             }}
+                            maxSelectedObjects={tickets.map((item) => {
+                                console.log(item.maxPerOrder, typeof item.maxPerOrder);
+                                return { category: item.ticketTypeName, quantity: item.maxPerOrder };
+                            })}
                             showSeatLabels="true"
                             showLegend="true"
                             colorScheme="dark"

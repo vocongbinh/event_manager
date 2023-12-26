@@ -4,8 +4,24 @@
     flex-direction: column;
     overflow-x: auto;
 }
-.table {
+.header {
+    width: 100%;
     margin-top: 40px;
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    p {
+        font-size: 1.1rem;
+        color: #4d4d4d;
+    }
+}
+.table-layout {
+    margin-top: 40px;
+    flex: 1;
+    overflow-x: auto;
+}
+.table {
     width: 100%;
     font-size: 1.6rem;
     td,
@@ -16,6 +32,28 @@
 }
 .table tr:first-child {
     th {
-        background-color: #f9f9f9;
+        background-color: #32da84;
+        color: var(--white);
+    }
+}
+.table {
+    tr {
+        &:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+    }
+}
+.download-btn {
+    background: none repeat scroll 0 0 #c2dea3;
+    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.25) inset;
+    color: #1a6c18;
+    font-size: 1.2rem;
+    padding: 4px 8px;
+    &:hover {
+        background-color: #b6e97b;
+    }
+    &:active {
+        background-color: #b1f069;
+
     }
 }

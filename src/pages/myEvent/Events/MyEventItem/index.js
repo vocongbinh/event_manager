@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 import {
     faBullhorn,
     faChartLine,
+    faCheckToSlot,
     faClockFour,
     faCopy,
     faEdit,
@@ -52,10 +53,10 @@ function MyEventItem({ data }) {
             role: ['Owner', 'Admin'],
         },
         {
-            title: 'Edit',
-            icon: <FontAwesomeIcon icon={faEdit} />,
-            path: `./${data._id}/edit`,
-            role: ['Owner', 'Admin'],
+            title: 'Check-in',
+            icon: <FontAwesomeIcon icon={faCheckToSlot} />,
+            path: `./${data._id}/check-in`,
+            role: ['Owner', 'Admin', 'Moderator', 'Check-in'],
         },
     ];
     let countItems = 0;

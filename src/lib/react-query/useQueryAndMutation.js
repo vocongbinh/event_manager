@@ -11,7 +11,7 @@ import eventService from '../../apiServices/eventService';
 import { getDistricts, getProvinces, getWards } from '../../apiServices/addressService';
 import showtimeService from '../../apiServices/showtimeService';
 import { getOrganizerProfile, updateOrganizer } from '../../apiServices/organizerService';
-import { getDiscountOfEvent } from '../../apiServices/discountService';
+import { getAll, getDiscountOfEvent } from '../../apiServices/discountService';
 // export const useValidateChart = (chartKey) => {
 //     return useQuery({
 //         queryKey: [GET_CHART_VALIDATE_STATUS],
@@ -134,5 +134,11 @@ export const useGetDiscountOfEvent = (eventId) => {
     return useQuery({
         queryKey: ['DiscountOfEvent'],
         queryFn: () => getDiscountOfEvent(eventId),
+    });
+};
+export const useGetAllDiscountOfEvent = (id) => {
+    return useQuery({
+        queryKey: ['DiscountAll'],
+        queryFn: () => getAll(id),
     });
 };

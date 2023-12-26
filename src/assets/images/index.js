@@ -734,6 +734,7 @@ const Images = {
     typeEventImg: require('./type_event_img.jpg'),
     home: require('./Home.png'),
     logo: require('./logo.png'),
+    qrCode: require('./qrcode.png'),
 };
 
 export default Images;

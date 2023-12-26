@@ -6,7 +6,7 @@ function AuthenticationLayout({ children }) {
     const cx = classNames.bind(styles);
     return (
         <div className={cx('wrapper')}>
-            <FormHeader header="Xin chào!" width="30%" />
+            <FormHeader header="Hello!" width="30%" />
             <div className={cx('container')}>{children}</div>
         </div>
     );

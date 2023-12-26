@@ -54,21 +54,19 @@ function Dashboard() {
                 const hotEventData = await eventService.hotEvents();
                 console.log(hotEventData);
                 const labelsConfig = hotEventData.map((event) => event._id.name);
-                let data = [];
+                let datasets = [];
                 const graph = document.getElementById('hotEvent-chart');
                 hotEventData.forEach((event) => {
-                    data.push(event.countSeats);
+                    datasets.push({
+                        label: event._id.name,
+                        data: [event.countSeats],
+                    });
                 });
                 const config = {
                     type: 'bar',
                     data: {
-                        labels: labelsConfig,
-                        datasets: [
-                            {
-                                label: 'hot events',
-                                data: data,
-                            },
-                        ],
+                        labels: ['Hot events'],
+                        datasets: datasets,
                     },
                     options: {
                         responsive: true,

@@ -7,10 +7,10 @@ export const create = async (data) => {
         console.log(error);
     }
 };
-export const getAll = async (showtimeId) => {
+export const getAll = async (id) => {
     try {
         const res = await request.get(`api/discount/showtime`, {
-            params: { showtime_id: showtimeId },
+            params: { event_id: id },
         });
         return res.data;
     } catch (error) {

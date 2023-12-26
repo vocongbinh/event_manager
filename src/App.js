@@ -22,6 +22,7 @@ import BookingResult from './pages/BookEvent/bookContent/BookingResult/bookingRe
 import EditEventLayout from './components/layouts/EditEventLayout/EditEventLayout';
 import OrganizerWrapper from './components/layouts/NewEventLayout/OrganizerProfile/OrganizerWrapper';
 
+import 'react-toastify/dist/ReactToastify.css';
 const client = new QueryClient();
 function App() {
     return (

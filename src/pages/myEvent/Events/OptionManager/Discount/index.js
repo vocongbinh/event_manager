@@ -37,8 +37,12 @@ function Discount() {
     const [endDate, setEndDate] = useState(new Date());
     const [stid, setStid] = useState('');
     const [formValue, setFormValue] = useState({
-        code: '',
-        amount: '',
+        discountName: '',
+        description: '',
+        percent: '',
+        maxAmount: '',
+        minAmount: '',
+        maxTimeUsed: '',
         quantity: '',
         timeStart: '00:00 AM',
         timeEnd: '00:00 AM',
@@ -46,22 +50,50 @@ function Discount() {
         itemId: '',
     });
     let dateStart, dateEnd;
+
     const [errors, setErrors] = useState({});
     const [type, setType] = useState('create');
     console.log(new Date());
     //form
     const validation = () => {
+        const start = listTimePicker.find((item) => item.display === formValue.timeStart);
+        const end = listTimePicker.find((item) => item.display === formValue.timeEnd);
+        let hourStart;
+        let hourEnd;
+        console.log(start);
+        if (start.aa === 'AM' && start.hour < 12) {
+            hourStart = start.hour;
+        } else hourStart = start.hour + 12;
+        if (end.aa === 'AM' && end.hour <= 12) {
+            hourEnd = end.hour;
+        } else hourEnd = end.hour + 12;
+        dateStart = new Date(
+            startDate.getFullYear(),
+            startDate.getMonth(),
+            startDate.getDate(),
+            hourStart,
+            start.minute,
+            0,
+        );
+        dateEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), hourEnd, end.minute, 0);
         let error = {};
-        if (formValue.code.length < 5) {
-            error.code = 'Discount code must have at least 5 characters';
-        } else {
-            const check = allDiscounts.filter((item) => item.code === formValue.code);
-            if (check.length > 0) {
-                error.code = 'Discount existed';
-            }
+        if (formValue.discountName === '') {
+            error.discountName = 'Please set the discount name';
         }
-        if (formValue.amount === '') {
-            error.amount = 'Please set the discount amount';
+        if (formValue.description === '') {
+            error.description = 'Please set the description';
+        }
+        if (formValue.minAmount === '') {
+            error.minAmount = 'Please set the min amount';
+        }
+        if (formValue.maxAmount === '') {
+            error.maxAmount = 'Please set the max amount';
+        }
+        if (formValue.maxTimeUsed === '') {
+            error.maxTimeUsed = 'Please set the max time used';
+        }
+        if (formValue.percent === '') {
+            error.percent = 'Please set the discount percent';
         }
         if (startDate === null || endDate === null) {
             error.date = 'Please set date';
@@ -117,13 +149,14 @@ function Discount() {
         setCheckedAll(!checkedAll);
         if (!checkedAll) {
             setListCheck(ticketTypes.map((item) => item._id));
+            // setListTypeOfDiscount(ticketTypes.map((item) => item._id));
         } else setListCheck([]);
     };
     const { isLoading, isError, data, refetch } = useQuery({
         queryKey: ['discounts', stid],
         queryFn: async () => {
             if (stid !== undefined) {
-                const discountData = await discountService.getDiscountOfEvent(params.id);
+                const discountData = await discountService.getAll(params.id);
                 setDiscounts(discountData);
             }
         },
@@ -146,8 +179,12 @@ function Discount() {
         setStartDate(new Date(data.startAt));
         setEndDate(new Date(data.endAt));
         setFormValue({
-            code: data.code,
-            amount: data.amount,
+            discountName: data.discountName,
+            description: data.description,
+            percent: data.percent,
+            maxAmount: data.maxAmount,
+            minAmount: data.minOrderAmount,
+            maxTimeUsed: data.maxtimeUsed,
             quantity: data.quantity,
             timeStart: format(new Date(data.startAt), 'hh:mm aa'),
             timeEnd: format(new Date(data.endAt), 'hh:mm aa'),
@@ -157,16 +194,47 @@ function Discount() {
     const handleCreate = () => {
         setType('create');
         setShow(true);
-        setFormValue({ code: '', amount: '', quantity: '', timeStart: '00:00 AM', timeEnd: '00:00 AM' });
+        setFormValue({
+            discountName: '',
+            description: '',
+            percent: '',
+            maxAmount: '',
+            minAmount: '',
+            maxTimeUsed: '',
+            quantity: '',
+            timeStart: '00:00 AM',
+            timeEnd: '00:00 AM',
+        });
         setStartDate(null);
         setEndDate(null);
     };
     const handleClose = () => {
         setShow(false);
         setErrors({});
+        setCheckedAll(false);
+        setListCheck([]);
+        setListTypeOfDiscount(
+            ticketTypes.map((item) => {
+                return {
+                    _id: item._id,
+                    quantity: 0,
+                    ticketName: item.ticketTypeName,
+                };
+            }),
+        );
     };
     const handleSave = async () => {
         const errs = validation();
+        let listChecked;
+        if (checkedAll) {
+            listChecked = [
+                {
+                    ticketName: 'all',
+                    quantity: quantityAll,
+                },
+            ];
+        } else listChecked = listTypeOfDiscount;
+        console.log(listChecked);
         setErrors(errs);
         if (Object.keys(errs).length === 0) {
             console.log(formValue.timeStart);
@@ -192,22 +260,23 @@ function Discount() {
             dateEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), hourEnd, end.minute, 0);
 
             const data = {
-                code: formValue.code,
-                amount: Number.parseInt(formValue.amount),
-                quantity: Number.parseInt(formValue.quantity),
+                discountName: formValue.discountName,
+                description: formValue.description,
+                percent: Number.parseInt(formValue.percent),
+                maxAmount: Number.parseInt(formValue.maxAmount),
+                minOrderAmount: Number.parseInt(formValue.minAmount),
+                eventId: params.id,
+                maxtimeUsed: Number.parseInt(formValue.maxTimeUsed),
                 startAt: dateStart,
                 endAt: dateEnd,
-                showtimeId: stid,
-                ticketTypes: listTypeOfDiscount,
+                quantity: Number.parseInt(formValue.quantity),
             };
             console.log(data);
+
             console.log(type);
             if (type === 'create') {
                 console.log('create');
-                await discountService
-                    .create(data)
-                    .then((res) => console.log(res))
-                    .catch((err) => console.log(err));
+                await discountService.create(data).then((res) => console.log(res));
             } else {
                 console.log('update');
                 await discountService.updateDiscount(discount._id, data);
@@ -250,7 +319,7 @@ function Discount() {
             <div className={cx('container')}>
                 <div className={cx('time')}>
                     <p>Manage discount codes</p>
-                    <div className={cx('time-select')}>
+                    {/* <div className={cx('time-select')}>
                         <span>Shows In</span>
                         <select
                             onChange={async (e) => {
@@ -275,29 +344,27 @@ function Discount() {
                                 <option value={showtime._id}>{showtime.startShowTime}</option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                 </div>
                 {discounts && discounts.length > 0 && (
                     <table className={cx('table')}>
                         <thead>
                             <tr>
-                                <th>discount code</th>
+                                <th>discountName</th>
                                 <th>amount</th>
                                 <th>start</th>
                                 <th>end</th>
-                                <th>orders used</th>
-                                <th>status</th>
+                                <th>min total price</th>
                             </tr>
                         </thead>
                         <tbody>
                             {discounts.map((item) => (
                                 <tr>
-                                    <td>{item.code}</td>
-                                    <td>{item.amount}%</td>
+                                    <td>{item.discountName}</td>
+                                    <td>{item.percent}%</td>
                                     <td>{format(new Date(item.startAt), 'dd/MM/yyyy HH:mm aa')}</td>
                                     <td>{format(new Date(item.endAt), 'dd/MM/yyyy HH:mm aa')}</td>
-                                    <td>{item.used}</td>
-                                    <th>pending</th>
+                                    <td>{item.minOrderAmount}</td>
                                     <th>
                                         <FontAwesomeIcon
                                             onClick={() => {
@@ -318,7 +385,7 @@ function Discount() {
                     </table>
                 )}
 
-                {stid && (
+                {
                     <Button
                         onClick={handleCreate}
                         className={cx('create-btn')}
@@ -327,7 +394,7 @@ function Discount() {
                     >
                         Add New Discount Code
                     </Button>
-                )}
+                }
 
                 <Modal
                     dialogClassName={cx('modal')}
@@ -343,27 +410,92 @@ function Discount() {
                         {/* <DiscountModel /> */}
                         <div className={cx('code-layout')}>
                             <input
-                                name="code"
-                                value={formValue.code}
+                                name="discountName"
+                                value={formValue.discountName}
                                 onChange={handleChange}
-                                placeholder="DISCOUNT CODE"
+                                placeholder="Discount name"
                             />
-                            {errors.code && <div className={cx('error')}>{errors.code}</div>}
+                            {errors.discountName && <div className={cx('error')}>{errors.discountName}</div>}
+                        </div>
+                        <div className={cx('code-layout')}>
+                            <input
+                                name="description"
+                                value={formValue.description}
+                                onChange={handleChange}
+                                placeholder="Description"
+                            />
+                            {errors.description && <div className={cx('error')}>{errors.description}</div>}
+                        </div>
 
-                            <span>Only alphanumeric characters allowed (A-Z and 0-9)</span>
+                        <div className={cx('body-layout', 'amount')}>
+                            <div className="row">
+                                <div className="col-4">
+                                    <span>Discount percent</span>
+                                </div>
+                                <div className="col-8">
+                                    <input
+                                        type="number"
+                                        name="percent"
+                                        value={formValue.percent}
+                                        onChange={handleChange}
+                                    />
+                                    <span>% of ticket sale</span>
+                                </div>
+                            </div>
+                            {errors.percent && <div className={cx('error')}>{errors.percent}</div>}
                         </div>
                         <div className={cx('body-layout', 'amount')}>
                             <div className="row">
                                 <div className="col-4">
-                                    <span>Discount amount</span>
+                                    <span>Min total price</span>
                                 </div>
                                 <div className="col-8">
-                                    <input name="amount" value={formValue.amount} onChange={handleChange} />
-                                    <span>% of ticket sale</span>
+                                    <input
+                                        type="number"
+                                        name="minAmount"
+                                        value={formValue.minAmount}
+                                        onChange={handleChange}
+                                    />
+                                    <span>VND</span>
                                 </div>
                             </div>
-                            {errors.amount && <div className={cx('error')}>{errors.amount}</div>}
+
+                            {errors.minAmount && <div className={cx('error')}>{errors.minAmount}</div>}
                         </div>
+                        <div className={cx('body-layout', 'amount')}>
+                            <div className="row">
+                                <div className="col-4">
+                                    <span>Max amount</span>
+                                </div>
+                                <div className="col-8">
+                                    <input
+                                        type="number"
+                                        name="maxAmount"
+                                        value={formValue.maxAmount}
+                                        onChange={handleChange}
+                                    />
+                                    <span>VND</span>
+                                </div>
+                            </div>
+                            {errors.maxAmount && <div className={cx('error')}>{errors.maxAmount}</div>}
+                        </div>
+                        <div className={cx('body-layout', 'amount')}>
+                            <div className="row">
+                                <div className="col-4">
+                                    <span>Max time used</span>
+                                </div>
+                                <div className="col-8">
+                                    <input
+                                        type="number"
+                                        name="maxTimeUsed"
+                                        value={formValue.maxTimeUsed}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+                            {errors.maxTimeUsed && <div className={cx('error')}>{errors.maxTimeUsed}</div>}
+                        </div>
+
                         <div className={cx('body-layout', 'time')}>
                             <div className="row">
                                 <div className="col-4">
@@ -430,7 +562,7 @@ function Discount() {
                             </div>
                             {errors.quantity && <div className={cx('error')}>{errors.quantity}</div>}
                         </div>
-                        <div className={cx('body-layout')}>
+                        {/* <div className={cx('body-layout')}>
                             <div className="row">
                                 <div className="col-4">
                                     <span>Ticket types</span>
@@ -487,7 +619,7 @@ function Discount() {
                                     })}
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </Modal.Body>
                     <Modal.Footer className={cx('footer')}>
                         <Button className={cx('save-btn')} size="max" onClick={handleSave}>
