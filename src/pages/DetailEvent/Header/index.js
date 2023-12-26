@@ -56,6 +56,7 @@ function Header() {
                     <Button
                         className={cx('create-btn')}
                         size="min"
+                        to={authContext.getOrganizer() ? '/newEvent' : '/organizer/profile'}
                         preIcon={<FontAwesomeIcon icon={faPlus} className={cx('add-icon')} />}
                     >
                         Create event

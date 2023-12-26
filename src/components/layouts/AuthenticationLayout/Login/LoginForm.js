@@ -47,7 +47,7 @@ const LoginForm = () => {
                 authContext.logIn(values);
 
                 const redirectPath = location.state?.path || '/';
-                navigate(-1);
+                navigate('/');
                 // navigate(redirectPath, { replace: true, state: { phoneNumber } });
             })
             .catch((error) => {

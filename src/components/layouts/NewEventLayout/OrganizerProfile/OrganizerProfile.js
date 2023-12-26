@@ -99,9 +99,9 @@ const OrganizerProfile = () => {
                                         })}
                                     </div>
                                 ) : null}
-                                {errors ? (
+                                {!formik.errors && errors ? (
                                     <div className={cx('error-errors')}>
-                                        <div className={cx('error-label')}>{errors.message}</div>
+                                        <div className={cx('error-label')}>Đã có lỗi từ phía máy chủ</div>
                                     </div>
                                 ) : null}
                             </div>
@@ -192,7 +192,11 @@ const OrganizerProfile = () => {
                                 <div className={cx('item-container')}>
                                     <div className={cx('title-text')}>Organizer Description</div>
                                     <div className="row col-12">
-                                        <TextAreaItem name="text" type="text" placeholder="Organizer description" />
+                                        <TextAreaItem
+                                            name="description"
+                                            type="text"
+                                            placeholder="Organizer description"
+                                        />
                                     </div>
                                 </div>
                             </div>

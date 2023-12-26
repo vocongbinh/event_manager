@@ -18,7 +18,7 @@ function MyCoupons() {
     });
     return (
         <div>
-            {coupons.map((coupon, index) => (
+            {coupons?.map((coupon, index) => (
                 <CouponItem key={index} data={coupon} />
             ))}
         </div>

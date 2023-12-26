@@ -6,8 +6,10 @@ import styles from '../../MyTickets.module.scss';
 import TicketItem from './ticketItem';
 import classNames from 'classnames/bind';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router';
 function MyEvents() {
     const [tickets, setTickets] = useState([]);
+    const navigate = useNavigate();
     const cx = classNames.bind(styles);
     const { data } = useQuery({
         queryKey: ['myTickets'],
@@ -19,8 +21,8 @@ function MyEvents() {
     });
     return (
         <div>
-            {tickets.length > 0 ? (
-                tickets.map((ticket, index) => {
+            {tickets?.length > 0 ? (
+                tickets?.map((ticket, index) => {
                     const time = format(new Date(ticket.showTimeId.startAt), 'MMMM, dd yyyy');
                     const addressData = ticket?.showTimeId?.eventId?.stageId?.addressId;
                     const address = `${addressData?.ward}, ${addressData?.district}, ${addressData?.province}`;
@@ -176,7 +178,9 @@ function MyEvents() {
                         </defs>
                     </svg>
                     <span>Bạn chưa có vé nào</span>
-                    <Button className={cx('book-btn')}>Book now</Button>
+                    <Button onClick={() => navigate('/')} className={cx('book-btn')}>
+                        Book now
+                    </Button>
                 </div>
             )}
         </div>

@@ -14,6 +14,7 @@ import modalStyles from '../../../../../styles/modal.module.scss';
 import userService from '../../../../../apiServices/useService';
 import moderatorService from '../../../../../apiServices/moderatorService';
 import { param } from 'jquery';
+import Images from '../../../../../assets/images';
 function Moderator() {
     const cx = classNames.bind(styles);
     const modalCx = classNames.bind(modalStyles);
@@ -94,7 +95,11 @@ function Moderator() {
                                 <tr style={{ backgroundColor: '#f6f6f6' }}>
                                     <td>
                                         <div className="d-flex align-items-center">
-                                            <img className={cx('avatar-item')} alt="" src={item.user.imageUrl} />
+                                            <img
+                                                className={cx('avatar-item')}
+                                                alt=""
+                                                src={item?.user?.imageUrl ?? Images.avatar}
+                                            />
                                             <div className="d-flex flex-column">
                                                 <span className={cx('name-item')}>{item.user.fullName}</span>
                                                 <span className={cx('email-item')}> {item.user.email}</span>

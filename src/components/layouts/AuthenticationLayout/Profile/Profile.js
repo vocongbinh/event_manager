@@ -57,10 +57,11 @@ const Profile = () => {
                     await authService
                         .editProfile(newUserData)
                         .then((response) => {
-                            authContext.setUserInfo(response);
+                            // authContext.setUserInfo(response);
+                            localStorage.setItem('user', JSON.stringify(response));
                             showSucces(true);
                         })
-                        .catch((err) => setError(err));
+                        .catch((err) => setError('Đã có lỗi xảy ra. Thử lại sau!'));
                     setIsSubmiting(false);
                 }}
             >
@@ -108,6 +109,8 @@ const Profile = () => {
                             </div>
                             <Form>
                                 {/* image picker */}
+                                {/* <div>{JSON.stringify(formik.errors)}</div> */}
+
                                 <AvatarPicker name="imageUrl" type="file" />
                                 <InputItem name="fullName" placeholder="Fullname" label="Fullname" />
                                 <InputItem
