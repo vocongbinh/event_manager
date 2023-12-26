@@ -17,7 +17,6 @@ function SelectTicket() {
     //get book context
     const bookContext = useContext(BookContext);
     bookContext.setShowtime(params.showtime_id);
-
     useEffect(() => {
         const fetchAPI = async () => {
             try {
@@ -73,10 +72,11 @@ function SelectTicket() {
     };
 
     const deselectedObjectHandler = (obj) => {
+        let seats = [];
         bookContext.setBookings((prev) => {
             return prev.map((item) => {
                 let count = item.count;
-                let seats = item.seats;
+                seats = item.seats;
                 console.log(item.name, obj.category.label);
                 if (item.name === obj.category.label) {
                     count--;

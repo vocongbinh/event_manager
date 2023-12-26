@@ -491,7 +491,6 @@ function BookEvent({ children, ...props }) {
                                     {/* <div className={`col-12 ${cx('discount')}`}>
                                         <h5>Enter Discount Code</h5>
                                     </div> */}
-                                    <button disable={bookings.length == 2}>didk</button>
                                     <div className="col-12">
                                         <Button
                                             disable={!bookings || bookings?.length}
