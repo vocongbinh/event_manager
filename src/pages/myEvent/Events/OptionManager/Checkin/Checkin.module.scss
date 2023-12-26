@@ -1,0 +1,55 @@
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(to bottom right, var(--primary), yellow);
+    display: flex;
+    flex-direction: column;
+}
+.header-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.header {
+    width: 80%;
+    margin: 0px auto;
+    padding-top: 60px;
+    font-size: 9rem;
+    font-weight: 700;
+    color: var(--white);
+    text-align: center;
+}
+.container {
+    padding-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.time-select {
+    text-align: center;
+    font-size: 3rem;
+    color: var(--white);
+}
+.scan-btn {
+    margin-top: 60px;
+    width: 40%;
+    background-image: linear-gradient(to bottom right, rgb(8 118 61), #c0fdca);
+
+    padding: 20px 60px;
+    border-radius: 64px;
+    color: var(--white);
+    transition: 0.5s ease-in-out background-image;
+    &:hover {
+        background-image: linear-gradient(to bottom right, rgb(8 118 61), #3fdb59);
+    }
+
+    p {
+        font-size: 5rem;
+        font-weight: 600;
+        text-align: left;
+    }
+    h6 {
+        font-size: 1.6rem;
+        font-weight: 400;
+        text-align: left;
+    }
+}

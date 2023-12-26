@@ -4,10 +4,13 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import Dashboard from './indexes/Dashboard';
 import Events from './indexes/Events';
+import { QrReader } from 'react-qr-reader';
 import { useState } from 'react';
 function AdminLayout({ children }) {
     const cx = classNames.bind(styles);
     const [selected, setSelected] = useState(0);
+    const [data, setData] = useState('No result');
+
     const options = [
         {
             index: 0,

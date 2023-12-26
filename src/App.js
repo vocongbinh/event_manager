@@ -15,7 +15,7 @@ import NewEventForm from './components/layouts/NewEventLayout/NewEventForm/NewEv
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import OrganizerProfile from './components/layouts/NewEventLayout/OrganizerProfile/OrganizerProfile';
 import BookingResult from './pages/BookEvent/bookContent/BookingResult/bookingResult';
-
+import 'react-toastify/dist/ReactToastify.css';
 const client = new QueryClient();
 function App() {
     return (

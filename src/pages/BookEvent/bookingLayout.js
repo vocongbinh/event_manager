@@ -162,7 +162,7 @@ function BookEvent({ children, ...props }) {
             // navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
 
             const receiverInformation = {
-                receiverName: firstName + latstName,
+                receiverName: firstName + ' ' + latstName,
                 receiverEmail: email,
                 receiverPhoneNumber: phoneNumber,
             };
@@ -355,7 +355,10 @@ function BookEvent({ children, ...props }) {
                                                                 <h5>{item.name}</h5>
                                                                 <p>{nf.format(item.price)} VND</p>
                                                                 {item.seats && (
-                                                                    <div className="d-flex">
+                                                                    <div
+                                                                        className="d-flex"
+                                                                        style={{ flexWrap: 'wrap' }}
+                                                                    >
                                                                         {item.seats.map((seat, index) => (
                                                                             <div
                                                                                 className={cx('seat-item')}

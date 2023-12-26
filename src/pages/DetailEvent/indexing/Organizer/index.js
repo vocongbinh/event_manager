@@ -15,9 +15,9 @@ const Organizer = forwardRef(({ data, show, setShow }, ref) => {
                 <div className={cx('content')}>
                     <p className={cx('name')}>{data && data.organizerName}</p>
                     <p className={cx('description')}>{data && data.description}</p>
-                    <Button className={cx('contact-btn')} preIcon={<FontAwesomeIcon icon={faEnvelope} />}>
+                    {/* <Button className={cx('contact-btn')} preIcon={<FontAwesomeIcon icon={faEnvelope} />}>
                         Contact the organizer
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
         </div>

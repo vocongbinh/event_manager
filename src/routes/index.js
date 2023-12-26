@@ -31,6 +31,8 @@ import NewStageChart from '../components/layouts/NewEventLayout/NewStage/NewStag
 import Address from '../components/layouts/NewEventLayout/Address/Address';
 import AdminLayout from '../components/layouts/AdminLayout';
 import DetailPendingEvent from '../pages/DetailPendingEvent';
+import Checkin from '../pages/myEvent/Events/OptionManager/Checkin';
+import CheckinSuccess from '../pages/myEvent/Events/OptionManager/Checkin/chekinSuccess';
 //private router
 const privateRouter = [{}];
 //public router
@@ -119,9 +121,8 @@ const publicRouter = [
         index: 5,
     },
     {
-        path: '/my_event/events/:id/edit',
-        component: Moderator,
-        layout: ManageEventLayout,
+        path: '/my_event/events/:id/check-in',
+        component: Checkin,
         index: 6,
     },
     {
@@ -170,6 +171,10 @@ const publicRouter = [
     {
         path: '/admin/:id',
         component: DetailPendingEvent,
+    },
+    {
+        path: '/checkinSuccess',
+        component: CheckinSuccess,
     },
 ];
 export { privateRouter, publicRouter };

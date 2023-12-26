@@ -66,9 +66,9 @@ function ManageEventLayout({ children, ...props }) {
             index: 5,
         },
         {
-            title: 'Edit',
+            title: 'Check-in',
             icon: <FontAwesomeIcon icon={faEdit} />,
-            path: current.split('/').slice(0, -1).join('/') + '/edit',
+            path: current.split('/').slice(0, -1).join('/') + '/check-in',
             index: 6,
         },
     ];

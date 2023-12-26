@@ -25,6 +25,13 @@ const InputItem = ({ label, ...props }) => {
                         // value={value}
                         // type="text"
                         // name={name}
+                        onKeyDown={(e) => {
+                            if (label === 'Password') {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                }
+                            }
+                        }}
                         className={cx('input-item')}
                         // onFocus={() => setInputFocus(true)}
                         // onBlur={() => setInputFocus(false)}
