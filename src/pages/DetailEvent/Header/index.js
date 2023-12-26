@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../../utils/authContext';
 function Header() {
     const cx = classNames.bind(styles);
-    const categories = ['Live music', 'Theater-Art', 'Nightlife', 'Community', 'Course', 'Attractions', 'Sport'];
+    const categories = ['Live music', 'Theater Art', 'Night life', 'Community', 'Course', 'Attractions', 'Sport'];
     const listLocation = ['Ho Chi Minh', 'Ha Noi', 'Other locations'];
     const navigate = useNavigate();
     const authContext = useAuthContext();

@@ -29,11 +29,11 @@ function FilterType({ setEvents, listChecked, setListChecked }) {
         },
         {
             index: 2,
-            title: 'Theater-Art',
+            title: 'Theater Art',
         },
         {
             index: 3,
-            title: 'Nightlife',
+            title: 'Night life',
         },
         {
             index: 4,

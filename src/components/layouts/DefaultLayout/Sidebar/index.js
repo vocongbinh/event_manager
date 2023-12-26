@@ -18,12 +18,12 @@ function Sidebar() {
         },
         {
             icon: Images.curture,
-            title: 'Theater-Art',
+            title: 'Theater Art',
             categories: [9, 10],
         },
         {
             icon: Images.night,
-            title: 'nightlife',
+            title: 'Night life',
             categories: [11],
         },
         {
