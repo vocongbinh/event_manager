@@ -11,6 +11,7 @@ import InforItem from '../../DefaultLayout/Header/InforItem';
 
 import { useAuthContext } from '../../../../utils/authContext';
 import { Link } from 'react-router-dom';
+import Images from '../../../../assets/images';
 function Header() {
     const cx = classNames.bind(styles);
     const authContext = useAuthContext();
@@ -62,7 +63,7 @@ function Header() {
                         <Button
                             type="primary"
                             size="min"
-                            preIcon={<Image src={user.imageUrl} className={cx('avatar')} />}
+                            preIcon={<Image src={user.imageUrl ?? Images.avatar} className={cx('avatar')} />}
                         >
                             {user.fullName}
                         </Button>

@@ -16,17 +16,17 @@ function MyTickets() {
             index: 0,
             component: <MyEvents />,
         },
-        {
-            title: 'Vouchers',
-            index: 1,
-            component: <MyCoupons />,
-        },
+        // {
+        //     title: 'Vouchers',
+        //     index: 1,
+        //     component: <MyCoupons />,
+        // },
     ];
 
     return (
         <div className={cx('wrapper')}>
             <h3 className={cx('title')}>Your Tickets</h3>
-            <div className={cx('header')}>
+            {/* <div className={cx('header')}>
                 {listTabs.map((item, index) => (
                     <div
                         className={cx('tab-item', {
@@ -37,8 +37,8 @@ function MyTickets() {
                         {item.title}
                     </div>
                 ))}
-            </div>
-            <div className={cx('container')}>{listTabs[selected].component}</div>
+            </div> */}
+            <div className={cx('container')}>{listTabs[0].component}</div>
         </div>
     );
 }

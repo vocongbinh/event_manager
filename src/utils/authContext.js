@@ -13,6 +13,15 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(values));
         // setUserInfo(values);
     };
+    const setOrganizer = (values) => {
+        console.log(values);
+        localStorage.setItem('organizer', JSON.stringify(values));
+    };
+    const getOrganizer = () => {
+        const organizer = localStorage.getItem('organizer');
+        if (organizer) return JSON.parse(organizer);
+        else return null;
+    };
     const getUser = () => {
         const user = localStorage.getItem('user');
         if (user) {
@@ -30,7 +39,7 @@ export const AuthProvider = ({ children }) => {
         setRegister(data);
     };
     return (
-        <AuthContext.Provider value={{ registerData, logIn, logOut, register, getUser }}>
+        <AuthContext.Provider value={{ registerData, logIn, logOut, register, getUser, setOrganizer, getOrganizer }}>
             {children}
         </AuthContext.Provider>
     );

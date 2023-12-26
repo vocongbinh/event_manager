@@ -24,7 +24,6 @@ function Header() {
     const cx = classNames.bind(styles);
     const authContext = useAuthContext();
     const navigate = useNavigate();
-    const [organizer, setOrganizer] = useState(null);
 
     let userOptions = [
         {
@@ -47,7 +46,7 @@ function Header() {
         const fetchOrganizerProfile = async () => {
             getOrganizerProfile()
                 .then((data) => {
-                    setOrganizer(data);
+                    authContext.setOrganizer(data);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -86,7 +85,7 @@ function Header() {
             <div className={cx('action')}>
                 <Button
                     className={cx('create-btn')}
-                    to={organizer ? '/newEvent' : '/organizer/profile'}
+                    to={authContext.getOrganizer() ? '/newEvent' : '/organizer/profile'}
                     target="_blank"
                     type="round"
                     size="min"
@@ -127,7 +126,7 @@ function Header() {
                         <Button
                             type="primary"
                             size="min"
-                            preIcon={<Image src={user.imageUrl} className={cx('avatar')} />}
+                            preIcon={<Image src={user.imageUrl ?? Images.avatar} className={cx('avatar')} />}
                         >
                             {user.fullName}
                         </Button>

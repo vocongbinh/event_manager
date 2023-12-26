@@ -107,7 +107,7 @@ const RegisterForm = () => {
                                     ) : null}
                                     {errors ? (
                                         <div className={cx('error-errors')}>
-                                            <div className={cx('error-label')}>{errors.message}</div>
+                                            <div className={cx('error-label')}>Đã có lỗi xảy ra</div>
                                         </div>
                                     ) : null}
                                 </div>

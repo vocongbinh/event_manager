@@ -86,8 +86,8 @@ export const organizerSchema = yup.object().shape({
     email: yup.string().email().required('Please input organizer email'),
     organizerName: yup.string().required('Please input organizer name'),
     businessType: yup.string().required('Please select business type'),
-    taxCode: yup.string(),
-    logoImage: yup.string(),
+    taxCode: yup.string().required('Please select tax code'),
+    logoImage: yup.string().required('Please pick organizer image'),
     phoneNumber: yup.number().required('Please input organizer phone number'),
     provinceCode: yup.number().required(),
     districtCode: yup.number().required(),
@@ -96,5 +96,5 @@ export const organizerSchema = yup.object().shape({
     district: yup.string().required('Plase select organizer district'),
     ward: yup.string().required('Please select organizer ward'),
     displacePlace: yup.string().required('Please input organizer location'),
-    description: yup.string(),
+    description: yup.string().required('Please input organizer description'),
 });

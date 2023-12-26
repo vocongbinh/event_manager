@@ -29,18 +29,18 @@ function MyEventLayout({ children, ...props }) {
             path: '/my_event/events',
             index: 1,
         },
-        {
-            title: 'My account balance',
-            icon: <FontAwesomeIcon icon={faMoneyBill} />,
-            path: '/my_event/account_balance',
-            index: 2,
-        },
-        {
-            title: 'Bank account information',
-            icon: <FontAwesomeIcon icon={faPiggyBank} />,
-            path: '/my_event/bank_account',
-            index: 3,
-        },
+        // {
+        //     title: 'My account balance',
+        //     icon: <FontAwesomeIcon icon={faMoneyBill} />,
+        //     path: '/my_event/account_balance',
+        //     index: 2,
+        // },
+        // {
+        //     title: 'Bank account information',
+        //     icon: <FontAwesomeIcon icon={faPiggyBank} />,
+        //     path: '/my_event/bank_account',
+        //     index: 3,
+        // },
     ];
     return (
         <div className={cx('wrapper')}>
@@ -57,7 +57,11 @@ function MyEventLayout({ children, ...props }) {
                     <button>
                         {authContext.getUser().fullName || ''}
                         <span className={cx('name')}>
-                            <img alt="" src={authContext.getUser().imageUrl} className={cx('avatar')} />
+                            <img
+                                alt=""
+                                src={authContext.getUser().imageUrl ?? Images.avatar}
+                                className={cx('avatar')}
+                            />
                         </span>
                     </button>
                 </div>

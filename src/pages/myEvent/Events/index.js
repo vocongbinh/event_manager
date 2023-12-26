@@ -24,8 +24,8 @@ function Events() {
     const navigate = useNavigate();
     const indexOfLastRecord = currentPage * maxPageDisplay;
     const indexOfFirstRecord = indexOfLastRecord - maxPageDisplay;
-    const nPages = Math.ceil(events.length / maxPageDisplay);
-    displayPage = events.slice(indexOfFirstRecord, indexOfLastRecord);
+    const nPages = Math.ceil(events?.length / maxPageDisplay);
+    displayPage = events?.slice(indexOfFirstRecord, indexOfLastRecord);
     const authContext = useAuthContext();
     const handleSetActive = (count) => {
         setCurrentPage(1);
@@ -42,7 +42,7 @@ function Events() {
     };
     useEffect(() => {
         const fetchApi = async () => {
-            const events = await myService.allEvents(authContext.getUser()._id);
+            const events = await myService.allEvents(authContext.getUser()?._id);
             console.log(events);
             setEvents(events);
         };
