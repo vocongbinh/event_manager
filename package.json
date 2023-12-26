@@ -37,7 +37,7 @@
         "moment": "^2.29.4",
         "moment-range": "^4.0.2",
         "normalize.css": "^8.0.1",
-        "react": "^18.2.0",
+        "react": "^18.0.0",
         "react-bootstrap": "^2.9.1",
         "react-chatbot-kit": "^2.1.2",
         "react-csv": "^2.2.2",
