@@ -113,7 +113,6 @@ function TypeEvent() {
                     <Link to="/">
                         <img alt="" className={cx('logo')} src={Images.logo} />
                     </Link>
-                    <DropdownButton />
                 </div>
                 <div className={cx('search')}>
                     <p className={cx('search-title')}>Discover upcoming events</p>
