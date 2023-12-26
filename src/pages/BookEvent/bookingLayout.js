@@ -37,6 +37,8 @@ import { createNewBooking } from '../../apiServices/bookingService';
 import Home from '../Home';
 import DisCountPicker from '../../components/layouts/components/DiscountPicker/DisCountPicker';
 import DiscountApply from '../../components/layouts/components/DiscountPicker/DiscountApply/DiscountApply';
+import { ToastContainer } from 'react-toastify';
+import toastMessage from '../../utils/toast';
 
 export const BookContext = createContext();
 function BookEvent({ children, ...props }) {
@@ -221,12 +223,17 @@ function BookEvent({ children, ...props }) {
     const listLayout = [<SelectTicket />, <PaymentInfo />];
     const nextHandler = async () => {
         console.log(activeStep);
+        let checkBookings = bookings.filter((booking) => booking.seats.length === 0);
         if (activeStep < 1) {
-            const value = activeStep + 2;
+            if (bookings.length !== checkBookings.length) {
+                const value = activeStep + 2;
 
-            navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
-            holdTickets({ bookings, eventKey, holdToken });
-            setActiveStep((prev) => prev + 1);
+                navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
+                holdTickets({ bookings, eventKey, holdToken });
+                setActiveStep((prev) => prev + 1);
+            } else {
+                toastMessage({ type: 'error', title: 'PLease choose seats!' });
+            }
         } else {
             console.log('do step 2' + showtime);
             // navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
@@ -507,6 +514,18 @@ function BookEvent({ children, ...props }) {
                     </div>
                 </div>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </div>
     );
 }

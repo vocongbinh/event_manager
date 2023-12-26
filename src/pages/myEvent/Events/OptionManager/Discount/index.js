@@ -56,6 +56,7 @@ function Discount() {
     console.log(new Date());
     //form
     const validation = () => {
+        console.log(formValue.timeStart);
         const start = listTimePicker.find((item) => item.display === formValue.timeStart);
         const end = listTimePicker.find((item) => item.display === formValue.timeEnd);
         let hourStart;
@@ -186,8 +187,8 @@ function Discount() {
             minAmount: data.minOrderAmount,
             maxTimeUsed: data.maxtimeUsed,
             quantity: data.quantity,
-            timeStart: format(new Date(data.startAt), 'hh:mm aa'),
-            timeEnd: format(new Date(data.endAt), 'hh:mm aa'),
+            timeStart: format(new Date(data.startAt), 'HH:mm aa'),
+            timeEnd: format(new Date(data.endAt), 'HH:mm aa'),
         });
         setType('update');
     };
