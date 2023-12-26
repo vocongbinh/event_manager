@@ -20,27 +20,17 @@ const Tickets = () => {
             const categories = await getCategories(newEventContext.chart);
             if (categories != undefined) {
                 categories.forEach((category) => {
-                    let existingTicket = updatedTickets.find((ticket) => ticket.key === category.key);
-                    if (existingTicket) {
-                        existingTicket.ticketTypeName = category.label;
-                        existingTicket.ticketColor = category.color;
-                    } else {
-                        updatedTickets.push({
-                            isFree: false,
-                            ticketTypeName: category.label,
-                            ticketTypePrice: '',
-                            ticketTypeDescription: '',
-                            ticketImage: null,
-                            ticketColor: category.color,
-                            minPerOrder: '',
-                            maxPerOrder: '',
-                        });
-                    }
+                    updatedTickets.push({
+                        isFree: false,
+                        ticketTypeName: category.label,
+                        ticketTypePrice: '',
+                        ticketTypeDescription: '',
+                        ticketImage: null,
+                        ticketColor: category.color,
+                        minPerOrder: '',
+                        maxPerOrder: '',
+                    });
                 });
-                updatedTickets = updatedTickets.filter((ticket) =>
-                    categories.some((category) => category.key === ticket.key),
-                );
-                console.log(updatedTickets);
                 setTickets(updatedTickets);
                 console.log('its false' + JSON.stringify(updatedTickets));
                 setIsPending(false);
