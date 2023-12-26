@@ -123,7 +123,7 @@ function Discount() {
         queryKey: ['discounts', stid],
         queryFn: async () => {
             if (stid !== undefined) {
-                const discountData = await discountService.getAll(stid);
+                const discountData = await discountService.getDiscountOfEvent(params.id);
                 setDiscounts(discountData);
             }
         },
@@ -198,12 +198,16 @@ function Discount() {
                 startAt: dateStart,
                 endAt: dateEnd,
                 showtimeId: stid,
+                ticketTypes: listTypeOfDiscount,
             };
-
+            console.log(data);
             console.log(type);
             if (type === 'create') {
                 console.log('create');
-                await discountService.create(data).then((res) => console.log(res));
+                await discountService
+                    .create(data)
+                    .then((res) => console.log(res))
+                    .catch((err) => console.log(err));
             } else {
                 console.log('update');
                 await discountService.updateDiscount(discount._id, data);

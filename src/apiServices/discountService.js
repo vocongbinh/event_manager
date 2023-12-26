@@ -50,3 +50,13 @@ export const findAll = async () => {
         console.log(error);
     }
 };
+
+export const getDiscountOfEvent = async (id) => {
+    try {
+        const res = await request.get(`/api/discount/event/${id}`);
+        console.log(res.data);
+        return res.data;
+    } catch (err) {
+        console.log(err?.response);
+    }
+};

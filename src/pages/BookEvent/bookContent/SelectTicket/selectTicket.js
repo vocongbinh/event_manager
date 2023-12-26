@@ -7,7 +7,6 @@ import { BookContext } from '../../bookingLayout';
 import { SeatsioSeatingChart } from '@seatsio/seatsio-react';
 import showtimeService from '../../../../apiServices/showtimeService';
 import { useGetShowtime } from '../../../../lib/react-query/useQueryAndMutation';
-import { da } from 'date-fns/locale';
 
 function SelectTicket() {
     console.log('render again');

@@ -22,8 +22,8 @@ function MyEvents() {
             {tickets.length > 0 ? (
                 tickets.map((ticket, index) => {
                     const time = format(new Date(ticket.showTimeId.startAt), 'MMMM, dd yyyy');
-                    const addressData = ticket.showTimeId.eventId.stageId.addressId;
-                    const address = `${addressData.ward}, ${addressData.district}, ${addressData.province}`;
+                    const addressData = ticket?.showTimeId?.eventId?.stageId?.addressId;
+                    const address = `${addressData?.ward}, ${addressData?.district}, ${addressData?.province}`;
                     return (
                         <TicketItem
                             id={ticket._id}

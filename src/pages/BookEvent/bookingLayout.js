@@ -27,9 +27,17 @@ import SelectTicket from './bookContent/SelectTicket/selectTicket';
 import PaymentInfo from './bookContent/PaymentInfo/paymentInfo';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import eventService from '../../apiServices/eventService';
-import { useCreateNewBooking, useHoldTickets, useHoldToken } from '../../lib/react-query/useQueryAndMutation';
+import {
+    useCreateNewBooking,
+    useGetDiscountOfEvent,
+    useHoldTickets,
+    useHoldToken,
+} from '../../lib/react-query/useQueryAndMutation';
 import { createNewBooking } from '../../apiServices/bookingService';
 import Home from '../Home';
+import DisCountPicker from '../../components/layouts/components/DiscountPicker/DisCountPicker';
+import DiscountApply from '../../components/layouts/components/DiscountPicker/DiscountApply/DiscountApply';
+
 export const BookContext = createContext();
 function BookEvent({ children, ...props }) {
     const cx = classNames.bind(styles);
@@ -46,12 +54,14 @@ function BookEvent({ children, ...props }) {
     const [reEmail, setReEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const navigate = useNavigate();
+    const [discounts, setDiscounts] = useState([]);
     const [event, setEvent] = useState();
     const [eventKey, setEventKey] = useState('');
+    const [totalValue, setTotal] = useState(0);
     // const eventKey = 'af5019ac-f204-4ba5-97d8-c029e3a07f8b';
     const nf = new Intl.NumberFormat();
     const { data: holdToken, isPending: isCreatingHoldToken, refetch: refetchToken } = useHoldToken();
-    console.log(holdToken);
+    // console.log(holdToken);
     useEffect(() => {
         refetchToken();
         console.log('ee' + refetchToken);
@@ -68,9 +78,68 @@ function BookEvent({ children, ...props }) {
         },
         enabled: event != null,
     });
+    const { data: discountList } = useGetDiscountOfEvent(params.id);
+    const selectDiscount = (index) => {
+        const newDiscount = discounts.map((item, ind) => {
+            return {
+                ...item,
+                isSelected: index == ind ? !item.isSelected : item.isSelected,
+            };
+        });
+        console.log('dd');
+        console.log(newDiscount);
+        setDiscounts(newDiscount);
+    };
+    useEffect(() => {
+        let totalValue = 0;
+        bookings.map((item) => {
+            const price = item.count * item.price;
+            totalValue += price;
+        });
+        let newDiscounts;
+        if (discounts.length == 0) {
+            newDiscounts = discountList?.map((item) => {
+                let disable = true;
+                if (!item.isSelected) item.isSelected = false;
+                let value = totalValue * item.percent;
+                if (value > item?.maxAmount) {
+                    value = item?.maxAmount;
+                }
+                if (totalValue > item.minOrderAmount) {
+                    disable = false;
+                }
+                return {
+                    ...item,
+                    isDisable: disable,
+                    value,
+                };
+            });
+        } else
+            newDiscounts = discounts.map((item) => {
+                let disable = true;
+                let value = totalValue * item.percent;
+                if (value > item?.maxAmount) {
+                    value = item?.maxAmount;
+                }
+                if (totalValue > item.minOrderAmount) {
+                    disable = false;
+                }
+                if (disable == true) item.isSelected = false;
+                return {
+                    ...item,
+                    isDisable: disable,
+                    value,
+                };
+            });
+        // setDiscounts(discounts);
+        console.log('change discount list');
+        console.log(newDiscounts);
+        if (newDiscounts && newDiscounts.length > 0) setDiscounts(newDiscounts);
+    }, [bookings]);
+
     const { mutateAsync: holdTickets } = useHoldTickets();
-    let total = 0;
     let propsProvider = {};
+    let total = 0;
     switch (props.index) {
         case 0:
             propsProvider = {
@@ -83,6 +152,7 @@ function BookEvent({ children, ...props }) {
                 eventKey,
                 setEventKey,
                 setShowtime,
+                discounts,
             };
             break;
 
@@ -169,7 +239,7 @@ function BookEvent({ children, ...props }) {
             console.log(receiverInformation);
             const res = await createNewBooking({
                 tickets: bookings,
-                discounts: [],
+                discounts: discounts.filter((item) => item.isSelected && !item.isDisable),
                 eventKey,
                 holdToken,
                 ...receiverInformation,
@@ -340,7 +410,7 @@ function BookEvent({ children, ...props }) {
                                                         <h5>Ticket type</h5>
                                                     </div>
                                                     <div className="col-4 text-end p-0 ">
-                                                        <h5>quantity</h5>
+                                                        <h5>Quantity</h5>
                                                     </div>
                                                 </div>
                                                 {bookings.map((item) => {
@@ -377,18 +447,55 @@ function BookEvent({ children, ...props }) {
                                                     );
                                                 })}
                                             </div>
+                                            <div className="container">
+                                                <div className={`row ${cx('header-row')}`}>
+                                                    <div className="col-8 p-0 ">
+                                                        <h5>Discounts</h5>
+                                                    </div>
+                                                    <div className="col-4 text-end p-0 ">
+                                                        <h5>Value</h5>
+                                                    </div>
+                                                </div>
+                                                {discounts?.map((item) => {
+                                                    // console.log(item);
+                                                    if (item.isSelected && !item.isDisable) {
+                                                        total -= item?.value;
+                                                    }
+                                                    return (
+                                                        item.isSelected &&
+                                                        !item.isDisable && (
+                                                            <div className={`row ${cx('book-item')}`}>
+                                                                <div className="col-8 p-0 ">
+                                                                    <h5>{item.discountName}</h5>
+                                                                </div>
+                                                                <div className="col-4 text-end p-0 ">
+                                                                    <p>{nf.format(item?.value)} VND</p>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    );
+                                                })}
+                                            </div>
                                         </div>
-
                                         <div className={`col-12 ${cx('total')}`}>
-                                            <h5>total</h5>
+                                            <h5>Total</h5>
                                             <h5>{total.toLocaleString()} VND</h5>
                                         </div>
                                     </div>
                                     <div className={`col-12 ${cx('discount')}`}>
-                                        <h5>Enter Discount Code</h5>
+                                        <DisCountPicker discounts={discounts} selectDiscount={selectDiscount} />
                                     </div>
+                                    {/* <div className={`col-12 ${cx('discount')}`}>
+                                        <h5>Enter Discount Code</h5>
+                                    </div> */}
+                                    <button disable={bookings.length == 2}>didk</button>
                                     <div className="col-12">
-                                        <Button onClick={nextHandler} className={cx('next-btn')} size="max">
+                                        <Button
+                                            disable={!bookings || bookings?.length}
+                                            onClick={nextHandler}
+                                            className={cx('next-btn')}
+                                            size="max"
+                                        >
                                             {props.index === 0 ? 'Next' : 'Submit'}
                                         </Button>
                                     </div>
