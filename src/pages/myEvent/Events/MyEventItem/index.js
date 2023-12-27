@@ -97,9 +97,11 @@ function MyEventItem({ data }) {
                         <FontAwesomeIcon size="xl" icon={faUsersRays} />
                     </Link>
                 )}
-                <Link to={`/editEvent/${data._id}`} target="_blank" className={cx('moderator-btn')}>
-                    <FontAwesomeIcon size="xl" icon={faEdit} />
-                </Link>
+                {(user.role === 'Admin' || user.role === 'Owner' || user.role === 'Moderator') && (
+                    <Link to={`/editEvent/${data._id}`} target="_blank" className={cx('moderator-btn')}>
+                        <FontAwesomeIcon size="xl" icon={faEdit} />
+                    </Link>
+                )}
             </div>
 
             <div className={cx('footer')}>
