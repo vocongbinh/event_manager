@@ -52,7 +52,7 @@ export const useHoldToken = () => {
     return useQuery({
         queryKey: [HOLD_TOKEN],
         queryFn: createHoldToken,
-        enabled: false,
+        enabled: true,
     });
 };
 

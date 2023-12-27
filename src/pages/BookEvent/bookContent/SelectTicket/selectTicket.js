@@ -107,6 +107,7 @@ function SelectTicket() {
                     showtimeInfo.showTimeStage && (
                         <SeatsioSeatingChart
                             holdToken={bookContext.holdToken.holdToken}
+                            session="manual"
                             onHoldTokenExpired={() => {
                                 bookContext.refetchToken();
                             }}

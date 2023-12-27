@@ -33,7 +33,7 @@ import {
     useHoldTickets,
     useHoldToken,
 } from '../../lib/react-query/useQueryAndMutation';
-import { createNewBooking } from '../../apiServices/bookingService';
+import { createHoldTickets, createNewBooking } from '../../apiServices/bookingService';
 import Home from '../Home';
 import DisCountPicker from '../../components/layouts/components/DiscountPicker/DisCountPicker';
 import DiscountApply from '../../components/layouts/components/DiscountPicker/DiscountApply/DiscountApply';
@@ -62,12 +62,12 @@ function BookEvent({ children, ...props }) {
     const [totalValue, setTotal] = useState(0);
     // const eventKey = 'af5019ac-f204-4ba5-97d8-c029e3a07f8b';
     const nf = new Intl.NumberFormat();
-    const { data: holdToken, isPending: isCreatingHoldToken, refetch: refetchToken } = useHoldToken();
+    const { data: holdToken, isPending: isCreatingHoldToken } = useHoldToken();
     // console.log(holdToken);
-    useEffect(() => {
-        refetchToken();
-        console.log('ee' + refetchToken);
-    }, [eventKey]);
+    // useEffect(() => {
+    //     refetchToken();
+    //     console.log('ee' + refetchToken);
+    // }, [eventKey]);
     // const { refetch } = useQuery('book', async () => {
     //     const eventData = await eventService.detailEvent(params.id);
     //     setEvent(eventData);
@@ -150,7 +150,6 @@ function BookEvent({ children, ...props }) {
                 holdToken,
                 selectedTickets,
                 setSelectedTickets,
-                refetchToken,
                 eventKey,
                 setEventKey,
                 setShowtime,
@@ -227,10 +226,12 @@ function BookEvent({ children, ...props }) {
         if (activeStep < 1) {
             if (bookings.length !== checkBookings.length) {
                 const value = activeStep + 2;
-
-                navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
-                holdTickets({ bookings, eventKey, holdToken });
-                setActiveStep((prev) => prev + 1);
+                createHoldTickets(bookings, eventKey, holdToken)
+                    .then((res) => {
+                        navigate(location.pathname.split('/').slice(0, -1).join('/') + '/step' + value);
+                        setActiveStep((prev) => prev + 1);
+                    })
+                    .catch((err) => toastMessage({ type: 'error', title: 'Booking not success' }));
             } else {
                 toastMessage({ type: 'error', title: 'PLease choose seats!' });
             }

@@ -1,19 +1,22 @@
 import { request } from '../utils/request';
-export async function createHoldTickets({ tickets, eventKey, holdToken }) {
-    try {
-        console.log(eventKey);
-        console.log(tickets);
-        if (tickets.length == 0) throw Error('tickets is empty');
-        const holdTickets = await request.post(`api/booking/holdTickets`, {
-            tickets,
-            eventKey,
-            holdToken,
-        });
-        console.log(JSON.stringify(holdTickets));
-        return { holdTickets };
-    } catch (error) {
-        console.log(JSON.stringify(error));
-    }
+export async function createHoldTickets(tickets, eventKey, holdToken) {
+    return new Promise(async (res, rej) => {
+        try {
+            console.log(eventKey);
+            console.log(tickets);
+            if (tickets.length == 0) throw Error('tickets is empty');
+            const holdTickets = await request.post(`api/booking/holdTickets`, {
+                tickets,
+                eventKey,
+                holdToken,
+            });
+            console.log(JSON.stringify(holdTickets));
+            return res(holdTickets.data);
+        } catch (error) {
+            rej(error);
+            console.log(error?.response);
+        }
+    });
 }
 export async function createNewBooking({
     tickets,
