@@ -189,29 +189,7 @@ function Summary() {
                 </Button>
             </div>
             {error && <span className={cx('error')}>End date must be after start date</span>}
-            <div className={cx('status-layout')}>
-                <div className={cx('status-item', 'paid')}>
-                    <FontAwesomeIcon className={cx('status-icon')} icon={faCheck} />
-                    <div className={cx('status-content')}>
-                        <p className={cx('count')}>0</p>
-                        <p className={cx('status')}>Paid</p>
-                    </div>
-                </div>
-                <div className={cx('status-item', 'cancel')}>
-                    <FontAwesomeIcon className={cx('status-icon')} icon={faXmark} />
-                    <div className={cx('status-content')}>
-                        <p className={cx('count')}>0</p>
-                        <p className={cx('status')}>Cancelled</p>
-                    </div>
-                </div>
-                <div className={cx('status-item', 'expire')}>
-                    <FontAwesomeIcon className={cx('status-icon')} icon={faXmark} />
-                    <div className={cx('status-content')}>
-                        <p className={cx('count')}>0</p>
-                        <p className={cx('status')}>Expired</p>
-                    </div>
-                </div>
-            </div>
+
             <div className={cx('ticket-summary')}>
                 <p className={cx('summary-header')}>Ticket summary</p>
                 <table>

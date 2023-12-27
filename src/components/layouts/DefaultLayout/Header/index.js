@@ -80,7 +80,9 @@ function Header() {
 
     return (
         <div className={cx('wrapper')}>
-            <img src={Images.logo} className={cx('logo')} />
+            <Link to="/">
+                <img src={Images.logo} className={cx('logo')} />
+            </Link>
             <SearchLayout className={cx('search-layout')} />
             <div className={cx('action')}>
                 <Button
